@@ -1,6 +1,10 @@
+# pakcage directory
 node_modules
 elm-stuff
 
+# Build output directory
 dist
+functions
+
 # Local Netlify folder
 .netlify

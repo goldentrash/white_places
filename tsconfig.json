@@ -1,0 +1,14 @@
+{
+	"include": ["src/**/*.ts"],
+	"compilerOptions": {
+		"module": "es6",
+		"moduleResolution": "node",
+		"rootDir": "src",
+		"outDir": "functions",
+		"target": "ES6",
+		"strict": true,
+		"allowUnreachableCode": false,
+		"pretty": true,
+		"removeComments": true
+	}
+}

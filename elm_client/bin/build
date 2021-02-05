@@ -1,3 +1,0 @@
-#!/bin/sh
-
-yarn elm make src/Main.elm --optimize --output=dist/index.html

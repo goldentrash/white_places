@@ -1,9 +1,11 @@
 [build]
   command = "yarn run build"
-  publish = "elm_client/dist"
+  publish = "dist"
 
-  functions = "api_server"
+  functions = "functions"
 
 [dev]
   command = "yarn run build"
-  publish = "elm_client/dist"
+  targetPort = 8080
+  publish = "dist"
+  framework = "#custom"

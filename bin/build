@@ -1,5 +1,3 @@
 #!/bin/sh
 
-cd elm_client
-sh bin/build
-cd ..
+yarn elm make src/Main.elm --optimize --output=dist/index.html

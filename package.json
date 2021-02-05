@@ -5,12 +5,13 @@
 	"repository": "https://github.com/goldentrash/netlify_test.git",
 	"author": "goldentrash <startoflateness@gmail.com>",
 	"license": "MIT",
-	"dependencies": {
-		"elm": "^0.19.1-5"
-	},
 	"scripts": {
 		"build": "sh bin/build",
 		"dev": "yarn netlify dev"
+	},
+	"dependencies": {
+		"elm": "^0.19.1-5",
+		"typescript": "^4.1.3"
 	},
 	"devDependencies": {
 		"netlify-cli": "^3.5.0"
