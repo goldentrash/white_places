@@ -3,3 +3,4 @@
 cd elm_client
 sh bin/build
 cd ..
+tree elm_client  -L 2
