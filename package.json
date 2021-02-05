@@ -6,8 +6,10 @@
 	"author": "goldentrash <startoflateness@gmail.com>",
 	"license": "MIT",
 	"scripts": {
-		"build": "sh bin/build",
-		"dev": "yarn netlify dev"
+		"start:dev": "yarn netlify dev",
+		"build": "yarn run build:client && yarn run build:api",
+		"build:client": "sh bin/build_client",
+		"build:api": "sh bin/build_api"
 	},
 	"dependencies": {
 		"elm": "^0.19.1-5",

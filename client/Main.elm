@@ -7,6 +7,7 @@ module Main exposing (..)
 --
 
 import Browser
+import Helper
 import Html exposing (Html, button, div, text)
 import Html.Events exposing (onClick)
 
@@ -30,7 +31,7 @@ type alias Model =
 
 init : Model
 init =
-    0
+    Helper.test 5
 
 
 

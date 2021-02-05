@@ -5,7 +5,4 @@
   functions = "functions"
 
 [dev]
-  command = "yarn run build"
-  targetPort = 8080
   publish = "dist"
-  framework = "#custom"
