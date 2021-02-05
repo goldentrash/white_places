@@ -9,7 +9,8 @@
 		"elm": "^0.19.1-5"
 	},
 	"scripts": {
-		"build": "sh bin/build"
+		"build": "sh bin/build",
+		"dev": "yarn netlify dev"
 	},
 	"devDependencies": {
 		"netlify-cli": "^3.5.0"

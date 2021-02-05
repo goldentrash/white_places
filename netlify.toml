@@ -1,0 +1,9 @@
+[build]
+  command = "yarn run build"
+  publish = "elm_client/dist"
+
+  functions = "api_server"
+
+[dev]
+  command = "yarn run build"
+  publish = "elm_client/dist"
