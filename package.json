@@ -9,6 +9,6 @@
 		"elm": "^0.19.1-5"
 	},
 	"scripts": {
-		"start": "bin/build"
+		"start": "sh bin/build"
 	}
 }
