@@ -1,0 +1,5 @@
+[build]
+base = "."
+publicsh = "elm_client/dist/"
+command = "bin/build"
+functions = "api_server/"

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd elm_client
+bin/build
+cd ..
