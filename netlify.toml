@@ -1,5 +1,5 @@
 [build]
 base = "."
 publicsh = "elm_client/dist/"
-command = "bin/build"
+command = "yarn start"
 functions = "api_server/"
