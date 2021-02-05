@@ -1,5 +1,5 @@
-#!/bin/bash
+#!/bin/sh
 
 cd elm_client
-bin/build
+sh bin/build
 cd ..
