@@ -10,5 +10,8 @@
 	},
 	"scripts": {
 		"build": "sh bin/build"
+	},
+	"devDependencies": {
+		"netlify-cli": "^3.5.0"
 	}
 }

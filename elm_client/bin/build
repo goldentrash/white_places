@@ -1,3 +1,3 @@
 #!/bin/sh
 
-../node_modules/.bin/elm make src/Main.elm --optimize --output=dist/index.html
+yarn elm make src/Main.elm --optimize --output=dist/index.html
