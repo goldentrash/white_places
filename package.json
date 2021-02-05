@@ -1,0 +1,11 @@
+{
+  "name": "white_places",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/goldentrash/netlify_test.git",
+  "author": "goldentrash <startoflateness@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "elm": "^0.19.1-5"
+  }
+}
