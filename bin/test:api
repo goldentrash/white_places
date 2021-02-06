@@ -1,0 +1,3 @@
+#!/bin/sh
+
+yarn mocha api/test/**.spec.ts --require ts-node/register

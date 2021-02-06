@@ -1,7 +1,4 @@
 #!/bin/sh
 
-# format functions(api)
-yarn prettier --write api
-
 # build functions(api)
 yarn webpack
