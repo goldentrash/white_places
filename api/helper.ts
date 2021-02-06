@@ -1,3 +1,5 @@
 export const helper = (num: number) => {
-	return num + 10;
+  const a = "hello";
+  a;
+  return num + 10;
 };

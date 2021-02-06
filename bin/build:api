@@ -1,4 +1,7 @@
 #!/bin/sh
 
-# yarn tsc --pretty
+# format functions(api)
+yarn prettier --write api
+
+# build functions(api)
 yarn webpack

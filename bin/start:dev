@@ -1,4 +1,7 @@
 #!/bin/sh
 
+# build
 sh bin/build
+
+# run dev server
 yarn netlify dev

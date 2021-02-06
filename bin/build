@@ -1,4 +1,7 @@
 #!/bin/sh
 
+# build functions(api)
 sh bin/build:api
+
+# build dist(client)
 sh bin/build:client
