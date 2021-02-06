@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
 	mode: 'production',
+	target: 'node',
 	devtool: 'inline-source-map',
 	entry: {
 		graphql: path.resolve(__dirname, 'api/graphql.ts'),
@@ -9,6 +10,7 @@ module.exports = {
 	output: {
 		filename: '[name].js',
 		path: path.resolve(__dirname, 'functions'),
+		libraryTarget: 'umd',
 	},
 	resolve: {
 		extensions: ['.ts', 'js', 'json'],
