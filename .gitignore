@@ -1,10 +1,13 @@
-# pakcage directory
+# Pakcage Cache
 node_modules
 elm-stuff
 
-# Build output directory
+# Build Output directory
 dist
 functions
 
 # Local Netlify folder
 .netlify
+
+# Lint Report
+report

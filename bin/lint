@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Lint functions(API)
+yarn eslint api --output-file report/lint.html --format html --color

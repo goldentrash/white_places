@@ -1,3 +1,4 @@
 #!/bin/sh
 
+# Unit Test functions(API)
 yarn mocha api/test/**.spec.ts --require ts-node/register

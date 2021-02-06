@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Check all is Okay
+sh bin/check
+
 # build
 sh bin/build
 

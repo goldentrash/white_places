@@ -1,34 +1,43 @@
 {
-	"name": "white_places",
-	"version": "1.0.0",
-	"main": "index.js",
-	"repository": "https://github.com/goldentrash/netlify_test.git",
-	"author": "goldentrash <startoflateness@gmail.com>",
-	"license": "MIT",
-	"scripts": {
-		"start:dev": "sh bin/start:dev",
-		"build": "sh bin/build",
-		"build:client": "sh bin/build:client",
-		"build:api": "sh bin/build:api"
-	},
-	"dependencies": {},
-	"devDependencies": {
-		"@types/chai": "^4.2.14",
-		"@types/mocha": "^8.2.0",
-		"@typescript-eslint/eslint-plugin": "^4.14.2",
-		"@typescript-eslint/parser": "^4.14.2",
-		"chai": "^4.3.0",
-		"elm": "^0.19.1-5",
-		"elm-test": "^0.19.1-revision6",
-		"eslint": "^7.19.0",
-		"eslint-config-prettier": "^7.2.0",
-		"mocha": "^8.2.1",
-		"netlify-cli": "^3.5.0",
-		"prettier": "^2.2.1",
-		"ts-loader": "^8.0.15",
-		"ts-node": "^9.1.1",
-		"typescript": "^4.1.3",
-		"webpack": "^5.20.2",
-		"webpack-cli": "^4.5.0"
-	}
+  "name": "white_places",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/goldentrash/netlify_test.git",
+  "author": "goldentrash <startoflateness@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start:dev": "sh bin/start:dev",
+    "test:unit": "sh bin/test:unit",
+    "build": "sh bin/build",
+    "lint": "sh bin/lint",
+    "format": "sh bin/format",
+    "check": "sh bin/check"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run check",
+      "pre-push": "yarn run check"
+    }
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/chai": "^4.2.14",
+    "@types/mocha": "^8.2.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
+    "@typescript-eslint/parser": "^4.14.2",
+    "chai": "^4.3.0",
+    "elm": "^0.19.1-5",
+    "elm-test": "^0.19.1-revision6",
+    "eslint": "^7.19.0",
+    "eslint-config-prettier": "^7.2.0",
+    "husky": "^4.3.8",
+    "mocha": "^8.2.1",
+    "netlify-cli": "^3.5.0",
+    "prettier": "^2.2.1",
+    "ts-loader": "^8.0.15",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3",
+    "webpack": "^5.20.2",
+    "webpack-cli": "^4.5.0"
+  }
 }

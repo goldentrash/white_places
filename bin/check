@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Lint
+yarn run lint
+
+# Unit Test
+yarn run test:unit
+
+# Format
+yarn run format

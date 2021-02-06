@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# build dist(client)
-yarn elm make client/Main.elm --optimize --output=dist/index.html
