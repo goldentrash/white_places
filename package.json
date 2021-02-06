@@ -13,12 +13,6 @@
     "format": "sh bin/format",
     "check": "sh bin/check"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn run check",
-      "pre-push": "yarn run check"
-    }
-  },
   "dependencies": {},
   "devDependencies": {
     "@types/chai": "^4.2.14",

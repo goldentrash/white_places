@@ -3,5 +3,17 @@
 # build functions(api)
 yarn webpack
 
+if [ $? -ne 0 ]
+then
+  echo "can't build functions(api)"
+  exit 1
+fi
+
 # build dist(client)
 yarn elm make client/Main.elm --optimize --output=dist/index.html
+
+if [ $? -ne 0 ]
+then 
+  echo "can't build dist(client)"
+  exit 1
+fi
