@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sh bin/build:api
+sh bin/build:client

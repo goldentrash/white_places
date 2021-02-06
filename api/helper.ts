@@ -1,1 +1,3 @@
-exports.test = (num: number) => num + 21;
+export const helper = (num: number) => {
+	return num + 10;
+};
