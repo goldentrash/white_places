@@ -1,7 +1,7 @@
 {
   "hooks": {
-    "pre-commit": "if git-branch-is --quiet master; then yarn run check; fi",
     "pre-merge-commit": "if git-branch-is --quiet master; then yarn run check; fi",
+    "pre-commit": "if git-branch-is --quiet master; then yarn run check; fi",
     "pre-rebase": "exit 1"
   }
 }
