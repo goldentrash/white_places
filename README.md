@@ -4,4 +4,5 @@
 
 ## Must Use --no-ff option when merge to master branch
 
-until husky support `pre-merge-commit` hook
+until husky support `pre-merge-commit` hook  
+I highly recommand to do `git config branch.master.mergeoptions --no-ff`

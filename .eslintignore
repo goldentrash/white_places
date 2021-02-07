@@ -1,1 +1,6 @@
+# config
 webpack.config.js
+
+# build output
+functions
+dist

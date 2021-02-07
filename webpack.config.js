@@ -1,9 +1,9 @@
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   mode: 'production',
   target: 'node',
-  devtool: 'inline-source-map',
   entry: {
     graphql: path.resolve(__dirname, 'api/graphql.ts'),
   },
@@ -21,6 +21,19 @@ module.exports = {
         test: /\.ts/,
         use: 'ts-loader',
       },
+    ],
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
     ],
   },
 };
