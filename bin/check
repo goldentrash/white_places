@@ -1,28 +1,36 @@
 #!/bin/sh
 
-# Lint
-yarn run lint
-
-if [ $? -ne 0 ]
+# ONLY do at master branch
+git-granch-is master
+if [ $? -eq 0 ]
 then
-  echo "lint error"
-  exit 1
-fi
+  # Lint
+  yarn run lint
 
-# Unit Test
-yarn run test:unit
+  if [ $? -ne 0 ]
+  then
+    echo "lint error"
+    exit 1
+  fi
 
-if [ $? -ne 0 ]
-then
-  echo "Unit Test Failed"
-  exit 1
-fi
+  # Unit Test
+  yarn run test:unit
 
-# Format
-yarn run format
+  if [ $? -ne 0 ]
+  then
+    echo "Unit Test Failed"
+    exit 1
+  fi
 
-if [ $? -ne 0 ]
-then
-  echo "Format Failed"
-  exit 1
+  # Format
+  yarn run format
+
+  if [ $? -ne 0 ]
+  then
+    echo "Format Failed"
+    exit 1
+  fi
+else
+  echo "current branch is not master"
+  echo "skip checking sources"
 fi

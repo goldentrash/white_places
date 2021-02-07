@@ -13,7 +13,9 @@
     "format": "sh bin/format",
     "check": "sh bin/check"
   },
-  "dependencies": {},
+  "dependencies": {
+    "git-branch-is": "^4.0.0"
+  },
   "devDependencies": {
     "@types/chai": "^4.2.14",
     "@types/mocha": "^8.2.0",
