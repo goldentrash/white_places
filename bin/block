@@ -1,3 +1,5 @@
 #!bin/sh
 
-echo "hi"
+# block and exist with code 1
+exit 1
+>>>>>>> develop
