@@ -3,3 +3,5 @@
 ## netlify test repo
 
 ## Must Use --no-ff option when merge to master branch
+
+until husky support `pre-merge-commit` hook

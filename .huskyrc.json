@@ -1,6 +1,5 @@
 {
   "hooks": {
-    "pre-merge-commit": "echo hi",
     "prepare-commit-msg": "if git-branch-is --quiet master; then yarn run check; fi",
     "pre-rebase": "exit 1"
   }
