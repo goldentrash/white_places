@@ -4,11 +4,9 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
   mode: 'production',
   target: 'node',
-  entry: {
-    graphql: path.resolve(__dirname, 'api/graphql.ts'),
-  },
+  entry: path.resolve(__dirname, 'api/handler.ts'),
   output: {
-    filename: '[name].js',
+    filename: 'graphql.js',
     path: path.resolve(__dirname, 'functions'),
     libraryTarget: 'umd',
   },

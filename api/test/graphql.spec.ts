@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { handler } from '../graphql';
+import { handler } from '../handler';
 
 describe('Netlify Function: graphql', () => {
   it('Netlify Functions should export handler', () => {
