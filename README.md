@@ -2,6 +2,9 @@
 
 ## netlify test repo
 
+use `netlify-cli@2.54.0` not `netlify-cli@latest` because later 2.54.0 is on error when send POST request in dev server
+please let me know if that error has solved then I will change netlify-cli's version to latest
+
 ## Must Use --no-ff option when merge to master branch
 
 until husky support `pre-merge-commit` hook  
