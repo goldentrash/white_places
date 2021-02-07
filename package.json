@@ -6,12 +6,14 @@
   "author": "goldentrash <startoflateness@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start:dev": "sh bin/start:dev",
-    "test:unit": "sh bin/test:unit",
-    "build": "sh bin/build",
-    "lint": "sh bin/lint",
-    "format": "sh bin/format",
-    "check": "sh bin/check"
+    "start:dev": "yarn run check && yarn run build && yarn netlify dev",
+    "test:unit:api": "yarn mocha api/test/**.spec.ts --require ts-node/register",
+    "build": "yarn run build:client && yarn run build:api",
+    "build:client": "yarn elm make client/Main.elm --optimize --output=dist/index.html",
+    "build:api": "yarn webpack",
+    "lint:api": "yarn eslint api --output-file report/lint.html --format html",
+    "format:api": "yarn prettier --write api",
+    "check": "yarn run lint:api && yarn run test:unit:api && yarn run format:api"
   },
   "dependencies": {
     "git-branch-is": "^4.0.0"
