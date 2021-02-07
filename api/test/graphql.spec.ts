@@ -5,6 +5,7 @@ describe('Netlify Function: graphql', () => {
   it('Netlify Functions should export handler', () => {
     // Neltify Functions should export handler!
     // 만만한게 이놈이다
+    // ,..,.
     expect(handler).to.exist;
   });
 });
