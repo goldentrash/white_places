@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # ONLY do at master branch
-git-granch-is master
+git-branch-is master
 if [ $? -eq 0 ]
 then
   # Lint
