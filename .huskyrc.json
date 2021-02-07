@@ -1,6 +1,7 @@
 {
   "hooks": {
     "pre-commit": "yarn run check",
-    "pre-push": "yarn run check"
+    "pre-merge-commit": "yarn run check",
+    "pre-rebase": "exit 1"
   }
 }
