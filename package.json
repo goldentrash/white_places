@@ -16,6 +16,7 @@
     "check": "yarn run lint:api && yarn run test:unit:api && yarn run format:api"
   },
   "dependencies": {
+    "colors": "^1.4.0",
     "git-branch-is": "^4.0.0",
     "graphql": "^15.5.0"
   },

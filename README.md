@@ -1,4 +1,5 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/27143e3c-9c91-4751-8fdb-1f69a3178fff/deploy-status)](https://app.netlify.com/sites/angry-lamarr-ff3a8e/deploys)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 ## netlify test repo
 

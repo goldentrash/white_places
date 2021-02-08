@@ -11,4 +11,13 @@ export const schema = buildSchema(`
     user: [User!]!
     rand(offset: Int!): Int!
   }
+
+  input UserInput {
+    name: String!
+    age: Int!
+  }
+
+  type Mutation {
+    insertUser(user: UserInput!): [User!]!
+  }
 `);
