@@ -3,6 +3,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 
 const baseConfig = {
   mode: 'production',
@@ -24,6 +25,7 @@ const baseConfig = {
 const apiConfig = {
   ...baseConfig,
   target: 'node',
+  externals: [nodeExternals()],
   entry: path.resolve(__dirname, 'api', 'handler.ts'),
   plugins: [new CleanWebpackPlugin()],
   output: {
@@ -38,7 +40,10 @@ const apiConfig = {
     rules: [
       {
         test: /\.ts$/,
-        exclude: [/elm-stuff$/, /node_modules$/],
+        exclude: [
+          path.resolve(__dirname, 'elm-stuff'),
+          path.resolve(__dirname, 'node_modules'),
+        ],
         use: 'ts-loader',
       },
     ],
@@ -48,14 +53,9 @@ const apiConfig = {
 const clientConfig = {
   ...baseConfig,
   target: 'web',
-  entry: path.resolve(__dirname, 'client', 'src', 'Main.elm'),
+  entry: path.resolve(__dirname, 'client', 'src', 'index.js'),
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'client', 'public', 'index.html'),
-      showErrors: true,
-      // inject: 'body',
-    }),
     new CopyPlugin({
       patterns: [
         {
@@ -68,6 +68,11 @@ const clientConfig = {
         },
       ],
     }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'client', 'public', 'index.html'),
+      showErrors: false,
+      inject: 'body',
+    }),
   ],
   output: {
     filename: 'application.js',
@@ -77,19 +82,11 @@ const clientConfig = {
     rules: [
       {
         test: /\.elm$/,
-        exclude: [/elm-stuff$/, /node_modules$/],
-        use: {
-          loader: 'elm-webpack-loader',
-          options: {},
-        },
-      },
-      {
-        test: /\.css$/,
-        type: 'asset/resource',
-      },
-      {
-        test: /\.png$/,
-        type: 'asset/resource',
+        exclude: [
+          path.resolve(__dirname, 'elm-stuff'),
+          path.resolve(__dirname, 'node_modules'),
+        ],
+        use: 'elm-webpack-loader',
       },
     ],
     noParse: [/\.elm$/],
