@@ -1,6 +1,6 @@
 import { buildSchema } from 'graphql';
 
-export const schema = buildSchema(`
+export default buildSchema(`
   type User {
     name: String!
     age: Int!

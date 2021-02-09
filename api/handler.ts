@@ -1,6 +1,6 @@
 import { graphql } from 'graphql';
-import { schema } from './schema';
-import * as resolver from './resolver';
+import root from './resolver';
+import schema from './schema';
 import colors from 'colors';
 
 interface Headers {
@@ -36,6 +36,8 @@ export const handler = async (event: Event): Promise<Response> => {
       };
     }
 
+    console.log(colors.yellow("Let's resolve request!"));
+    console.log();
     const escapedRequestBody = event.body.replace(/[\n\r\t\f\v]/g, ''); // JSON.parse can't resolve sapce included string
     const requestBody = JSON.parse(escapedRequestBody);
 
@@ -52,23 +54,19 @@ export const handler = async (event: Event): Promise<Response> => {
     const result = await graphql(
       schema,
       graphqlQuery,
-      resolver,
+      root,
       null,
       graphqlVariables
     );
 
-    let statusCode = 200;
     if (result.errors) {
       console.log(colors.blue('grapnql error'));
       console.error(result.errors);
-
-      // error 유형에 따라 더 정확한 status code가 반환되어야 한다
-      statusCode = 400;
-      result.errors = undefined;
+      console.log();
     }
 
     return {
-      statusCode,
+      statusCode: result.errors ? 400 : 200,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -78,6 +76,7 @@ export const handler = async (event: Event): Promise<Response> => {
     // not resolvable request
     console.log(colors.blue('something wrong'));
     console.error(error);
+    console.log();
 
     return {
       statusCode: 500,

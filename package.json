@@ -4,20 +4,17 @@
   "main": "index.js",
   "repository": "https://github.com/goldentrash/netlify_test.git",
   "author": "goldentrash <startoflateness@gmail.com>",
-  "license": "MIT",
+  "license": "",
   "scripts": {
     "start:dev": "yarn run check && yarn run build && yarn netlify dev",
-    "test:unit:api": "yarn mocha api/test/**.spec.ts --require ts-node/register",
-    "build": "yarn run build:client && yarn run build:api",
-    "build:client": "yarn elm make client/Main.elm --optimize --output=dist/index.html",
-    "build:api": "yarn webpack",
+    "test:unit": "yarn mocha api/test/**.spec.ts --require ts-node/register",
+    "build": "yarn webpack",
     "lint:api": "yarn eslint api --output-file report/lint.html --format html",
-    "format:api": "yarn prettier --write api",
-    "check": "yarn run lint:api && yarn run test:unit:api && yarn run format:api"
+    "format": "yarn prettier --write api && yarn run elm-format client/src --yes",
+    "check": "yarn run lint:api && yarn run test:unit && yarn run format"
   },
   "dependencies": {
     "colors": "^1.4.0",
-    "git-branch-is": "^4.0.0",
     "graphql": "^15.5.0"
   },
   "devDependencies": {
@@ -26,10 +23,16 @@
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
     "chai": "^4.3.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^7.0.0",
     "elm": "^0.19.1-5",
+    "elm-format": "^0.8.5",
     "elm-test": "^0.19.1-revision6",
+    "elm-webpack-loader": "^7.0.1",
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^7.2.0",
+    "git-branch-is": "^4.0.0",
+    "html-webpack-plugin": "^5.0.0",
     "husky": "^4.3.8",
     "mocha": "^8.2.1",
     "netlify-cli": "2.54.0",
