@@ -1,6 +1,7 @@
 module Page exposing (Msg, Page, children, init, update)
 
 import Html exposing (Html)
+import Section.Nav as Nav
 import Status exposing (Status)
 import Url exposing (Url)
 import Url.Parser as UP
@@ -10,19 +11,24 @@ import Url.Parser as UP
 -- MODEL
 
 
-type Page
+type alias Page =
+    { status : Status
+    , route : Route
+    }
+
+
+type Route
     = NotFound
-    | Home Status
+    | Home
 
 
 init : Status -> Url -> Page
 init status url =
-    let
-        parser =
-            makeParser status
-    in
-    UP.parse parser url
-        |> Maybe.withDefault NotFound
+    { status = status
+    , route =
+        UP.parse parser url
+            |> Maybe.withDefault NotFound
+    }
 
 
 
@@ -31,7 +37,7 @@ init status url =
 
 children : List (Html msg)
 children =
-    Nav.view :: Board.view :: Page.view
+    [ Nav.view, Board.view, Page.view ]
 
 
 
@@ -51,8 +57,8 @@ update _ page =
 -- PARSER
 
 
-makeParser : Status -> UP.Parser (Page -> a) a
-makeParser status =
+parser : UP.Parser (Route -> a) a
+parser =
     UP.oneOf
-        [ UP.map (Home status) UP.top
+        [ UP.map Home UP.top
         ]

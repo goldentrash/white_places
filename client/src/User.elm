@@ -1,6 +1,6 @@
-module User exposing (Name, User, nameDecoder)
+module User exposing (User)
 
-import Json.Decode as JD
+import Username exposing (Username)
 
 
 
@@ -8,18 +8,5 @@ import Json.Decode as JD
 
 
 type User
-    = FollowedUser Name
-    | UnfollowedUser Name
-
-
-type Name
-    = Name String
-
-
-
--- DECODER
-
-
-nameDecoder : JD.Decoder Name
-nameDecoder =
-    JD.map Name JD.string
+    = FollowedUser Username
+    | UnfollowedUser Username

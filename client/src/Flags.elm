@@ -1,4 +1,4 @@
-module Flags exposing (Flags, value)
+module Flags exposing (Flags, toValue)
 
 import Json.Encode as JE
 
@@ -15,8 +15,6 @@ type Flags
 -- GETTER
 
 
-value : Flags -> JE.Value
-value flags =
-    case flags of
-        Flags v ->
-            v
+toValue : Flags -> JE.Value
+toValue (Flags value) =
+    value

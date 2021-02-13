@@ -1,9 +1,9 @@
-module Status exposing (Status, init)
+module Status exposing (Status, init, maybeUsername)
 
 import Flags exposing (Flags)
 import Json.Decode as JD
 import Json.Decode.Pipeline as JDP
-import User
+import Username exposing (Username)
 
 
 
@@ -11,7 +11,7 @@ import User
 
 
 type Status
-    = Login User.Name JWT
+    = Login Username JWT
     | Logout
 
 
@@ -21,8 +21,22 @@ type JWT
 
 init : Flags -> Status
 init flags =
-    JD.decodeValue decoder (Flags.value flags)
+    JD.decodeValue decoder (Flags.toValue flags)
         |> Result.withDefault Logout
+
+
+
+-- GETTER
+
+
+maybeUsername : Status -> Maybe Username
+maybeUsername status =
+    case status of
+        Login username _ ->
+            Just username
+
+        Logout ->
+            Nothing
 
 
 
@@ -37,7 +51,7 @@ decoder =
 loginDecoder : JD.Decoder Status
 loginDecoder =
     JD.succeed Login
-        |> JDP.required "username" User.nameDecoder
+        |> JDP.required "username" Username.decoder
         |> JDP.required "jwt" jwtDecoder
 
 
