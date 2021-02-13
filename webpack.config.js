@@ -20,6 +20,9 @@ const baseConfig = {
       }),
     ],
   },
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
 };
 
 const apiConfig = {

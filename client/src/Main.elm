@@ -2,7 +2,9 @@ module Main exposing (main)
 
 import Browser
 import Browser.Navigation as Nav
-import Flags exposing (Flags)
+import Html exposing (div)
+import Html.Attributes exposing (id)
+import Json.Encode as JE
 import Page exposing (Page)
 import Status
 import Url exposing (Url)
@@ -12,7 +14,7 @@ import Url exposing (Url)
 -- MAIN
 
 
-main : Program Flags Model Msg
+main : Program JE.Value Model Msg
 main =
     Browser.application
         { init = init
@@ -34,7 +36,7 @@ type alias Model =
     }
 
 
-init : Flags -> Url -> Nav.Key -> ( Model, Cmd Msg )
+init : JE.Value -> Url -> Nav.Key -> ( Model, Cmd Msg )
 init flags url navKey =
     let
         status =
@@ -52,9 +54,11 @@ init flags url navKey =
 
 
 view : Model -> Browser.Document Msg
-view _ =
+view model =
     { title = "White Places"
-    , body = Page.children
+    , body =
+        [ div [ id "app" ] (Page.children model.page PageMsg)
+        ]
     }
 
 
@@ -71,20 +75,20 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        UrlRequest _ ->
+        LinkClicked _ ->
             ( model, Cmd.none )
 
-        UrlChange _ ->
+        UrlChanged _ ->
             ( model, Cmd.none )
 
-        PageMsg msg ->
-            Page.update PageMsg msg model
+        PageMsg pageMsg ->
+            Page.update pageMsg PageMsg model.page (Model model.navKey)
 
 
 
 -- SUBSCRIPTION
 
 
-subscriptions : () -> Sub Msg
+subscriptions : Model -> Sub Msg
 subscriptions _ =
     Sub.none

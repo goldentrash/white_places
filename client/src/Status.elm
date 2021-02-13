@@ -1,8 +1,8 @@
 module Status exposing (Status, init, maybeUsername)
 
-import Flags exposing (Flags)
 import Json.Decode as JD
 import Json.Decode.Pipeline as JDP
+import Json.Encode as JE
 import Username exposing (Username)
 
 
@@ -19,9 +19,9 @@ type JWT
     = JWT String
 
 
-init : Flags -> Status
+init : JE.Value -> Status
 init flags =
-    JD.decodeValue decoder (Flags.toValue flags)
+    JD.decodeValue decoder flags
         |> Result.withDefault Logout
 
 

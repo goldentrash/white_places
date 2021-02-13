@@ -1,10 +1,10 @@
 module Page exposing (Msg, Page, children, init, update)
 
-import Html exposing (Html)
-import Section.Nav as Nav
+import Html exposing (Html, div, text)
 import Status exposing (Status)
 import Url exposing (Url)
 import Url.Parser as UP
+import Username
 
 
 
@@ -35,9 +35,40 @@ init status url =
 -- VIEW
 
 
-children : List (Html msg)
-children =
-    [ Nav.view, Board.view, Page.view ]
+children : Page -> (Msg -> rootMsg) -> List (Html rootMsg)
+children page toRootMsg =
+    [ viewNav page, viewBoard page, viewInfo ]
+        |> List.map (Html.map toRootMsg)
+
+
+viewNav : Page -> Html Msg
+viewNav { status, route } =
+    case route of
+        NotFound ->
+            div [] [ text "Not Found Nav" ]
+
+        Home ->
+            case Status.maybeUsername status of
+                Nothing ->
+                    div [] [ text "Login?" ]
+
+                Just username ->
+                    div [] [ text (Username.toString username ++ "'s Profile") ]
+
+
+viewBoard : Page -> Html Msg
+viewBoard { route } =
+    case route of
+        NotFound ->
+            div [] [ text "NOT FOUND!" ]
+
+        Home ->
+            div [] [ text "On Develop" ]
+
+
+viewInfo : Html Msg
+viewInfo =
+    div [] [ text "I think I need new Type like \"Target\"" ]
 
 
 
@@ -48,9 +79,11 @@ type alias Msg =
     ()
 
 
-update : Msg -> Page -> ( Page, Cmd Msg )
-update _ page =
-    ( page, Cmd.none )
+update : Msg -> (Msg -> rootMsg) -> Page -> (Page -> rootModel) -> ( rootModel, Cmd rootMsg )
+update msg toRootMsg page toRootModel =
+    case msg of
+        () ->
+            ( toRootModel page, Cmd.map toRootMsg Cmd.none )
 
 
 
