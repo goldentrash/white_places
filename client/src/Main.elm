@@ -1,41 +1,90 @@
-module Main exposing (..)
+module Main exposing (main)
 
 import Browser
-import Html exposing (Html, p, text)
-import Html.Attributes exposing (class)
+import Browser.Navigation as Nav
+import Flags exposing (Flags)
+import Page exposing (Page)
+import Status
+import Url exposing (Url)
 
 
 
 -- MAIN
 
 
-main : Program () () ()
+main : Program Flags Model Msg
 main =
-    Browser.sandbox { init = init, update = update, view = view }
+    Browser.application
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = subscriptions
+        , onUrlRequest = LinkClicked
+        , onUrlChange = UrlChanged
+        }
 
 
 
 -- MODEL
 
 
-init : ()
-init =
-    ()
+type alias Model =
+    { navKey : Nav.Key
+    , page : Page
+    }
 
 
-
--- UPDATE
-
-
-update : () -> () -> ()
-update _ _ =
-    ()
+init : Flags -> Url -> Nav.Key -> ( Model, Cmd Msg )
+init flags url navKey =
+    let
+        status =
+            Status.init flags
+    in
+    ( { navKey = navKey
+      , page = Page.init status url
+      }
+    , Cmd.none
+    )
 
 
 
 -- VIEW
 
 
-view : () -> Html msg
+view : Model -> Browser.Document Msg
 view _ =
-    p [ class "colored" ] [ text "hello some text" ]
+    { title = "White Places"
+    , body = Page.children
+    }
+
+
+
+-- UPDATE
+
+
+type Msg
+    = LinkClicked Browser.UrlRequest
+    | UrlChanged Url
+    | PageMsg Page.Msg
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        UrlRequest _ ->
+            ( model, Cmd.none )
+
+        UrlChange _ ->
+            ( model, Cmd.none )
+
+        PageMsg msg ->
+            Page.update PageMsg msg model
+
+
+
+-- SUBSCRIPTION
+
+
+subscriptions : () -> Sub Msg
+subscriptions _ =
+    Sub.none

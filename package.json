@@ -6,11 +6,11 @@
   "author": "goldentrash <startoflateness@gmail.com>",
   "scripts": {
     "start:dev": "yarn run check && yarn run build && yarn netlify dev",
-    "test:unit": "yarn mocha api/test/**.spec.ts --require ts-node/register",
+    "test:unit": "yarn mocha **/*.spec.ts --require ts-node/register",
     "build": "yarn webpack",
-    "lint:api": "yarn eslint api --output-file report/lint.html --format html",
-    "format": "yarn prettier --write api && yarn run elm-format client/src --yes",
-    "check": "yarn run lint:api && yarn run test:unit && yarn run format"
+    "lint": "yarn eslint",
+    "format": "yarn prettier --write && yarn run elm-format client/src --yes",
+    "check": "yarn run lint && yarn run test:unit && yarn run format"
   },
   "dependencies": {
     "colors": "^1.4.0",

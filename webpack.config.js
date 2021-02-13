@@ -33,9 +33,6 @@ const apiConfig = {
     path: path.resolve(__dirname, 'functions'),
     libraryTarget: 'umd',
   },
-  resolve: {
-    extensions: ['.ts'],
-  },
   module: {
     rules: [
       {
@@ -53,7 +50,7 @@ const apiConfig = {
 const clientConfig = {
   ...baseConfig,
   target: 'web',
-  entry: path.resolve(__dirname, 'client', 'src', 'index.js'),
+  entry: path.resolve(__dirname, 'client', 'public', 'application.js'),
   plugins: [
     new CleanWebpackPlugin(),
     new CopyPlugin({

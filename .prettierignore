@@ -5,6 +5,3 @@ node_modules
 # Build Output
 dist
 functions
-
-# report
-report

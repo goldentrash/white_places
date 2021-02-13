@@ -8,6 +8,3 @@ functions
 
 # Local Netlify folder
 .netlify
-
-# Lint Report
-report
