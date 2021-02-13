@@ -1,3 +1,7 @@
+# cache
+elm-stuff
+node_modules
+
 # Build Output
 dist
 functions
