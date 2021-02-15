@@ -1,12 +1,11 @@
 module Main exposing (main)
 
 import Browser
-import Browser.Navigation as Nav
-import Html exposing (div)
-import Html.Attributes exposing (id)
+import Browser.Navigation as BN
+import Html
 import Json.Encode as JE
-import Page exposing (Page)
-import Status
+import Route exposing (Route)
+import Session exposing (Status)
 import Url exposing (Url)
 
 
@@ -28,22 +27,27 @@ main =
 
 
 -- MODEL
+{-
+   고민 끝에 status는 JS LocalStorage를 Subscribe해서
+   LocalStorage의 상태에 따라 Msg를 출력하도록 하기로 했다.
+   Login과정은 LocalStorage에 유저정보를 저장하고,
+   LocalSotrage의 상태가 변함에 따라 수신된 Msg를 바탕으로
+   Elm 안에서의 status를 변경하도록 한다
+-}
 
 
 type alias Model =
-    { navKey : Nav.Key
-    , page : Page
+    { bnKey : BN.Key
+    , status : Status
+    , route : Route
     }
 
 
-init : JE.Value -> Url -> Nav.Key -> ( Model, Cmd Msg )
-init flags url navKey =
-    let
-        status =
-            Status.init flags
-    in
-    ( { navKey = navKey
-      , page = Page.init status url
+init : Maybe User -> Url -> BN.Key -> ( Model, Cmd Msg )
+init maybeUser url bnKey =
+    ( { bnKey = bnKey
+      , status = Session.fromUser maybeUser
+      , route = Route.fromUrl url
       }
     , Cmd.none
     )
@@ -54,10 +58,11 @@ init flags url navKey =
 
 
 view : Model -> Browser.Document Msg
-view model =
+view { status, route } =
     { title = "White Places"
     , body =
-        [ div [ id "app" ] (Page.children model.page PageMsg)
+        [ Route.view status route
+            |> Html.map RouteMsg
         ]
     }
 
@@ -69,7 +74,7 @@ view model =
 type Msg
     = LinkClicked Browser.UrlRequest
     | UrlChanged Url
-    | PageMsg Page.Msg
+    | RouteMsg Route.Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -81,8 +86,8 @@ update msg model =
         UrlChanged _ ->
             ( model, Cmd.none )
 
-        PageMsg pageMsg ->
-            Page.update pageMsg PageMsg model.page (Model model.navKey)
+        RouteMsg _ ->
+            Route.update pageMsg RouteMsg model.page (Model model.bnKey)
 
 
 

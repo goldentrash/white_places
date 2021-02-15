@@ -1,12 +1,19 @@
-module User exposing (User)
+module User exposing (User, name, jwt)
 
-import Username exposing (Username)
+import JWT exposing (JWT)
+import Name exposing (Name)
 
 
 
 -- TYPE
 
 
-type User
-    = FollowedUser Username
-    | UnfollowedUser Username
+type User = User Name JWT
+
+-- GETTER
+
+name : User -> Name
+name (User name _) = name
+
+jwt : User -> JWT
+jwt (User _ jwt) = jwt
