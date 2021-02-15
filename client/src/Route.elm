@@ -6,6 +6,7 @@ import Session exposing (Session)
 import Url exposing (Url)
 import Url.Parser as UP
 import Name
+import Html exposing (a)
 
 
 
@@ -91,90 +92,97 @@ view detail =
 
 viewNav = div [ id "explore_nav" ][
     ul [] [
-        li [] [ text "Login" ] -- or about me (view overview. and give btn to go my page or log out)
-        li [] [ text "Help" ]
+        li [ onclick Login ] [ text "Login" ] -- or about me (view overview. and give btn to go my page or log out)
+        li [ onclick Help ] [ text "Help" ]
     ]
     hr [] []
     ul [] [
-        li [ class (isActiv url) ] [ text "Projects" ]
+        li [ class (isActiv url) ] [ a "Projects" ]
     ]
 ]
 
 
 viewNav = div [ id "userpage_nav" ][
     ul [] [
-        li [] [ text "go back Explore" ]
-        li [] [ text "Login" ] -- or about me. if user === person. this menu will be disappear
-        li [] [ text "help" ]
+        li [] [ a "go back Explore" ]
+        li [ onclick Login ] [ text "Login" ] -- or about me. if user === person. this menu will be disappear
+        li [ onclick Help ] [ text "help" ]
     ]
     hr [] []
     ul [] [
-        li [] [ b "about user" ]
-        li [ class (isActiv url) ] [ text "followers" ]
-        li [ class (isActiv url) ] [ text "followings" ]
-        li [ class (isActiv url) ] [ text "Projects" ]
-        li [ class (isActiv url) ] [ text "Opinions" ]
-        li [ class (isActiv url) ] [ text "Tasks" ]
-        li [ class (isActiv url) ] [ text "Comments" ] -- comments의 내용은 Card안에 다 들어가도록 강제 (글자수 제한). 
+        li [ onclick AboutUser ] [ b "about user" ]
+        li [ class (isActiv url) ] [ a "followers" ]
+        li [ class (isActiv url) ] [ a "followings" ]
+        li [ class (isActiv url) ] [ a "Projects" ]
+        li [ class (isActiv url) ] [ a "Opinions" ]
+        li [ class (isActiv url) ] [ a "Tasks" ]
+        li [ class (isActiv url) ] [ a "Comments" ] -- comments의 내용은 Card안에 다 들어가도록 강제 (글자수 제한). 
     ] --그래서 comments를 선택했을 땐, 옆 정보창에 어떤 "프로젝트"의 어떤 "오피니언"에 "누가" 남겼는지를 표시 ("like/dislike")
 ]
 
 viewNav = div [ id "project_nav" ][
     ul [] [
-        li [] [ text "go back explore" ]
-        li [] [ text "Login" ] -- or about me.
-        li [] [ text "help" ]
+        li [] [ a "go back explore" ]
+        li [ onclick Login ] [ text "Login" ] -- or about me.
+        li [ onclick Help ] [ text "help" ]
     ]
     hr [] []
     ul [] [
-        li [] [ b "about project" ]
-        li [ class (isActiv url) ] [ text "announcement" ]
-        li [ class (isActiv url) ] [ text "opinion" ] -- opinion클릭 시 옆 정보창엔 간단하게 표시.
-        li [ class (isActiv url) ] [ text "task" ] -- "내용", "누가", "좋아요 수", "댓글 수"
-        li [ class (isActiv url) ] [ text "contiributors" ]
+        li [ onclick AboutProject ] [ b "about project" ]
+        li [ class (isActiv url) ] [ a "announcement" ]
+        li [ class (isActiv url) ] [ a "opinion" ] -- opinion클릭 시 옆 정보창엔 간단하게 표시.
+        li [ class (isActiv url) ] [ a "task" ] -- "내용", "누가", "좋아요 수", "댓글 수"
+        li [ class (isActiv url) ] [ a "contiributors" ]
     ]
 ]
 
 viewNav = div [ id "opinion_nav" ] [
     ul [] [
-        li [] [ text "go back project" ]
-        li [] [ text "Login" ] -- or about me.
-        li [] [ text "help" ]
+        li [] [ a "go back project" ]
+        li [ onclick Login ] [ text "Login" ] -- or about me.
+        li [ onclick Help ] [ text "help" ]
     ]
     hr [] []
     ul [] [
-        li [] [ b "about opinion" ]
-        li [ class (isActiv url) ] [ text "comments" ]
+        li [ onclick AboutOpinion ] [ b "about opinion" ]
+        li [ class (isActiv url) ] [ a "comments" ]
     ]
 ]
 
 viewNav = div [ id "task_nav" ] [
     ul [] [
-        li [] [ text "go back project" ]
-        li [] [ text "Login" ] -- or about me.
-        li [] [ text "help" ]
+        li [] [ a "go back project" ]
+        li [ onclick Login ] [ text "Login" ] -- or about me.
+        li [ onclick Help ] [ text "help" ]
     ]
     hr [] []
     ul [] [
-        li [] [ b "about tasks" ]
-        li [ class (isActiv url) ] [ text "comments" ]
-        li [ class (isActiv url) ] [ text "workers" ]
-        li [ class (isActiv url) ] [ text "wating PRs" ]
+        li [ onclick AboutTask ] [ b "about tasks" ]
+        li [ class (isActiv url) ] [ a "comments" ]
+        li [ class (isActiv url) ] [ a "workers" ]
+        li [ class (isActiv url) ] [ a "wating PRs" ]
     ]
 ]
 
 -- UPDATE
 
 
-type alias Msg =
-    ()
+type Msg 
+    = Login
+    | Help
+    | AboutUser
+    | AboutProject
+    | AboutOpinion
+    | AboutTask
 
 
-update : Msg -> (Msg -> rootMsg) -> Page -> (Page -> rootModel) -> ( rootModel, Cmd rootMsg )
-update msg toRootMsg page toRootModel =
+update : Msg  -> Detail -> ( Detail, Cmd Msg )
+update msg detail =
     case msg of
-        () ->
-            ( toRootModel page, Cmd.map toRootMsg Cmd.none )
+        Login -> ( {detail | info = loginoption }, Cmd.none )
+        Help -> ( {detail | info = helpinfo }, Cmd.none )
+        AboutUser -> ( {detail | info = userloading}, getUserInfo )
+        AboutProject -> ( {detail | info = projectloading}, getProjectInfo)
 
 
 
