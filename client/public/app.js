@@ -1,4 +1,5 @@
 import { Elm } from '../src/Main.elm';
+import './app.css';
 
 const flags = {
   username: 'user',

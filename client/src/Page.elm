@@ -1,97 +1,114 @@
-module Page exposing (Msg, Page, children, init, update)
+module Page exposing (Page, details, init)
 
-import Html exposing (Html, div, text)
-import Status exposing (Status)
+import Page.Error as Error
+import Page.Explore as Explore
+import Page.Opinion as Opinion
+import Page.Project as Project
+import Page.Task as Task
+import Page.User as User
+import Skeleton
 import Url exposing (Url)
-import Url.Parser as UP
-import Username
+import Url.Parser as UP exposing ((</>), (<?>))
+import Url.Parser.Query as UPQ
 
 
 
 -- MODEL
 
 
-type alias Page =
-    { status : Status
-    , route : Route
-    }
+type Page
+    = Error
+    | Explore Explore.Model
+    | User User.Model
+    | Project Project.Model
+    | Opinion Opinion.Model
+    | Task Task.Model
 
 
-type Route
-    = NotFound
-    | Home
+init : Url -> ( Page, Cmd msg )
+init url =
+    case UP.parse urlParser url of
+        Just ( page, cmd ) ->
+            ( page, cmd )
 
-
-init : Status -> Url -> Page
-init status url =
-    { status = status
-    , route =
-        UP.parse parser url
-            |> Maybe.withDefault NotFound
-    }
+        Nothing ->
+            ( Error, Cmd.none )
 
 
 
 -- VIEW
 
 
-children : Page -> (Msg -> rootMsg) -> List (Html rootMsg)
-children page toRootMsg =
-    [ viewNav page, viewBoard page, viewInfo ]
-        |> List.map (Html.map toRootMsg)
+details : Page -> Skeleton.Details
+details page =
+    case page of
+        Error ->
+            Error.details
 
+        Explore model ->
+            Explore.details model
 
-viewNav : Page -> Html Msg
-viewNav { status, route } =
-    case route of
-        NotFound ->
-            div [] [ text "Not Found Nav" ]
+        User model ->
+            User.details model
 
-        Home ->
-            case Status.maybeUsername status of
-                Nothing ->
-                    div [] [ text "Login?" ]
+        Project model ->
+            Project.details model
 
-                Just username ->
-                    div [] [ text (Username.toString username ++ "'s Profile") ]
+        Opinion model ->
+            Opinion.details model
 
-
-viewBoard : Page -> Html Msg
-viewBoard { route } =
-    case route of
-        NotFound ->
-            div [] [ text "NOT FOUND!" ]
-
-        Home ->
-            div [] [ text "On Develop" ]
-
-
-viewInfo : Html Msg
-viewInfo =
-    div [] [ text "I think I need new Type like \"Target\"" ]
-
-
-
--- UPDATE
-
-
-type alias Msg =
-    ()
-
-
-update : Msg -> (Msg -> rootMsg) -> Page -> (Page -> rootModel) -> ( rootModel, Cmd rootMsg )
-update msg toRootMsg page toRootModel =
-    case msg of
-        () ->
-            ( toRootModel page, Cmd.map toRootMsg Cmd.none )
+        Task model ->
+            Task.details model
 
 
 
 -- PARSER
 
 
-parser : UP.Parser (Route -> a) a
-parser =
+urlParser : UP.Parser (( Page, Cmd msg ) -> a) a
+urlParser =
+    let
+        user : UP.Parser (String -> b) b
+        user =
+            UP.custom "user" Just
+
+        project : UP.Parser (String -> b) b
+        project =
+            UP.custom "project" Just
+
+        opinion : UP.Parser (String -> b) b
+        opinion =
+            UP.custom "opinion" Just
+
+        task : UP.Parser (String -> b) b
+        task =
+            UP.custom "task" Just
+
+        board : UP.Parser (String -> b) b
+        board =
+            UP.custom "board" Just
+
+        sorting : UPQ.Parser String
+        sorting =
+            UPQ.map (Maybe.withDefault "latest") <| UPQ.string "sorting"
+
+        page : UP.Parser (Maybe String -> b) b
+        page =
+            UP.fragment identity
+
+        step : (subModel -> Page) -> ( subModel, Cmd msg ) -> ( Page, Cmd msg )
+        step toPage ( model, cmd ) =
+            ( toPage model, cmd )
+    in
     UP.oneOf
-        [ UP.map Home UP.top
+        [ UP.map (step Task) <|
+            UP.map Task.init (user </> project </> task </> board <?> sorting </> page)
+        , UP.map (step Opinion) <|
+            UP.map Opinion.init (user </> project </> opinion </> board <?> sorting </> page)
+        , UP.map (step Project) <|
+            UP.map Project.init (user </> project </> board <?> sorting </> page)
+        , UP.map (step User) <|
+            UP.map User.init (user </> board <?> sorting </> page)
+        , UP.map (step Explore) <|
+            UP.map Explore.init (UP.top <?> sorting </> page)
         ]
