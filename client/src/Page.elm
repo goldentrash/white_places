@@ -1,4 +1,4 @@
-module Page exposing (..)
+module Page exposing (Page, details, init)
 
 import Page.Error as Error
 import Page.Explore as Explore
@@ -12,6 +12,10 @@ import Url.Parser as UP exposing ((</>), (<?>))
 import Url.Parser.Query as UPQ
 
 
+
+-- MODEL
+
+
 type Page
     = Error
     | Explore Explore.Model
@@ -19,6 +23,20 @@ type Page
     | Project Project.Model
     | Opinion Opinion.Model
     | Task Task.Model
+
+
+init : Url -> ( Page, Cmd msg )
+init url =
+    case UP.parse urlParser url of
+        Just ( page, cmd ) ->
+            ( page, cmd )
+
+        Nothing ->
+            ( Error, Cmd.none )
+
+
+
+-- VIEW
 
 
 details : Page -> Skeleton.Details
@@ -43,19 +61,8 @@ details page =
             Task.details model
 
 
-init : Url -> ( Page, Cmd msg )
-init url =
-    case UP.parse urlParser url of
-        Just ( page, cmd ) ->
-            ( page, cmd )
 
-        Nothing ->
-            ( Error, Cmd.none )
-
-
-step : (subModel -> Page) -> ( subModel, Cmd msg ) -> ( Page, Cmd msg )
-step toPage ( model, cmd ) =
-    ( toPage model, cmd )
+-- PARSER
 
 
 urlParser : UP.Parser (( Page, Cmd msg ) -> a) a
@@ -88,6 +95,10 @@ urlParser =
         page : UP.Parser (Maybe String -> b) b
         page =
             UP.fragment identity
+
+        step : (subModel -> Page) -> ( subModel, Cmd msg ) -> ( Page, Cmd msg )
+        step toPage ( model, cmd ) =
+            ( toPage model, cmd )
     in
     UP.oneOf
         [ UP.map (step Task) <|
@@ -99,5 +110,5 @@ urlParser =
         , UP.map (step User) <|
             UP.map User.init (user </> board <?> sorting </> page)
         , UP.map (step Explore) <|
-            UP.map Explore.init (UP.top </> board <?> sorting </> page)
+            UP.map Explore.init (UP.top <?> sorting </> page)
         ]

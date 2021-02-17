@@ -1,18 +1,8 @@
-module Skeleton exposing (..)
+module Skeleton exposing (BoardItem, BoardTab, Details, NavItem, Page, view)
 
 import Browser
 import Html exposing (Html)
 import Html.Attributes as Attr
-
-
-type alias Details =
-    { current : String
-    , ancestors : List NavItem
-    , children : List NavItem
-    , boardTabs : List BoardTab
-    , boardItems : List BoardItem
-    , page : Page
-    }
 
 
 
@@ -33,74 +23,137 @@ type alias Details =
 -}
 
 
-type alias NavItem =
-    { text : String, isCurrent : Bool, url : String }
+type alias Details =
+    { current : String
 
+    -- nav details
+    , ancestors : List NavItem
+    , children : List NavItem
 
-type alias BoardTab =
-    { text : String, isCurrent : Bool, url : String }
+    -- board details
+    , boardTabs : List BoardTab
+    , boardItems : List BoardItem
 
-
-type alias BoardItem =
-    ()
-
-
-type alias Page =
-    ()
+    -- page details
+    -- 어쩌면 여기에 type var을 사용해야 할 수도 있다
+    -- 버튼이 존재할 것이기에...
+    , page : Page
+    }
 
 
 view : Details -> Browser.Document msg
 view details =
     { title = details.current
     , body =
-        [ Html.div [ Attr.id "app" ]
+        [ Html.div
+            [ Attr.id "app"
+            , Attr.class "flex-column-container"
+            ]
             [ viewSidebar details
             , viewBoard details
-            , viewPage details.page
+            , viewPage details
             ]
         ]
     }
 
 
-viewSidebar : Details -> Html msg
-viewSidebar { current, ancestors, children } =
+
+-- SIDEBAR
+
+
+type alias NavItem =
+    { text : String, isSelected : Bool, url : String }
+
+
+viewNav : Details -> Html msg
+viewNav { ancestors, children } =
     let
         navLink : NavItem -> Html msg
-        navLink { text, url, isCurrent } =
-            Html.a [ Attr.href url, Attr.classList [ ( "selected", isCurrent ) ] ] [ Html.text text ]
+        navLink { text, url, isSelected } =
+            Html.a
+                [ Attr.href url
+                , Attr.class "nav-item"
+                , Attr.classList [ ( "selected", isSelected ) ]
+                ]
+                [ Html.text text ]
     in
-    Html.div [ Attr.id "sidebar" ]
-        [ Html.header []
-            [ Html.img [ Attr.src "favicon.png" ] []
-            , Html.h2 [] [ Html.text current ]
+    if List.isEmpty children then
+        Html.nav []
+            [ Html.ul [ Attr.id "nav-ancestor" ] <|
+                {- userpageLink user :: -} List.map navLink ancestors
             ]
-        , Html.ul [] <|
-            {- userpageLink user :: -} List.map navLink ancestors
-        , Html.hr
-            []
-            []
-        , Html.ul [] <|
-            List.map navLink children
+
+    else
+        Html.nav []
+            [ Html.ul [ Attr.id "nav-ancestor" ] <|
+                {- userpageLink user :: -} List.map navLink ancestors
+            , Html.hr [] []
+            , Html.ul [ Attr.id "nav-children" ] <|
+                List.map navLink children
+            ]
+
+
+viewSidebar : Details -> Html msg
+viewSidebar details =
+    Html.div
+        [ Attr.id "sidebar"
+        , Attr.class "flex-column-20"
         ]
+        [ Html.div [ Attr.id "title" ]
+            [ Html.h2 []
+                [ Html.img [ Attr.src "favicon.png" ] []
+                , Html.text details.current
+                ]
+            ]
+        , viewNav details
+        ]
+
+
+
+-- BOARD
+
+
+type alias BoardTab =
+    { text : String, isSelected : Bool, url : String }
+
+
+type alias BoardItem =
+    ()
 
 
 viewBoard : Details -> Html msg
 viewBoard { boardTabs, boardItems } =
     let
         boardTab : BoardTab -> Html msg
-        boardTab tab =
-            Html.a [ Attr.href tab.url ] [ Html.text tab.text ]
+        boardTab { text, isSelected, url } =
+            Html.a
+                [ Attr.href url
+                , Attr.class "board-tab"
+                , Attr.classList [ ( "selected", isSelected ) ]
+                ]
+                [ Html.text text ]
 
         boardItem : BoardItem -> Html msg
         boardItem _ =
-            Html.div [] []
+            Html.div [ Attr.class "board-item flex-board-item" ] []
     in
-    Html.div [ Attr.id "board" ]
-        [ Html.header [] <| List.map boardTab boardTabs
+    Html.div
+        [ Attr.id "board"
+        , Attr.class "flex-column-auto flex-board-container"
+        ]
+        [ Html.div [ Attr.id "tabs" ] <| List.map boardTab boardTabs
         , Html.div [ Attr.id "items" ] <| List.map boardItem boardItems
         ]
 
 
-viewPage : Page -> Html msg
+
+-- PAGE
+
+
+type alias Page =
+    ()
+
+
+viewPage : Details -> Html msg
 viewPage _ =
     Html.div [ Attr.id "page" ] []

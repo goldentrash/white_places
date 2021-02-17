@@ -1,4 +1,4 @@
-module Page.User exposing (..)
+module Page.User exposing (Model, details, init)
 
 import Skeleton
 import Url.Builder as UB
@@ -6,19 +6,21 @@ import Url.Builder as UB
 
 type alias Model =
     { user : String
-    , board : String
-    , tab : String
-    , boardItems : List Skeleton.BoardItem
+    , currBoard : String
+    , currTab : String
+    , items : List Skeleton.BoardItem
+    , anchor : Maybe String
     , page : Skeleton.Page
     }
 
 
 init : String -> String -> String -> Maybe String -> ( Model, Cmd msg )
-init user board sorting page =
+init user currBoard currTab anchor =
     ( { user = user
-      , board = board
-      , tab = sorting
-      , boardItems = []
+      , currBoard = currBoard
+      , currTab = currTab
+      , items = []
+      , anchor = anchor
       , page = ()
       }
     , Cmd.none
@@ -31,22 +33,22 @@ details model =
         ancestors : List Skeleton.NavItem
         ancestors =
             [ { text = "Back to Explore"
-              , isCurrent = False
+              , isSelected = False
               , url = UB.relative [] [ UB.string "sorting" "latest" ]
               }
             ]
 
-        children : String -> String -> String -> List Skeleton.NavItem
-        children user board tab =
+        children : Model -> List Skeleton.NavItem
+        children { user, currBoard, currTab } =
             [ { text = "Projects"
-              , isCurrent = board == "projects"
-              , url = UB.relative [ user, "projects" ] [ UB.string "sorting" tab ]
+              , isSelected = currBoard == "projects"
+              , url = UB.relative [ user, "projects" ] [ UB.string "sorting" currTab ]
               }
             ]
     in
     { current = model.user
     , ancestors = ancestors
-    , children = children model.user model.board model.tab
+    , children = children model
     , boardTabs = []
     , boardItems = []
     , page = ()

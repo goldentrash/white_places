@@ -64,6 +64,7 @@ const clientConfig = {
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
+      chunkFilename: '[name].css',
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'client', 'public', 'index.html'),

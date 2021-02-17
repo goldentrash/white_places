@@ -1,8 +1,7 @@
-module Main exposing (..)
+module Main exposing (Msg, main)
 
 import Browser
 import Browser.Navigation as Nav
-import Dict exposing (update)
 import Page exposing (Page)
 import Skeleton
 import Url exposing (Url)
@@ -15,33 +14,19 @@ main =
         , view = view
         , update = update
         , subscriptions = subscriptions
-        , onUrlChange = UrlChanged
         , onUrlRequest = LinkClicked
+        , onUrlChange = UrlChanged
         }
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        _ ->
-            ( model, Cmd.none )
 
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.none
+-- MODEL
 
 
 type alias Model =
     { navKey : Nav.Key
     , page : Page
     }
-
-
-type Msg
-    = Login
-    | LinkClicked Browser.UrlRequest
-    | UrlChanged Url
 
 
 init : () -> Url -> Nav.Key -> ( Model, Cmd Msg )
@@ -53,10 +38,39 @@ init _ url navKey =
     ( { navKey = navKey
       , page = page
       }
-    , Cmd.none
+    , cmd
     )
+
+
+
+-- UPDATE
+
+
+type Msg
+    = LinkClicked Browser.UrlRequest
+    | UrlChanged Url
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        _ ->
+            ( model, Cmd.none )
+
+
+
+-- VIEW
 
 
 view : Model -> Browser.Document Msg
 view { page } =
     Skeleton.view <| Page.details page
+
+
+
+-- SUBSCRIPTION
+
+
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+    Sub.none

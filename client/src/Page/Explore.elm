@@ -1,22 +1,21 @@
-module Page.Explore exposing (..)
+module Page.Explore exposing (Model, details, init)
 
 import Skeleton
-import Url.Builder as UB
 
 
 type alias Model =
-    { board : String
-    , tab : String
-    , boardItems : List Skeleton.BoardItem
+    { currTab : String
+    , items : List Skeleton.BoardItem
+    , anchor : Maybe String
     , page : Skeleton.Page
     }
 
 
-init : String -> String -> Maybe String -> ( Model, Cmd msg )
-init board sorting targetPage =
-    ( { board = board
-      , tab = sorting
-      , boardItems = []
+init : String -> Maybe String -> ( Model, Cmd msg )
+init currTab anchor =
+    ( { currTab = currTab
+      , items = []
+      , anchor = anchor
       , page = ()
       }
     , Cmd.none
@@ -24,19 +23,10 @@ init board sorting targetPage =
 
 
 details : Model -> Skeleton.Details
-details model =
-    let
-        children : String -> String -> List Skeleton.NavItem
-        children board tab =
-            [ { text = "Projects"
-              , isCurrent = board == "projects"
-              , url = UB.relative [ "projects" ] [ UB.string "sorting" tab ]
-              }
-            ]
-    in
+details _ =
     { current = "White Places"
     , ancestors = []
-    , children = children model.board model.tab
+    , children = []
     , boardTabs = []
     , boardItems = []
     , page = ()
