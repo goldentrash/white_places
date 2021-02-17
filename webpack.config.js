@@ -1,32 +1,14 @@
 const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-
-const baseConfig = {
-  mode: 'production',
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          format: {
-            comments: false,
-          },
-        },
-        extractComments: false,
-      }),
-    ],
-  },
-  resolve: {
-    extensions: ['.ts', '.js'],
-  },
-};
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const apiConfig = {
-  ...baseConfig,
+  mode: 'production',
   target: 'node',
   externals: [nodeExternals()],
   entry: path.resolve(__dirname, 'api', 'handler.ts'),
@@ -35,6 +17,9 @@ const apiConfig = {
     filename: 'graphql.js',
     path: path.resolve(__dirname, 'functions'),
     libraryTarget: 'umd',
+  },
+  resolve: {
+    extensions: ['.ts'],
   },
   module: {
     rules: [
@@ -48,30 +33,41 @@ const apiConfig = {
       },
     ],
   },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+    ],
+  },
 };
 
 const clientConfig = {
-  ...baseConfig,
+  mode: 'production',
   target: 'web',
-  entry: path.resolve(__dirname, 'client', 'public', 'application.js'),
+  entry: path.resolve(__dirname, 'client', 'public', 'app.js'),
   plugins: [
     new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [
-        {
-          from: path.resolve(__dirname, 'client', 'public', '*.css'),
-          to: path.resolve(__dirname, 'dist', '[name].[ext]'),
-        },
         {
           from: path.resolve(__dirname, 'client', 'public', '*.png'),
           to: path.resolve(__dirname, 'dist', '[name].[ext]'),
         },
       ],
     }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+    }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'client', 'public', 'index.html'),
       showErrors: false,
-      inject: 'body',
     }),
   ],
   output: {
@@ -88,8 +84,34 @@ const clientConfig = {
         ],
         use: 'elm-webpack-loader',
       },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
     ],
     noParse: [/\.elm$/],
+  },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+      new CssMinimizerPlugin({
+        minimizerOptions: {
+          preset: [
+            'default',
+            {
+              discardComments: { removeAll: true },
+            },
+          ],
+        },
+      }),
+    ],
   },
 };
 

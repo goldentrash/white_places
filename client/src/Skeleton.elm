@@ -15,6 +15,24 @@ type alias Details =
     }
 
 
+
+{-
+   nav와 board는 각 페이지에 고유하다
+   물론, 유저와 프로젝트에서 오피니언과 테스크가 겹치긴 하나
+   그 부분을 제외하면 모든 보드는 페이지에 고유하다
+   또한 겹치는 이 부분도, 추후 얼마든지 변경될수 잇다
+
+
+   그러하면, 겹치는 유일한 부분은 페이지가 된다
+   이 페이지는 서버로부터 받아온 상세 페이지이며,
+   데이터를 출력, 혹은 수정하는 부분이기 때문에,
+   페이지와 보드에 자유롭다
+   그 어떤 데이터라도 존재할수 있는 것이다
+   그렇다면, 인포를 구성하는것은 이곳 혹은 다른 모듈이 되어야 할 것이다
+
+-}
+
+
 type alias NavItem =
     { text : String, isCurrent : Bool, url : String }
 
@@ -79,10 +97,10 @@ viewBoard { boardTabs, boardItems } =
     in
     Html.div [ Attr.id "board" ]
         [ Html.header [] <| List.map boardTab boardTabs
-        , Html.div [] <| List.map boardItem boardItems
+        , Html.div [ Attr.id "items" ] <| List.map boardItem boardItems
         ]
 
 
 viewPage : Page -> Html msg
 viewPage _ =
-    Html.article [] []
+    Html.div [ Attr.id "page" ] []
