@@ -25,8 +25,7 @@ init currTab anchor =
 details : Model -> Skeleton.Details
 details _ =
     { current = "White Places"
-    , ancestors = []
-    , children = []
+    , navSections = []
     , boardTabs = []
     , boardItems = []
     , page = ()

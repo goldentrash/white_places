@@ -1,8 +1,9 @@
-module Skeleton exposing (BoardItem, BoardTab, Details, NavItem, Page, view)
+module Skeleton exposing (BoardItem, BoardTab, Details, NavItem, NavSection, Page, view)
 
 import Browser
 import Html exposing (Html)
 import Html.Attributes as Attr
+import Url.Builder as UB
 
 
 
@@ -24,11 +25,9 @@ import Html.Attributes as Attr
 
 
 type alias Details =
-    { current : String
-
-    -- nav details
-    , ancestors : List NavItem
-    , children : List NavItem
+    { -- nav details
+      current : String
+    , navSections : List NavSection
 
     -- board details
     , boardTabs : List BoardTab
@@ -49,7 +48,7 @@ view details =
             [ Attr.id "app"
             , Attr.class "flex-column-container"
             ]
-            [ viewSidebar details
+            [ viewNav details
             , viewBoard details
             , viewPage details
             ]
@@ -65,48 +64,58 @@ type alias NavItem =
     { text : String, isSelected : Bool, url : String }
 
 
+type alias NavSection =
+    { name : String, items : List NavItem }
+
+
 viewNav : Details -> Html msg
-viewNav { ancestors, children } =
+viewNav { current, navSections } =
     let
-        navLink : NavItem -> Html msg
-        navLink { text, url, isSelected } =
-            Html.a
-                [ Attr.href url
-                , Attr.class "nav-item"
-                , Attr.classList [ ( "selected", isSelected ) ]
+        navSection : NavSection -> Html msg
+        navSection { name, items } =
+            let
+                navLink : NavItem -> Html msg
+                navLink { text, url, isSelected } =
+                    Html.li []
+                        [ Html.a
+                            [ Attr.href url
+                            , Attr.class "nav-item"
+                            , Attr.classList [ ( "selected", isSelected ) ]
+                            ]
+                            [ Html.text text ]
+                        ]
+            in
+            Html.div [ Attr.class "nav-section" ]
+                [ Html.span
+                    [ Attr.class "nav-section-title"
+                    ]
+                    [ Html.b [] [ Html.text name ]
+                    ]
+                , Html.ul [] <| List.map navLink items
                 ]
-                [ Html.text text ]
+
+        navBrand : Html msg
+        navBrand =
+            Html.div [ Attr.id "nav-brand" ]
+                [ Html.a
+                    [ Attr.href <| UB.absolute [] []
+                    ]
+                    [ Html.text current
+                    ]
+                ]
+
+        sections : List (Html msg)
+        sections =
+            navSections
+                |> List.map navSection
     in
-    if List.isEmpty children then
-        Html.nav []
-            [ Html.ul [ Attr.id "nav-ancestor" ] <|
-                {- userpageLink user :: -} List.map navLink ancestors
-            ]
-
-    else
-        Html.nav []
-            [ Html.ul [ Attr.id "nav-ancestor" ] <|
-                {- userpageLink user :: -} List.map navLink ancestors
-            , Html.hr [] []
-            , Html.ul [ Attr.id "nav-children" ] <|
-                List.map navLink children
-            ]
-
-
-viewSidebar : Details -> Html msg
-viewSidebar details =
-    Html.div
+    Html.nav
         [ Attr.id "sidebar"
-        , Attr.class "flex-column-20"
+        , Attr.class "flex-column-fixed"
         ]
-        [ Html.div [ Attr.id "title" ]
-            [ Html.h2 []
-                [ Html.img [ Attr.src "favicon.png" ] []
-                , Html.text details.current
-                ]
-            ]
-        , viewNav details
-        ]
+    <|
+        navBrand
+            :: sections
 
 
 
@@ -156,4 +165,8 @@ type alias Page =
 
 viewPage : Details -> Html msg
 viewPage _ =
-    Html.div [ Attr.id "page" ] []
+    Html.div
+        [ Attr.id "page"
+        , Attr.class "flex-column-fixed"
+        ]
+        []

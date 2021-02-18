@@ -30,11 +30,11 @@ init user currBoard currTab anchor =
 details : Model -> Skeleton.Details
 details model =
     let
-        ancestors : List Skeleton.NavItem
-        ancestors =
+        basicNavs : List Skeleton.NavItem
+        basicNavs =
             [ { text = "Back to Explore"
               , isSelected = False
-              , url = UB.relative [] [ UB.string "sorting" "latest" ]
+              , url = UB.absolute [] []
               }
             ]
 
@@ -42,13 +42,27 @@ details model =
         children { user, currBoard, currTab } =
             [ { text = "Projects"
               , isSelected = currBoard == "projects"
-              , url = UB.relative [ user, "projects" ] [ UB.string "sorting" currTab ]
+              , url = UB.absolute [ user, "projects" ] [ UB.string "sorting" currTab ]
+              }
+            , { text = "Followers"
+              , isSelected = currBoard == "followers"
+              , url = UB.absolute [ user, "followers" ] [ UB.string "sorting" currTab ]
+              }
+            , { text = "Followings"
+              , isSelected = currBoard == "followings"
+              , url = UB.absolute [ user, "followings" ] [ UB.string "sorting" currTab ]
               }
             ]
     in
     { current = model.user
-    , ancestors = ancestors
-    , children = children model
+    , navSections =
+        [ { name = "basics"
+          , items = basicNavs
+          }
+        , { name = "children"
+          , items = children model
+          }
+        ]
     , boardTabs = []
     , boardItems = []
     , page = ()

@@ -6,14 +6,21 @@ import Url.Builder as UB
 
 details : Skeleton.Details
 details =
+    let
+        basicNavs : List Skeleton.NavItem
+        basicNavs =
+            [ { text = "Back to Explore"
+              , isSelected = False
+              , url = UB.absolute [] []
+              }
+            ]
+    in
     { current = "Error!"
-    , ancestors =
-        [ { text = "Back to Explore"
-          , isSelected = False
-          , url = UB.relative [] [ UB.string "sorting" "latest" ]
+    , navSections =
+        [ { name = "basics"
+          , items = basicNavs
           }
         ]
-    , children = []
     , boardTabs = []
     , boardItems = []
     , page = ()
