@@ -33,8 +33,7 @@ init user project opinion currBoard currTab anchor =
 details : Model -> Skeleton.Details
 details model =
     { current = model.opinion
-    , ancestors = []
-    , children = []
+    , navSections = []
     , boardTabs = []
     , boardItems = []
     , page = ()

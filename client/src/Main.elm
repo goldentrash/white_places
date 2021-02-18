@@ -54,8 +54,28 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        _ ->
-            ( model, Cmd.none )
+        LinkClicked link ->
+            case link of
+                Browser.Internal url ->
+                    ( model
+                    , Nav.pushUrl model.navKey <| Url.toString url
+                    )
+
+                Browser.External url ->
+                    ( model
+                    , Nav.load url
+                    )
+
+        UrlChanged url ->
+            let
+                ( page, cmd ) =
+                    Page.init url
+            in
+            ( { model
+                | page = page
+              }
+            , cmd
+            )
 
 
 

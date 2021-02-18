@@ -31,8 +31,7 @@ init user project currBoard currTab anchor =
 details : Model -> Skeleton.Details
 details model =
     { current = model.project
-    , ancestors = []
-    , children = []
+    , navSections = []
     , boardTabs = []
     , boardItems = []
     , page = ()
