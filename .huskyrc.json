@@ -1,6 +1,6 @@
 {
   "hooks": {
-    "prepare-commit-msg": "if git-branch-is --quiet master; then yarn run check; else echo \"not on master. skip checking\"; fi",
+    "prepare-commit-msg": "if git-branch-is --quiet master; then yarn run prepare; else echo \"not on master. skip checking\"; fi",
     "pre-rebase": "exit 1"
   }
 }
