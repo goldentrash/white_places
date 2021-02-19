@@ -7,7 +7,7 @@
   "author": "goldentrash <startoflateness@gmail.com>",
   "scripts": {
     "start:dev": "yarn run lint && yarn run format && yarn run build && yarn netlify dev",
-    "build": "yarn webpack",
+    "build": "yarn run gql && yarn webpack",
     "lint": "yarn eslint",
     "format": "yarn prettier --write .",
     "gql": "yarn ts-node ./api/schemaGenerator.ts"
