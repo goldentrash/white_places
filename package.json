@@ -6,11 +6,12 @@
   "repository": "https://github.com/goldentrash/netlify_test.git",
   "author": "goldentrash <startoflateness@gmail.com>",
   "scripts": {
-    "start:dev": "yarn run lint && yarn run format && yarn run build && yarn netlify dev",
-    "build": "yarn run gql && yarn webpack",
+    "start:dev": "yarn run build && yarn netlify dev",
+    "build": "yarn run prebuild && yarn webpack",
     "lint": "yarn eslint",
     "format": "yarn prettier --write .",
-    "gql": "yarn ts-node ./api/schemaGenerator.ts"
+    "gql": "yarn ts-node ./api/schemaGenerator.ts",
+    "prebuild": "yarn run lint && yarn run format && yarn run gql"
   },
   "dependencies": {
     "@types/aws-lambda": "^8.10.72",
