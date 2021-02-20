@@ -8,4 +8,6 @@ const flags = {
 };
 
 const App = Elm.Main.init({ flags });
+
+// App will be used for send, subscript with Elm Application
 App;
