@@ -2,5 +2,8 @@
 elm-stuff
 node_modules
 
+# auto generated
+src/Api/
+
 # Build Output
 dist
