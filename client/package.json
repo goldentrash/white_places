@@ -10,7 +10,7 @@
   "scripts": {
     "build": "yarn webpack",
     "gql": "yarn elm-graphql https://test-white-places.netlify.app/.netlify/functions/graphql",
-    "prebuild": "yarn run gql && yarn lint-staged"
+    "prebuild": "yarn run gql && yarn lint-staged --debug"
   },
   "dependencies": {},
   "devDependencies": {
