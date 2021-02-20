@@ -1,0 +1,6 @@
+{
+  "hooks": {
+    "pre-commit": "yarn run lint-staged && yarn --cwd client run lint-staged && yarn --cwd api run lint-staged",
+    "pre-rebase": "exit 1"
+  }
+}

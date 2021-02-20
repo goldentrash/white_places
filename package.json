@@ -5,7 +5,7 @@
   "repository": "https://github.com/goldentrash/netlify_test.git",
   "author": "goldentrash <startoflateness@gmail.com>",
   "lint-staged": {
-    "*.{json, toml}": "yarn prettier --write"
+    "./*.{json, toml}": "yarn prettier --write"
   },
   "scripts": {
     "install:all": "yarn install && yarn --cwd client install && yarn --cwd api install",
