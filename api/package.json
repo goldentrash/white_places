@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "yarn webpack",
-    "prebuild": "yarn lint-staged"
+    "prebuild": "yarn lint-staged --verbose"
   },
   "dependencies": {
     "apollo-server-lambda": "^2.21.0",
