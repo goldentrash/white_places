@@ -5,14 +5,12 @@
   "repository": "https://github.com/goldentrash/netlify_test.git",
   "author": "goldentrash <startoflateness@gmail.com>",
   "lint-staged": {
-    "*": "yarn run check"
+    "*.{json, toml}": "yarn prettier --write"
   },
   "scripts": {
     "install:all": "yarn install && yarn --cwd client install && yarn --cwd api install",
     "start:dev": "yarn run build && yarn netlify dev",
-    "build": "yarn --cwd client run build && yarn --cwd api run build",
-    "format": "yarn prettier --write .",
-    "check": "yarn run format && yarn --cwd client run check && yarn --cwd api run check"
+    "build": "yarn --cwd client run build && yarn --cwd api run build"
   },
   "dependencies": {},
   "devDependencies": {

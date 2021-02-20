@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "author": "goldentrash <startoflateness@gmail.com>",
+  "lint-staged": {
+    "*.js": "yarn eslint",
+    "*.{json, js, elm, html, css}": "yarn prettier --write"
+  },
   "scripts": {
     "build": "yarn webpack",
-    "lint": "yarn eslint",
-    "format": "yarn prettier --write .",
-    "check": "yarn run lint && yarn run format",
     "gql": "yarn elm-graphql https://test-white-places.netlify.app/.netlify/functions/graphql",
-    "prebuild": "yarn run gql && yarn run check"
+    "prebuild": "yarn run gql && yarn lint-staged"
   },
   "dependencies": {},
   "devDependencies": {
@@ -25,6 +26,7 @@
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^7.2.0",
     "html-webpack-plugin": "^5.0.0",
+    "lint-staged": "^10.5.4",
     "mini-css-extract-plugin": "^1.3.7",
     "prettier": "^2.2.1",
     "prettier-plugin-elm": "^0.7.0",

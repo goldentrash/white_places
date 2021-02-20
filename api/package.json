@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "author": "goldentrash <startoflateness@gmail.com>",
+  "lint-staged": {
+    "*.ts": "yarn eslint",
+    "*.{json, ts, js}": "yarn prettier --write"
+  },
   "scripts": {
     "build": "yarn webpack",
-    "lint": "yarn eslint",
-    "format": "yarn prettier --write .",
-    "check": "yarn run lint && yarn run format",
-    "prebuild": "yarn run check"
+    "prebuild": "yarn lint-staged"
   },
   "dependencies": {
     "apollo-server-lambda": "^2.21.0",
@@ -24,6 +25,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^7.2.0",
+    "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
     "ts-loader": "^8.0.15",
     "ts-node": "^9.1.1",

@@ -1,6 +1,6 @@
 {
   "hooks": {
-    "prepare-commit": "yarn run lint-staged",
+    "pre-commit": "yarn run lint-staged",
     "pre-rebase": "exit 1"
   }
 }
