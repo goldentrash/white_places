@@ -1,6 +1,6 @@
 # Pakcage Cache
-node_modules
-elm-stuff
+/node_modules
+/elm-stuff
 
 # Build Output directory
-dist
+/dist

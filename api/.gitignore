@@ -1,5 +1,5 @@
 # Pakcage Cache
-node_modules
+/node_modules
 
 # Build Output directory
-functions
+/functions
