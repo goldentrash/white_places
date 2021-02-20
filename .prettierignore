@@ -1,8 +1,7 @@
 # cache
 node_modules
-elm-stuff
 
-# nested projects's
-dist
-functions
+# nested projects
+api
+client
 db
