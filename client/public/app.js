@@ -8,3 +8,4 @@ const flags = {
 };
 
 const App = Elm.Main.init({ flags });
+App;
