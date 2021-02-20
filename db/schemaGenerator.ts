@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { buildSchemaSync } from 'type-graphql';
-import { QueryResolver, ProjectResolver } from './resolver';
+import { QueryResolver, ProjectResolver } from '../api/src/resolver';
 import path from 'path';
 
 buildSchemaSync({

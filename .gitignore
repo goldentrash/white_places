@@ -1,10 +1,5 @@
 # Pakcage Cache
 node_modules
-elm-stuff
-
-# Build Output directory
-dist
-functions
 
 # Local Netlify folder
 .netlify

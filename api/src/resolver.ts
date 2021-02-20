@@ -1,6 +1,6 @@
 import { Resolver, Query, FieldResolver, Root } from 'type-graphql';
 import { Project } from './types';
-import { projectList } from './fakeDB';
+import { projectList } from '../../db/fakeDB';
 
 @Resolver()
 export class QueryResolver {

@@ -1,0 +1,8 @@
+# cache
+node_modules
+
+# config
+webpack.config.js
+
+# build output
+functions

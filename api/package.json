@@ -1,0 +1,35 @@
+{
+  "name": "white_places_api",
+  "version": "1.0.0",
+  "private": true,
+  "author": "goldentrash <startoflateness@gmail.com>",
+  "scripts": {
+    "build": "yarn webpack",
+    "lint": "yarn eslint",
+    "format": "yarn prettier --write .",
+    "check": "yarn run lint && yarn run format",
+    "prebuild": "yarn run check"
+  },
+  "dependencies": {
+    "apollo-server-lambda": "^2.21.0",
+    "class-validator": "^0.13.1",
+    "graphql": "^15.5.0",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.72",
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
+    "@typescript-eslint/parser": "^4.14.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "eslint": "^7.19.0",
+    "eslint-config-prettier": "^7.2.0",
+    "prettier": "^2.2.1",
+    "ts-loader": "^8.0.15",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3",
+    "webpack": "^5.20.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-node-externals": "^2.5.2"
+  }
+}
