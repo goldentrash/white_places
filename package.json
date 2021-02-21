@@ -1,54 +1,23 @@
 {
   "name": "white_places",
   "version": "1.0.0",
-  "main": "index.js",
   "private": true,
   "repository": "https://github.com/goldentrash/netlify_test.git",
   "author": "goldentrash <startoflateness@gmail.com>",
+  "lint-staged": {
+    "./*.{json, toml}": "yarn prettier --write"
+  },
   "scripts": {
+    "install:all": "yarn install && yarn --cwd client install && yarn --cwd api install",
     "start:dev": "yarn run build && yarn netlify dev",
-    "build": "yarn run prebuild && yarn webpack",
-    "lint": "yarn eslint",
-    "format": "yarn prettier --write .",
-    "gql": "yarn ts-node ./api/schemaGenerator.ts",
-    "prebuild": "yarn run lint && yarn run format && yarn run gql"
+    "build": "yarn --cwd client run build && yarn --cwd api run build"
   },
-  "dependencies": {
-    "@types/aws-lambda": "^8.10.72",
-    "apollo-server-lambda": "^2.21.0",
-    "class-validator": "^0.13.1",
-    "colors": "^1.4.0",
-    "graphql": "^15.5.0",
-    "reflect-metadata": "^0.1.13",
-    "type-graphql": "^1.1.1"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@dillonkearns/elm-graphql": "^4.2.0",
-    "@typescript-eslint/eslint-plugin": "^4.14.2",
-    "@typescript-eslint/parser": "^4.14.2",
-    "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^7.0.0",
-    "css-loader": "^5.0.2",
-    "css-minimizer-webpack-plugin": "^1.2.0",
-    "elm": "^0.19.1-5",
-    "elm-format": "^0.8.5",
-    "elm-test": "^0.19.1-revision6",
-    "elm-webpack-loader": "^7.0.1",
-    "eslint": "^7.19.0",
-    "eslint-config-prettier": "^7.2.0",
-    "git-branch-is": "^4.0.0",
-    "html-webpack-plugin": "^5.0.0",
     "husky": "^4.3.8",
-    "mini-css-extract-plugin": "^1.3.7",
+    "lint-staged": "^10.5.4",
     "netlify-cli": "2.54.0",
     "prettier": "^2.2.1",
-    "prettier-plugin-elm": "^0.7.0",
-    "prettier-plugin-toml": "^0.3.1",
-    "ts-loader": "^8.0.15",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.1.3",
-    "webpack": "^5.20.2",
-    "webpack-cli": "^4.5.0",
-    "webpack-node-externals": "^2.5.2"
+    "prettier-plugin-toml": "^0.3.1"
   }
 }

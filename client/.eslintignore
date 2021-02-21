@@ -3,8 +3,7 @@ elm-stuff
 node_modules
 
 # config
-webpack.config.js
+*.config.js
 
 # build output
-functions
 dist

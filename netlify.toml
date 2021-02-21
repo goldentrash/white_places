@@ -1,7 +1,7 @@
 [build]
 command = "yarn run build"
-publish = "dist"
-functions = "functions"
+publish = "client/dist"
+functions = "api/functions"
 
 [[redirects]]
 from = "/*"

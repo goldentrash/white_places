@@ -1,0 +1,8 @@
+# cache
+node_modules
+
+# config
+*.config.js
+
+# build output
+functions
