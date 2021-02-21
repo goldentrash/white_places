@@ -4,8 +4,11 @@
   "private": true,
   "author": "goldentrash <startoflateness@gmail.com>",
   "lint-staged": {
-    "*.js": "yarn eslint",
-    "*.{json, js, elm, html, css}": "yarn prettier --write"
+    "*.js": [
+      "yarn eslint",
+      "yarn prettier --write"
+    ],
+    "*.{json, elm, html, css}": "yarn prettier --write"
   },
   "scripts": {
     "build": "yarn webpack",
