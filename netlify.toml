@@ -1,5 +1,5 @@
 [build]
-command = "yarn run build"
+command = "yarn run install:all && yarn run build"
 publish = "client/dist"
 functions = "api/functions"
 
