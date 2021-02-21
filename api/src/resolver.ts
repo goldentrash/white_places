@@ -1,19 +1,14 @@
-import { Resolver, Query, FieldResolver, Root } from 'type-graphql';
-import { Project } from './types';
-import { projectList } from '../../db/fakeDB';
+const fakeDB = [{ title: '111', summary: 'asdfasdf' }];
 
-@Resolver()
-export class QueryResolver {
-  @Query((returns) => [Project])
-  projects() {
-    return projectList;
-  }
+interface Project {
+  title: string;
+  summary: string;
 }
 
-@Resolver((of) => Project)
-export class ProjectResolver {
-  @FieldResolver((returns) => String!)
-  titleAndSummary(@Root() project: Project) {
-    return project.name + ' ++ ' + project.summary;
-  }
-}
+export const resolvers = {
+  Query: {
+    projects(): Project[] {
+      return fakeDB;
+    },
+  },
+};

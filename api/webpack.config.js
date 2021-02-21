@@ -1,9 +1,9 @@
-import path from 'path';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import nodeExternals from 'webpack-node-externals';
-import TerserPlugin from 'terser-webpack-plugin';
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
+const TerserPlugin = require('terser-webpack-plugin');
 
-export default {
+module.exports = {
   mode: 'production',
   target: 'node',
   externals: [nodeExternals()],
