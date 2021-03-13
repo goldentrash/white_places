@@ -40,7 +40,7 @@ type alias Details =
     }
 
 
-view : Details -> Browser.Document msg
+view : Details -> Browser.Document Never
 view details =
     { title = details.current
     , body =
@@ -68,7 +68,7 @@ type alias NavSection =
     { name : String, items : List NavItem }
 
 
-viewNav : Details -> Html msg
+viewNav : Details -> Html Never
 viewNav { current, navSections } =
     let
         navSection : NavSection -> Html msg
@@ -127,10 +127,12 @@ type alias BoardTab =
 
 
 type alias BoardItem =
-    ()
+    { name : String
+    , summary : String
+    }
 
 
-viewBoard : Details -> Html msg
+viewBoard : Details -> Html Never
 viewBoard { boardTabs, boardItems } =
     let
         boardTab : BoardTab -> Html msg
@@ -143,8 +145,12 @@ viewBoard { boardTabs, boardItems } =
                 [ Html.text text ]
 
         boardItem : BoardItem -> Html msg
-        boardItem _ =
-            Html.div [ Attr.class "board-item flex-board-item" ] []
+        boardItem { name, summary } =
+            Html.div [ Attr.class "board-item flex-board-item" ]
+                [ Html.text name
+                , Html.br [] []
+                , Html.text summary
+                ]
     in
     Html.div
         [ Attr.id "board"
@@ -163,7 +169,7 @@ type alias Page =
     ()
 
 
-viewPage : Details -> Html msg
+viewPage : Details -> Html Never
 viewPage _ =
     Html.div
         [ Attr.id "page"

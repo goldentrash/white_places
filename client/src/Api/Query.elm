@@ -20,7 +20,7 @@ import Json.Decode as Decode exposing (Decoder)
 
 
 projects :
-    SelectionSet decodesTo Api.Object.I
+    SelectionSet decodesTo Api.Object.Project
     -> SelectionSet (List decodesTo) RootQuery
 projects object____ =
     Object.selectionForCompositeField "projects" [] object____ (identity >> Decode.list)

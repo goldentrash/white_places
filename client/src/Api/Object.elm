@@ -5,5 +5,5 @@
 module Api.Object exposing (..)
 
 
-type I
-    = I
+type Project
+    = Project

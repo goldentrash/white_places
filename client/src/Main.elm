@@ -33,7 +33,7 @@ init : () -> Url -> Nav.Key -> ( Model, Cmd Msg )
 init _ url navKey =
     let
         ( page, cmd ) =
-            Page.init url
+            Page.init PageMsg url
     in
     ( { navKey = navKey
       , page = page
@@ -49,6 +49,7 @@ init _ url navKey =
 type Msg
     = LinkClicked Browser.UrlRequest
     | UrlChanged Url
+    | PageMsg Page.Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -69,13 +70,20 @@ update msg model =
         UrlChanged url ->
             let
                 ( page, cmd ) =
-                    Page.init url
+                    Page.init PageMsg url
             in
             ( { model
                 | page = page
               }
             , cmd
             )
+
+        PageMsg msg ->
+            let
+                ( page, cmd ) =
+                    Page.update msg model
+            in
+            ( { model | page = page }, cmd )
 
 
 

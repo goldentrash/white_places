@@ -1,5 +1,8 @@
 # cache
 node_modules
 
+# auto generated
+src/generated
+
 # Build Output
 functions

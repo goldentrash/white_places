@@ -25,22 +25,32 @@ type Page
     | Task Task.Model
 
 
-init : Url -> ( Page, Cmd msg )
-init url =
+init : (Msg -> rootMsg) -> Url -> ( Page, Cmd rootMsg )
+init toRootMsg url =
     case UP.parse urlParser url of
         Just ( page, cmd ) ->
-            ( page, cmd )
+            ( page, Cmd.map toRootMsg cmd )
 
         Nothing ->
             ( Error, Cmd.none )
 
 
+-- UPDATE
 
+type Msg = ExploreMsg Explore.Msg
+
+update : (Msg -> rootMsg) -> Msg -> Page -> (Page, Cmd rootMsg)
+update msg page =
+    case msg of
+        ExploreMsg msg ->
+            let
+                (page, cmd) = Explore.update msg 
+            in
 -- VIEW
 
 
-details : Page -> Skeleton.Details
-details page =
+details :  Page -> Skeleton.Details
+details  page =
     case page of
         Error ->
             Error.details
