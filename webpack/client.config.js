@@ -9,27 +9,27 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
   mode: 'production',
   target: 'web',
-  entry: path.resolve(__dirname, 'public', 'app.js'),
+  entry: path.resolve(__dirname, 'src', 'public', 'app.ts'),
   plugins: [
     new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'public', '*.png'),
-          to: path.resolve(__dirname, 'dist', '[name].[ext]'),
+          from: path.resolve(__dirname, 'src', 'public', '*.png'),
+          to: path.resolve(__dirname, 'dist', 'static', '[name].[ext]'),
         },
       ],
     }),
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'public', 'index.html'),
+      template: path.resolve(__dirname, 'src', 'public', 'index.html'),
       showErrors: false,
       publicPath: '/',
     }),
   ],
   output: {
     filename: 'application.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist', 'static'),
   },
   module: {
     rules: [

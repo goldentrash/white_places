@@ -1,11 +1,13 @@
 # cache
 node_modules
+elm-stuff
 
 # auto generated
-src/generated
+src/api/codegen
+src/client/Api
 
 # config
-*.config.js
+webpack
 
 # build output
-functions
+dist

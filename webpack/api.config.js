@@ -7,11 +7,11 @@ module.exports = {
   mode: 'production',
   target: 'node',
   externals: [nodeExternals()],
-  entry: path.resolve(__dirname, 'src', 'graphql.ts'),
+  entry: path.resolve(__dirname, 'src', 'api', 'graphql.ts'),
   plugins: [new CleanWebpackPlugin()],
   output: {
     filename: 'graphql.js',
-    path: path.resolve(__dirname, 'functions'),
+    path: path.resolve(__dirname, 'dist', 'functions'),
     libraryTarget: 'umd',
   },
   resolve: {
@@ -21,7 +21,10 @@ module.exports = {
     rules: [
       {
         test: /\.ts$/,
-        exclude: [path.resolve(__dirname, 'node_modules')],
+        exclude: [
+          path.resolve(__dirname, 'elm-stuff'),
+          path.resolve(__dirname, 'node_modules'),
+        ],
         use: 'ts-loader',
       },
     ],

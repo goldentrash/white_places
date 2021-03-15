@@ -1,7 +1,10 @@
 # cache
 node_modules
+elm-stuff
 
-# nested projects
-api
-client
-db
+# auto generated
+src/api/codegen
+src/client/Api
+
+# Build Output
+dist

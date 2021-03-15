@@ -1,0 +1,8 @@
+schema: 'src/api/schema.graphql'
+extensions:
+  codgen:
+    generates:
+      src/api/codegen/types.ts:
+        plugins:
+          - typescript
+          - typescript-resolvers

@@ -1,7 +1,7 @@
 [build]
-command = "yarn run install:all && yarn run build"
-publish = "client/dist"
-functions = "api/functions"
+command = "yarn run build"
+publish = "dist/static"
+functions = "dist/functions"
 
 [[redirects]]
 from = "/*"
@@ -10,4 +10,4 @@ status = 200
 force = false
 
 [dev]
-publish = "dist"
+publish = "dist/static"
