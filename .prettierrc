@@ -6,3 +6,9 @@ singleQuote: true
 trailingComma: es5
 bracketSpacing: true
 arrowParens: always
+
+# prettier by default don't treat rc file yaml file
+overrides:
+  - files: '*rc'
+    options:
+      parser: 'yaml'

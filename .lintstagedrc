@@ -1,12 +1,12 @@
 # functions sources
-'*(.ts|.graphql)':
+'*.{ts, graphql}':
   - eslint
   - prettier --write
 
 # client sources
-'*(.elm|.html|.css)':
+'*.{elm, html, css}':
   - prettier --write
 
 # config
-'*(.json|.toml|.yaml|rc|.config.js)':
+'(*.{json, toml, yaml, config.js}|*rc)':
   - prettier --write
