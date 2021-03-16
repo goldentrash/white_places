@@ -4,27 +4,13 @@
   "private": true,
   "repository": "https://github.com/goldentrash/netlify_test.git",
   "author": "goldentrash <startoflateness@gmail.com>",
-  "lint-staged": {
-    "*{.ts, .graphql}": [
-      "yarn eslint",
-      "yarn prettier --write"
-    ],
-    "*{.elm, .html, .css}": "yarn prettier --write",
-    "*{.json, .toml, .yaml, rc, .config.js}": "yarn prettier --write"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint-staged --verbose",
-      "pre-rebase": "exit 1"
-    }
-  },
   "scripts": {
-    "dev:netlify": "yarn run build && yarn netlify dev",
+    "dev:netlify": "yarn run build && netlify dev",
     "build": "yarn run build:api && yarn run build:client",
-    "build:api": "yarn webpack --config webpack/api.config.js",
-    "build:client": "yarn webpack --config webpack/client.config.js",
-    "gen:gql:api": "yarn graphql-codegen --config .graphqlrc",
-    "gen:gql:client": "yarn elm-graphql https://test-white-places.netlify.app/.netlify/functions/graphql --base Functions --output src/client"
+    "build:api": "webpack --config webpack/api.config.js",
+    "build:client": "webpack --config webpack/client.config.js",
+    "gen:gql:api": "graphql-codegen --config .graphqlrc",
+    "gen:gql:client": "elm-graphql https://test-white-places.netlify.app/.netlify/functions/graphql --base Functions --output src/client"
   },
   "dependencies": {
     "apollo-server-lambda": "^2.21.0",
