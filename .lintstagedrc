@@ -4,7 +4,7 @@
   - prettier --write
 
 # client sources
-'*.{elm, html, css}':
+'*.{html, css}':
   - prettier --write
 
 # config

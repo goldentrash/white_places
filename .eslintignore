@@ -1,6 +1,5 @@
 # cache
 node_modules
-elm-stuff
 
 # auto generated
 src/api/codegen
