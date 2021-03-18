@@ -1,6 +1,6 @@
 schema: 'src/api/schema.graphql'
 extensions:
-  codgen:
+  codegen:
     generates:
       src/api/codegen/types.ts:
         plugins:

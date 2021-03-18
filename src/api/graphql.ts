@@ -1,18 +1,19 @@
 import { ApolloServer } from 'apollo-server-lambda';
-import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
-import { loadSchemaSync } from '@graphql-tools/load';
+import { readFileSync } from 'fs';
 import { resolvers } from './resolver';
 import path from 'path';
 
-const schema = loadSchemaSync(path.resolve(__dirname, '..', 'api.graphql'), {
-  loaders: [new GraphQLFileLoader()],
-});
+const typeDefs = readFileSync(
+  path.resolve(__dirname, 'schema.graphql'),
+  'utf-8'
+);
 
-console.log(schema);
+console.log(typeDefs);
 
 const server = new ApolloServer({
-  schema,
+  typeDefs,
   resolvers,
+  introspection: true,
   debug: false,
 });
 

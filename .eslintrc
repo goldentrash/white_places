@@ -2,22 +2,26 @@ root: true
 env:
   browser: true
   node: true
-
-parser: '@typescript-eslint/parser'
-parserOptions:
-  ecmaVersion: 2020
-  sourceType: module
-  project: tsconfig.json
-plugins:
-  - '@typescript-eslint'
 extends:
   - eslint:recommended
-  - plugin:@typescript-eslint/recommended
-  - plugin:@typescript-eslint/recommended-requiring-type-checking
   - prettier
 
-# for graphql
 overrides:
+  # for typescript
+  - files:
+      - '*.ts'
+    parser: '@typescript-eslint/parser'
+    parserOptions:
+      ecmaVersion: 2020
+      sourceType: module
+      project: tsconfig.json
+    plugins:
+      - '@typescript-eslint'
+    extends:
+      - plugin:@typescript-eslint/recommended
+      - plugin:@typescript-eslint/recommended-requiring-type-checking
+
+  # for graphql
   - files:
       - '*.graphql'
     parser: '@graphql-eslint/eslint-plugin'
@@ -28,9 +32,9 @@ overrides:
       '@graphql-eslint/no-deprecated': error
       '@graphql-eslint/no-anonymous-operations': warn
       '@graphql-eslint/no-operation-name-suffix': warn
+      '@graphql-eslint/require-deprecation-reason': error
       '@graphql-eslint/avoid-operation-name-prefix': warn
       '@graphql-eslint/no-case-insensitive-enum-values-duplicates': error
-      '@graphql-eslint/require-description': warn
       '@graphql-eslint/description-style': warn
       '@graphql-eslint/avoid-duplicate-fields': error
       '@graphql-eslint/fields-on-correct-type': error
@@ -44,10 +48,12 @@ overrides:
       '@graphql-eslint/no-unused-variables': error
       '@graphql-eslint/provided-required-arguments': error
       '@graphql-eslint/scalar-leafs': error
-      '@graphql-eslint/unique-argument-names': error
-      '@graphql-eslint/unique-field-definition-names': error
-      '@graphql-eslint/unique-input-field-names': error
-      '@graphql-eslint/unique-type-names': error
-      '@graphql-eslint/unique-variable-names': error
-      '@graphql-eslint/value-literals-of-correct-type': error
-      '@graphql-eslint/variables-are-input-types': error
+
+      # It seems like unique rules have bug
+      # '@graphql-eslint/unique-argument-names': error
+      # '@graphql-eslint/unique-field-definition-names': error
+      # '@graphql-eslint/unique-input-field-names': error
+      # '@graphql-eslint/unique-type-names': error
+      # '@graphql-eslint/unique-variable-names': error
+      # '@graphql-eslint/value-literals-of-correct-type': error
+      # '@graphql-eslint/variables-are-input-types': error
