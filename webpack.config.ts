@@ -1,10 +1,10 @@
 import path from 'path';
 import { Configuration } from 'webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import nodeExternals from 'webpack-node-externals';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import nodeExternals from 'webpack-node-externals';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const apiConfig: Configuration = {

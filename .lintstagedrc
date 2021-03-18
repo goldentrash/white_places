@@ -8,5 +8,5 @@
   - prettier --write
 
 # config
-'(*.{json, toml, yaml, config.js}|*rc)':
+'(*.{json, toml, yaml, config.*}|*rc)':
   - prettier --write
