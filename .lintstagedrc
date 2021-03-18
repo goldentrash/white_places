@@ -1,4 +1,4 @@
-# functions sources
+# functions sources and webpack.config.ts
 '*.{ts, graphql}':
   - eslint
   - prettier --write
@@ -8,5 +8,5 @@
   - prettier --write
 
 # config
-'(*.{json, toml, yaml, config.*}|*rc)':
+'(*.{json, toml, yaml}|*rc)':
   - prettier --write
