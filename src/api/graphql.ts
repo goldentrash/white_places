@@ -1,14 +1,6 @@
 import { ApolloServer } from 'apollo-server-lambda';
-import { readFileSync } from 'fs';
-import { resolvers } from './resolver';
-import path from 'path';
-
-const typeDefs = readFileSync(
-  path.resolve(__dirname, 'schema.graphql'),
-  'utf-8'
-);
-
-console.log(typeDefs);
+import resolvers from './resolver';
+import typeDefs from './typeDefs';
 
 const server = new ApolloServer({
   typeDefs,

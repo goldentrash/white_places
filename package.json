@@ -4,9 +4,9 @@
   "private": true,
   "repository": "https://github.com/goldentrash/netlify_test.git",
   "author": "goldentrash <startoflateness@gmail.com>",
-  "type": "module",
   "scripts": {
-    "start:netlify": "yarn run build && netlify dev",
+    "start": "netlify dev",
+    "prestart": "yarn run build",
     "build": "webpack",
     "gen:gql:api": "graphql-codegen --config .graphqlrc"
   },

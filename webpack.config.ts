@@ -16,7 +16,9 @@ const apiConfig: Configuration = {
   output: {
     filename: 'graphql.js',
     path: path.resolve('dist', 'functions'),
-    libraryTarget: 'umd',
+    library: {
+      type: 'commonjs',
+    },
   },
   resolve: {
     extensions: ['.ts'],
