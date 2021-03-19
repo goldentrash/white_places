@@ -21,7 +21,7 @@ const projectList: Project[] = [
 
 const resolvers: Resolvers = {
   Query: {
-    projects: (parent, args, context, info) => projectList,
+    projects: () => projectList,
   },
 };
 

@@ -1,12 +1,7 @@
-# functions sources and webpack.config.ts
+# lintting
 '*.{ts, graphql}':
   - eslint
-  - prettier --write
 
-# client sources
-'*.{html, css}':
-  - prettier --write
-
-# config
-'(*.{json, toml, yaml}|*rc)':
+# formatting
+'(*.{toml, html, css, json, yaml, ts, graphql}|*rc)':
   - prettier --write

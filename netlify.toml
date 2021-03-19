@@ -5,7 +5,7 @@ functions = "dist/functions"
 
 [[redirects]]
 from = "/app/*"
-to = "/app/"
+to = "/app"
 status = 200
 force = false
 
