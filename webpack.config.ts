@@ -11,7 +11,7 @@ const apiConfig: Configuration = {
   mode: 'production',
   target: 'node',
   externals: [nodeExternals()],
-  entry: path.resolve('src', 'api', 'graphql.ts'),
+  entry: path.resolve('src', 'functions', 'graphql.ts'),
   plugins: [new CleanWebpackPlugin()],
   output: {
     filename: 'graphql.js',

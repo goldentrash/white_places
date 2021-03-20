@@ -1,8 +1,12 @@
-schema: 'src/api/schema.graphql'
-extensions:
-  codegen:
-    generates:
-      src/api/codegen/types.ts:
-        plugins:
-          - typescript
-          - typescript-resolvers
+projects:
+  functions:
+    schema: 'src/functions/typeDefs.ts'
+    extensions:
+      codegen:
+        generates:
+          src/functions/codegen/types.ts:
+            config:
+              useIndexSignature: true
+            plugins:
+              - typescript
+              - typescript-resolvers

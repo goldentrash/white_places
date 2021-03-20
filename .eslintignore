@@ -2,7 +2,7 @@
 node_modules
 
 # auto generated
-src/api/codegen
+src/functions/codegen
 src/client/Api
 
 # build output

@@ -8,7 +8,7 @@
     "start": "netlify dev",
     "prestart": "yarn run build",
     "build": "webpack",
-    "gen:gql:api": "graphql-codegen --config .graphqlrc"
+    "gen:gql": "graphql-codegen --config .graphqlrc --project functions"
   },
   "dependencies": {
     "apollo-server-lambda": "^2.21.0",
