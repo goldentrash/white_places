@@ -4,6 +4,5 @@ type Project {
 }
 
 type Query {
-  project(title: String!): Project!
   projects: [Project!]!
 }

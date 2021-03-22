@@ -4,9 +4,17 @@ projects:
     extensions:
       codegen:
         generates:
-          src/functions/codegen/types.ts:
+          src/functions/codegen/generated/types.ts:
             config:
               useIndexSignature: true
             plugins:
               - typescript
               - typescript-resolvers
+  db:
+    schema: 'src/functions/db.graphql'
+    extensions:
+      codegen:
+        generates:
+          src/functions/codegen/generated/db.ts:
+            plugins:
+              - typescript

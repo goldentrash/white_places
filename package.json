@@ -11,6 +11,7 @@
     "gen:gql": "graphql-codegen --config .graphqlrc --project functions"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.12",
     "apollo-server-lambda": "^2.21.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.5.0"

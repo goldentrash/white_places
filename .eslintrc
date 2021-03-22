@@ -28,7 +28,6 @@ overrides:
     plugins:
       - '@graphql-eslint'
     rules:
-      '@graphql-eslint/no-unreachable-types': error
       '@graphql-eslint/no-deprecated': error
       '@graphql-eslint/no-anonymous-operations': warn
       '@graphql-eslint/no-operation-name-suffix': warn
@@ -49,7 +48,8 @@ overrides:
       '@graphql-eslint/provided-required-arguments': error
       '@graphql-eslint/scalar-leafs': error
 
-      # It seems like unique rules have bug
+      # It seems like below rules have bug
+      # '@graphql-eslint/no-unreachable-types': error
       # '@graphql-eslint/unique-argument-names': error
       # '@graphql-eslint/unique-field-definition-names': error
       # '@graphql-eslint/unique-input-field-names': error
