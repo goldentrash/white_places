@@ -2,8 +2,7 @@
 node_modules
 
 # auto generated
-src/functions/codegen
-src/client/Api
+src/functions/generated
 
 # build output
 dist

@@ -21,7 +21,7 @@ const apiConfig: Configuration = {
     },
   },
   resolve: {
-    extensions: ['.ts'],
+    extensions: ['.js', '.ts'],
   },
   module: {
     rules: [
@@ -40,20 +40,20 @@ const apiConfig: Configuration = {
 const clientConfig: Configuration = {
   mode: 'production',
   target: 'web',
-  entry: path.resolve('src', 'public', 'app.ts'),
+  entry: path.resolve('src', 'index.tsx'),
   plugins: [
     new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve('src', 'public', '*.png'),
+          from: path.resolve('public', '*.png'),
           to: path.resolve('dist', 'static', '[name].[ext]'),
         },
       ],
     }),
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve('src', 'public', 'index.html'),
+      template: path.resolve('public', 'index.html'),
       showErrors: false,
       publicPath: '/',
     }),
@@ -62,11 +62,19 @@ const clientConfig: Configuration = {
     filename: 'application.js',
     path: path.resolve('dist', 'static'),
   },
+  resolve: {
+    extensions: ['.js', '.ts', '.tsx'],
+  },
   module: {
     rules: [
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: path.resolve('node_modules'),
+        use: 'ts-loader',
       },
     ],
   },
@@ -87,4 +95,4 @@ const clientConfig: Configuration = {
   },
 };
 
-export default [apiConfig /*, clientConfig */];
+export default [apiConfig, clientConfig];

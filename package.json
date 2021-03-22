@@ -8,22 +8,27 @@
     "start": "netlify dev",
     "prestart": "yarn run build",
     "build": "webpack",
-    "gen:gql": "graphql-codegen --config .graphqlrc --project functions"
+    "prebuild": "yarn run test",
+    "test": "echo \"there's no test yet\"",
+    "codegen": "graphql-codegen --config .graphqlrc"
   },
   "dependencies": {
     "@apollo/client": "^3.3.12",
     "apollo-server-lambda": "^2.21.0",
     "dotenv": "^8.2.0",
-    "graphql": "^15.5.0"
+    "graphql": "^15.5.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "1.21.1",
     "@graphql-codegen/typescript": "1.21.0",
     "@graphql-codegen/typescript-resolvers": "^1.19.0",
-    "@graphql-eslint/eslint-plugin": "^0.9.0",
     "@types/copy-webpack-plugin": "^6.4.0",
     "@types/css-minimizer-webpack-plugin": "^1.1.1",
     "@types/mini-css-extract-plugin": "^1.2.2",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.2",
     "@types/terser-webpack-plugin": "^5.0.2",
     "@types/webpack": "^4.41.26",
     "@types/webpack-node-externals": "^2.5.0",
@@ -35,6 +40,9 @@
     "css-minimizer-webpack-plugin": "^1.2.0",
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "graphql-config": "^3.2.0",
     "html-webpack-plugin": "^5.0.0",
     "husky": "^4.3.8",
