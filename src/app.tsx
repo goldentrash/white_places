@@ -2,10 +2,10 @@ import React from 'react';
 
 type AppProps = {
   name?: string;
-  age: number;
+  age?: number;
 };
 
-const App: React.FC<AppProps> = ({ name = 'guest', age }: AppProps) => {
+const App: React.FC<AppProps> = ({ name = 'guest', age = 3 }: AppProps) => {
   return (
     <div>
       hello {name}!
