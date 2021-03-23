@@ -1,7 +1,18 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 
-const App = (): ReactElement => {
-  return <div>hello world!</div>;
+type AppProps = {
+  name?: string;
+  age: number;
+};
+
+const App: React.FC<AppProps> = ({ name = 'guest', age }: AppProps) => {
+  return (
+    <div>
+      hello {name}!
+      <br />
+      you are {age} years old!
+    </div>
+  );
 };
 
 export default App;

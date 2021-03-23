@@ -6,7 +6,7 @@ import App from './app';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App age={5} />
   </React.StrictMode>,
   document.getElementById('application')
 );
