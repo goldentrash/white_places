@@ -4,12 +4,6 @@ publish = "dist/static"
 functions = "dist/functions"
 
 [[redirects]]
-from = "/app/*"
-to = "/app"
-status = 200
-force = false
-
-[[redirects]]
 from = "/*"
 to = "/"
 status = 200
