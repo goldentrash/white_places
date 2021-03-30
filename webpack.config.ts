@@ -1,19 +1,43 @@
 import path from 'path';
 import { Configuration } from 'webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import CopyPlugin from 'copy-webpack-plugin';
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import nodeExternals from 'webpack-node-externals';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+
+const commonConfig: Configuration = {
+  resolve: {
+    plugins: [new TsconfigPathsPlugin({ extensions: ['.js', '.ts', '.tsx'] })],
+    extensions: ['.js', '.ts', '.tsx'],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        include: [path.resolve('src'), path.resolve('functions')],
+        use: 'ts-loader',
+      },
+    ],
+  },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+    ],
+  },
+};
 
 const apiConfig: Configuration = {
-  mode: 'production',
+  ...commonConfig,
   target: 'node',
-  externals: [nodeExternals()],
-  entry: path.resolve('src', 'functions', 'graphql.ts'),
-  plugins: [new CleanWebpackPlugin()],
+  entry: path.resolve('functions', 'graphql.ts'),
   output: {
     filename: 'graphql.js',
     path: path.resolve('dist', 'functions'),
@@ -21,97 +45,27 @@ const apiConfig: Configuration = {
       type: 'commonjs',
     },
   },
-  resolve: {
-    extensions: ['.js', '.ts'],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        exclude: path.resolve('node_modules'),
-        use: 'ts-loader',
-      },
-    ],
-  },
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          format: {
-            comments: false,
-          },
-        },
-        extractComments: false,
-      }),
-    ],
-  },
+  externals: [nodeExternals()],
+  plugins: [new CleanWebpackPlugin()],
 };
 
 const clientConfig: Configuration = {
-  mode: 'production',
+  ...commonConfig,
   target: 'web',
   entry: path.resolve('src', 'index.tsx'),
+  output: {
+    filename: 'application.js',
+    path: path.resolve('dist', 'publish'),
+  },
   plugins: [
     new CleanWebpackPlugin(),
-    new CopyPlugin({
-      patterns: [
-        {
-          from: path.resolve('public', '*.png'),
-          to: path.resolve('dist', 'static', '[name].[ext]'),
-        },
-      ],
-    }),
-    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve('public', 'index.html'),
       showErrors: false,
       publicPath: '/',
+      favicon: path.resolve('public', 'favicon.png'),
     }),
   ],
-  output: {
-    filename: 'application.js',
-    path: path.resolve('dist', 'static'),
-  },
-  resolve: {
-    extensions: ['.js', '.ts', '.tsx'],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
-      },
-      {
-        test: /\.tsx?$/,
-        exclude: path.resolve('node_modules'),
-        use: 'ts-loader',
-      },
-    ],
-  },
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new CssMinimizerPlugin({
-        minimizerOptions: {
-          preset: [
-            'default',
-            {
-              discardComments: { removeAll: true },
-            },
-          ],
-        },
-      }),
-      new TerserPlugin({
-        terserOptions: {
-          format: {
-            comments: false,
-          },
-        },
-        extractComments: false,
-      }),
-    ],
-  },
 };
 
-export default [apiConfig, clientConfig];
+export default [clientConfig, apiConfig];

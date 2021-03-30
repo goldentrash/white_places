@@ -1,7 +1,7 @@
 # lintting
-'*.{ts,tsx,graphql}':
+'*.{ts,tsx}':
   - eslint
 
 # formatting
-'(*.{toml,html,css,json,yaml,ts,tsx,graphql}|*rc)':
+'(*.{toml,html,css,json,yaml,ts,tsx}|*rc)':
   - prettier --write

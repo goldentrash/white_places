@@ -1,6 +1,6 @@
 [build]
 command = "yarn run build"
-publish = "dist/static"
+publish = "dist/publish"
 functions = "dist/functions"
 
 [[redirects]]
@@ -8,6 +8,3 @@ from = "/*"
 to = "/"
 status = 200
 force = false
-
-[dev]
-publish = "dist/static"

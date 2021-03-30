@@ -1,3 +1,4 @@
 hooks:
   pre-commit: lint-staged --verbose
-  pre-rebase: exit 1 # I don't want to use rebase
+  # I don't want to use rebase
+  pre-rebase: exit 1

@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
-import Header from './header';
 import { BrowserRouter } from 'react-router-dom';
-import '../style/app.css';
+import Header from 'components/header';
 
 const App = (): ReactElement => {
   return (

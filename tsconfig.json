@@ -1,15 +1,16 @@
 {
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "dist"],
   "compilerOptions": {
     "target": "es2020",
     "module": "commonjs",
-    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": { "components/*": ["src/components/*"] },
     "jsx": "react",
     "removeComments": true,
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true
   }
 }
