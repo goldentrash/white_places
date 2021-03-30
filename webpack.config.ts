@@ -32,6 +32,9 @@ const commonConfig: Configuration = {
       }),
     ],
   },
+  watchOptions: {
+    ignored: 'node_modules',
+  },
 };
 
 const apiConfig: Configuration = {

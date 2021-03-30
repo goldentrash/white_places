@@ -79,7 +79,7 @@ const Header = (): ReactElement => {
           variant="contained"
           className={classes.link}
         >
-          Log In
+          Log In?
         </Button>
       </Toolbar>
     </AppBar>
