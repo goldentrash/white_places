@@ -1,12 +1,12 @@
 import path from 'path';
 import { Configuration } from 'webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+import nodeExternals from 'webpack-node-externals';
 import TerserPlugin from 'terser-webpack-plugin';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
-const clientConfig = (
+const functionsConfig = (
   _env: Record<string, unknown>,
   argv: Record<string, unknown>
 ): Configuration => {
@@ -14,25 +14,27 @@ const clientConfig = (
 
   return {
     mode: isProduction ? 'production' : 'development',
-    target: 'web',
+    target: 'node',
 
-    entry: path.resolve('src', 'index.tsx'),
+    entry: path.resolve('functions', 'graphql.ts'),
     output: {
-      filename: '[name].js',
-      path: path.resolve('dist', 'publish'),
+      filename: 'graphql.js',
+      path: path.resolve('dist', 'functions'),
       pathinfo: false,
+      library: {
+        type: 'commonjs',
+      },
     },
+
     resolve: {
-      plugins: [
-        new TsconfigPathsPlugin({ extensions: ['.js', '.ts', '.tsx'] }),
-      ],
-      extensions: ['.js', '.ts', '.tsx'],
+      plugins: [new TsconfigPathsPlugin({ extensions: ['.js', '.ts'] })],
+      extensions: ['.js', '.ts'],
     },
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
-          include: path.resolve('src'),
+          test: /\.ts$/,
+          include: path.resolve('functions'),
           use: {
             loader: 'ts-loader',
             options: {
@@ -42,22 +44,12 @@ const clientConfig = (
         },
       ],
     },
+    externals: [nodeExternals()],
 
     plugins: [
       ...(isProduction ? [new CleanWebpackPlugin()] : []),
       new ForkTsCheckerWebpackPlugin({
-        eslint: { enabled: true, files: './src/**/*.{ts,tsx}' },
-      }),
-      new HtmlWebpackPlugin({
-        title: 'White Places',
-        template: path.resolve('public', 'index.html'),
-        favicon: path.resolve('public', 'favicon.png'),
-        meta: {
-          charset: 'UTF-8',
-          viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
-        },
-        showErrors: isProduction ? false : true,
-        publicPath: '/',
+        eslint: { enabled: true, files: './functions/**/*.{ts,tsx}' },
       }),
     ],
 
@@ -88,14 +80,14 @@ const clientConfig = (
     },
 
     devServer: {
-      contentBase: path.resolve('dist', 'publish'),
+      contentBase: path.resolve('dist', 'functions'),
       watchContentBase: true,
       watchOptions: {
-        ignored: ['node_modules', 'functions'],
+        ignored: ['node_modules', 'src'],
         poll: true,
       },
     },
   };
 };
 
-export default clientConfig;
+export default functionsConfig;
