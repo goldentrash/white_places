@@ -1,9 +1,9 @@
-schema: 'src/functions/typeDefs.ts'
+schema: 'functions/typeDefs.ts'
 extensions:
   codegen:
     generates:
       # for develop resolvers
-      src/functions/generated/types.ts:
+      functions/generated/types.ts:
         config:
           useIndexSignature: true
         plugins:

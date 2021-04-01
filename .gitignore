@@ -4,5 +4,8 @@ node_modules
 # Build Output directory
 dist
 
+# auto generated
+generated
+
 # secret
 .env
