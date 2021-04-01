@@ -19,7 +19,7 @@ const functionsConfig = (
     entry: path.resolve('functions', 'graphql.ts'),
     output: {
       filename: 'graphql.js',
-      path: path.resolve('dist', 'functions'),
+      path: path.resolve('..', 'dist', 'functions'),
       pathinfo: false,
       library: {
         type: 'commonjs',
@@ -47,10 +47,14 @@ const functionsConfig = (
     externals: [nodeExternals()],
 
     plugins: [
-      ...(isProduction ? [new CleanWebpackPlugin()] : []),
-      new ForkTsCheckerWebpackPlugin({
-        eslint: { enabled: true, files: './functions/**/*.{ts,tsx}' },
-      }),
+      ...(isProduction
+        ? [
+            new CleanWebpackPlugin(),
+            new ForkTsCheckerWebpackPlugin({
+              eslint: { enabled: true, files: './functions/**/*.{ts,tsx}' },
+            }),
+          ]
+        : []),
     ],
 
     optimization: {
@@ -77,15 +81,6 @@ const functionsConfig = (
           extractComments: false,
         }),
       ],
-    },
-
-    devServer: {
-      contentBase: path.resolve('dist', 'functions'),
-      watchContentBase: true,
-      watchOptions: {
-        ignored: ['node_modules', 'src'],
-        poll: true,
-      },
     },
   };
 };

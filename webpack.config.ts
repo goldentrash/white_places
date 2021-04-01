@@ -44,10 +44,14 @@ const clientConfig = (
     },
 
     plugins: [
-      ...(isProduction ? [new CleanWebpackPlugin()] : []),
-      new ForkTsCheckerWebpackPlugin({
-        eslint: { enabled: true, files: './src/**/*.{ts,tsx}' },
-      }),
+      ...(isProduction
+        ? [
+            new CleanWebpackPlugin(),
+            new ForkTsCheckerWebpackPlugin({
+              eslint: { enabled: true, files: './src/**/*.{ts,tsx}' },
+            }),
+          ]
+        : []),
       new HtmlWebpackPlugin({
         title: 'White Places',
         template: path.resolve('public', 'index.html'),
@@ -88,11 +92,12 @@ const clientConfig = (
     },
 
     devServer: {
+      port: 8080,
       contentBase: path.resolve('dist', 'publish'),
       watchContentBase: true,
       watchOptions: {
         ignored: ['node_modules', 'functions'],
-        poll: true,
+        poll: 1000,
       },
     },
   };
