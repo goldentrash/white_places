@@ -5,8 +5,9 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import ESLintPlugin from 'eslint-webpack-plugin';
 
-const clientConfig = (
+export default (
   _env: Record<string, unknown>,
   argv: Record<string, unknown>
 ): Configuration => {
@@ -18,10 +19,11 @@ const clientConfig = (
 
     entry: path.resolve('src', 'index.tsx'),
     output: {
-      filename: '[name].js',
+      filename: 'application.js',
       path: path.resolve('dist', 'publish'),
       pathinfo: false,
     },
+
     resolve: {
       plugins: [
         new TsconfigPathsPlugin({ extensions: ['.js', '.ts', '.tsx'] }),
@@ -48,7 +50,13 @@ const clientConfig = (
         ? [
             new CleanWebpackPlugin(),
             new ForkTsCheckerWebpackPlugin({
-              eslint: { enabled: true, files: './src/**/*.{ts,tsx}' },
+              eslint: { enabled: true, files: 'src/**/*.{ts,tsx}' },
+            }),
+            new ESLintPlugin({
+              extensions: ['ts', 'tsx'],
+              files: 'src',
+              failOnError: true,
+              failOnWarning: true,
             }),
           ]
         : []),
@@ -92,7 +100,6 @@ const clientConfig = (
     },
 
     devServer: {
-      port: 8080,
       contentBase: path.resolve('dist', 'publish'),
       watchContentBase: true,
       watchOptions: {
@@ -102,5 +109,3 @@ const clientConfig = (
     },
   };
 };
-
-export default clientConfig;

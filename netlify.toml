@@ -10,7 +10,7 @@ status = 200
 force = false
 
 [dev]
-command = "yarn run start:client"
+command = "webpack serve --port 8080 --config webpack/client.config.ts"
 port = 8888
 targetPort = 8080
 publish = "dist/publish"

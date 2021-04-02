@@ -1,12 +1,13 @@
 import path from 'path';
 import { Configuration } from 'webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import nodeExternals from 'webpack-node-externals';
-import TerserPlugin from 'terser-webpack-plugin';
-import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import nodeExternals from 'webpack-node-externals';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import ESLintPlugin from 'eslint-webpack-plugin';
 
-const functionsConfig = (
+export default (
   _env: Record<string, unknown>,
   argv: Record<string, unknown>
 ): Configuration => {
@@ -15,11 +16,12 @@ const functionsConfig = (
   return {
     mode: isProduction ? 'production' : 'development',
     target: 'node',
+    externals: [nodeExternals()],
 
     entry: path.resolve('functions', 'graphql.ts'),
     output: {
       filename: 'graphql.js',
-      path: path.resolve('..', 'dist', 'functions'),
+      path: path.resolve('dist', 'functions'),
       pathinfo: false,
       library: {
         type: 'commonjs',
@@ -44,14 +46,19 @@ const functionsConfig = (
         },
       ],
     },
-    externals: [nodeExternals()],
 
     plugins: [
       ...(isProduction
         ? [
             new CleanWebpackPlugin(),
             new ForkTsCheckerWebpackPlugin({
-              eslint: { enabled: true, files: './functions/**/*.{ts,tsx}' },
+              eslint: { enabled: true, files: 'functions/**/*.ts' },
+            }),
+            new ESLintPlugin({
+              extensions: ['ts'],
+              files: 'functions',
+              failOnError: true,
+              failOnWarning: true,
             }),
           ]
         : []),
@@ -82,7 +89,10 @@ const functionsConfig = (
         }),
       ],
     },
+
+    watchOptions: {
+      ignored: ['node_modules', 'src'],
+      poll: 1000,
+    },
   };
 };
-
-export default functionsConfig;

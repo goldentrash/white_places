@@ -9,6 +9,10 @@ const projectList: Project[] = [
     title: 'h2',
     summary: 'df',
   },
+  {
+    title: 'h2',
+    summary: 'aaaaadf',
+  },
 ];
 
 const queryResolver: QueryResolvers = {
