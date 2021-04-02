@@ -102,6 +102,7 @@ export default (
     devServer: {
       contentBase: path.resolve('dist', 'publish'),
       watchContentBase: true,
+      historyApiFallback: true,
       watchOptions: {
         ignored: ['node_modules', 'functions'],
         poll: 1000,
