@@ -1,11 +1,22 @@
 schema: 'functions/typeDefs.ts'
+documents: 'src/document/**/*.graphql'
+
 extensions:
   codegen:
+    overwrite: true
+
     generates:
-      # for develop resolvers
-      functions/generated/types.ts:
+      # for resolvers
+      codegen/resolver-types.ts:
         config:
           useIndexSignature: true
         plugins:
           - typescript
           - typescript-resolvers
+
+      # for react hooks
+      codegen/document-types.ts:
+        plugins:
+          - typescript
+          - typescript-operations
+          - typescript-react-apollo

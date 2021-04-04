@@ -1,4 +1,4 @@
-import { Resolvers, QueryResolvers, Project } from './generated/types';
+import { Resolvers, QueryResolvers, Project } from 'codegen/resolver-types';
 
 const projectList: Project[] = [
   {
@@ -11,6 +11,10 @@ const projectList: Project[] = [
   },
   {
     title: 'h2',
+    summary: 'aaaaadf',
+  },
+  {
+    title: 'need some new title!',
     summary: 'aaaaadf',
   },
 ];

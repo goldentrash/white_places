@@ -1,17 +1,13 @@
-import path from 'path';
-import { Configuration } from 'webpack';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import TerserPlugin from 'terser-webpack-plugin';
-import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
-import ESLintPlugin from 'eslint-webpack-plugin';
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
-export default (
-  _env: Record<string, unknown>,
-  argv: Record<string, unknown>
-): Configuration => {
-  const isProduction: boolean = argv.mode === 'production';
+module.exports = (_env, argv) => {
+  const isProduction = argv.mode === 'production';
 
   return {
     mode: isProduction ? 'production' : 'development',
@@ -34,7 +30,7 @@ export default (
       rules: [
         {
           test: /\.tsx?$/,
-          include: path.resolve('src'),
+          include: [path.resolve('src'), path.resolve('codegen')],
           use: {
             loader: 'ts-loader',
             options: {

@@ -1,24 +1,20 @@
-import path from 'path';
-import { Configuration } from 'webpack';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import TerserPlugin from 'terser-webpack-plugin';
-import nodeExternals from 'webpack-node-externals';
-import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
-import ESLintPlugin from 'eslint-webpack-plugin';
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
-export default (
-  _env: Record<string, unknown>,
-  argv: Record<string, unknown>
-): Configuration => {
-  const isProduction: boolean = argv.mode === 'production';
+module.exports = (_env, argv) => {
+  const isProduction = argv.mode === 'production';
 
   return {
     mode: isProduction ? 'production' : 'development',
     target: 'node',
     externals: [nodeExternals()],
 
-    entry: path.resolve('functions', 'graphql.ts'),
+    entry: path.resolve('functions', 'index.ts'),
     output: {
       filename: 'graphql.js',
       path: path.resolve('dist', 'functions'),
@@ -36,7 +32,7 @@ export default (
       rules: [
         {
           test: /\.ts$/,
-          include: path.resolve('functions'),
+          include: [path.resolve('functions'), path.resolve('codegen')],
           use: {
             loader: 'ts-loader',
             options: {

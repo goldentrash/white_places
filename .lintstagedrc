@@ -3,5 +3,5 @@
   - eslint
 
 # formatting
-'(*.{toml,html,json,yaml,ts,tsx}|*rc)':
+'(*.{config.js,toml,html,json,yaml,ts,tsx,graphql}|*rc)':
   - prettier --write

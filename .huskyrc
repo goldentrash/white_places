@@ -1,4 +1,6 @@
 hooks:
-  pre-commit: lint-staged --verbose
+  # All source must successfully be compiled
+  pre-commit: lint-staged --verbose && yarn run type-check
+
   # I don't want to use rebase
   pre-rebase: exit 1

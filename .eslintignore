@@ -2,7 +2,13 @@
 node_modules
 
 # auto generated
-generated
+codegen
 
 # build output
 dist
+
+# graphql
+*.graphql
+
+# config
+*.config.js

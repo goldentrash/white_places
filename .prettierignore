@@ -2,7 +2,7 @@
 node_modules
 
 # auto generated
-generated
+codegen
 
 # Build Output
 dist

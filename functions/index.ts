@@ -7,7 +7,10 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: () => ({}),
-  introspection: true,
+  dataSources: () => ({}),
+  introspection: false,
+  uploads: false,
+  playground: false,
   debug: false,
 });
 

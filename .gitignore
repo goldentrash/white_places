@@ -5,7 +5,10 @@ node_modules
 dist
 
 # auto generated
-generated
+codegen
 
 # secret
 .env
+
+# log
+*.log
