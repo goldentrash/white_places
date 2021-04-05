@@ -1,15 +1,23 @@
-import { DocumentResolvers } from 'codegen/resolver-types';
+import {
+  DocumentResolvers,
+  Task,
+  Opinion,
+  Document,
+} from 'codegen/resolver-types';
+
+const isTask = (document: Document): document is Task => {
+  return (document as Task).workers !== undefined;
+};
+
+const isOpinion = (document: Document): document is Opinion => {
+  return (document as Opinion).liek !== undefined;
+};
 
 const documentResolver: DocumentResolvers = {
-  __resolveType: ({ __typename }) => {
-    switch (__typename) {
-      case 'Task':
-        return 'Task';
-      case 'Opinion':
-        return 'Opinion';
-      default:
-        return null;
-    }
+  __resolveType: (parent) => {
+    if (isTask(parent)) return 'Task';
+    if (isOpinion(parent)) return 'Opinion';
+    return null;
   },
 };
 

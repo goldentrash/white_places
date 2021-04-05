@@ -1,0 +1,8 @@
+mutation changeProjectTitle {
+  changeProjectTitle(
+    changeProjectTitleInput: { title: "hi", newTitle: "aaa" }
+  ) {
+    title
+    summary
+  }
+}
