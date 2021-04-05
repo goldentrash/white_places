@@ -1,8 +1,8 @@
 import React, { ReactElement, useEffect } from 'react';
-import { useProjectsLazyQuery } from 'codegen/document-types';
+import { useGetProjectsLazyQuery } from 'codegen/document-types';
 
 const Search = (): ReactElement => {
-  const [loadProjects, { loading, error, data }] = useProjectsLazyQuery();
+  const [loadProjects, { loading, error, data }] = useGetProjectsLazyQuery();
 
   useEffect(() => {
     console.log('load projects!');

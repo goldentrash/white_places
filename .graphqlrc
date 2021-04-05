@@ -1,4 +1,4 @@
-schema: 'functions/typeDefs.ts'
+schema: 'functions/schema/**/!(index).ts'
 documents: 'src/document/**/*.graphql'
 
 extensions:

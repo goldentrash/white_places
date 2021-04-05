@@ -1,30 +1,25 @@
-import { Resolvers, QueryResolvers, Project } from 'codegen/resolver-types';
-
+import { Project } from 'codegen/resolver-types';
 const projectList: Project[] = [
   {
     title: 'hi',
     summary: 'df',
+    documents: [],
   },
   {
     title: 'h2',
     summary: 'df',
+    documents: [],
   },
   {
     title: 'h2',
     summary: 'aaaaadf',
+    documents: [],
   },
   {
     title: 'need some new title!',
     summary: 'aaaaadf',
+    documents: [],
   },
 ];
 
-const queryResolver: QueryResolvers = {
-  projects: () => projectList,
-};
-
-const resolvers: Resolvers = {
-  Query: queryResolver,
-};
-
-export default resolvers;
+export default projectList;
