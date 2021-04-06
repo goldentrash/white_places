@@ -8,22 +8,21 @@ const logger: ApolloServerPlugin = {
   },
 
   requestDidStart: ({ request: { operationName, variables, query } }) => {
+    console.log(colors.green('Request starting up!'));
+
     if (operationName) {
       console.log(colors.yellow('operation name:'));
       console.log(operationName);
-      console.log();
     }
 
     if (variables) {
       console.log(colors.yellow('variables:'));
       console.log(variables);
-      console.log();
     }
 
     if (query) {
       console.log(colors.yellow('query:'));
       console.log(query);
-      console.log();
     }
 
     return {
@@ -31,7 +30,6 @@ const logger: ApolloServerPlugin = {
         console.log(colors.yellow('encounter errors!'));
         errors.map((error) => {
           console.error(JSON.stringify(error, null, 4));
-          console.log();
         });
       },
 

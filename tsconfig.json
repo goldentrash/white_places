@@ -7,8 +7,7 @@
     "baseUrl": ".",
     "paths": {
       "codegen/*": ["codegen/*"],
-      "components/*": ["src/components/*"],
-      "page/*": ["src/page/*"]
+      "components/*": ["src/components/*"]
     },
     "jsx": "react",
     "removeComments": true,

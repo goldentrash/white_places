@@ -1,0 +1,4 @@
+fragment TitleAndSummary on Project {
+  title
+  summary
+}

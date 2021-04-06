@@ -1,5 +1,6 @@
 import { MutationResolvers } from 'codegen/resolver-types';
 import projectList from '../fakeDB';
+import { UserInputError } from 'apollo-server-lambda';
 
 const mutationResolver: MutationResolvers = {
   chagneProjectTitle: (
@@ -11,11 +12,7 @@ const mutationResolver: MutationResolvers = {
     );
 
     if (!targetProject) {
-      return {
-        code: 400,
-        success: false,
-        message: 'invalid title',
-      };
+      throw new UserInputError('invalid title');
     }
 
     targetProject.title = newTitle;

@@ -5,14 +5,14 @@
   "repository": "https://github.com/goldentrash/netlify_test.git",
   "author": "goldentrash <startoflateness@gmail.com>",
   "scripts": {
-    "postinstall": "yarn run codegen",
+    "postinstall": "yarn run gql-codegen",
     "start": "npm-run-all --parallel start:*",
     "start:client": "netlify dev",
     "start:functions": "webpack watch --config webpack/functions.config.js",
     "build": "npm-run-all --parallel build:*",
     "build:client": "webpack --mode=production --config webpack/client.config.js",
     "build:functions": "webpack --mode=production --config webpack/functions.config.js",
-    "codegen": "graphql-codegen --config .graphqlrc",
+    "gql-codegen": "graphql-codegen --config .graphqlrc",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {

@@ -1,0 +1,17 @@
+#import "../fragment/titleAndSummary.graphql"
+
+query GetProjects {
+  projects {
+    ...TitleAndSummary
+
+    documents {
+      ... on Task {
+        workers
+      }
+
+      ... on Opinion {
+        liek
+      }
+    }
+  }
+}
