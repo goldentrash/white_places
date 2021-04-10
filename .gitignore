@@ -9,6 +9,7 @@ codegen
 
 # secret
 .env
+.faunarc
 
 # log
 *.log

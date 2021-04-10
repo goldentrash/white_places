@@ -1,4 +1,5 @@
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -58,6 +59,7 @@ module.exports = (_env, argv) => {
             }),
           ]
         : []),
+      new Dotenv(),
     ],
 
     optimization: {
