@@ -1,4 +1,11 @@
-import React, { ReactElement, useState, Fragment, MouseEvent } from 'react';
+import React, {
+  ReactElement,
+  useState,
+  Fragment,
+  MouseEvent,
+  FormEvent,
+  ChangeEvent,
+} from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -9,14 +16,28 @@ import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     brandLink: {
       flex: 'none',
       margin: theme.spacing(1, 1.5),
+
       '&:hover': {
         textDecoration: 'none',
+      },
+    },
+    searchForm: {
+      display: 'inline-block',
+    },
+    searchInput: {
+      marginLeft: theme.spacing(1),
+      width: '15ch',
+
+      '&::-webkit-search-cancel-button,&::-webkit-search-decoration,&::-webkit-search-results-button,&::-webkit-search-results-decoration': {
+        '-webkit-appearance': 'none',
       },
     },
     toolbar: {
@@ -42,10 +63,36 @@ const Header = (): ReactElement => {
     </Link>
   );
 
-  const searchIconButton = (
-    <IconButton component={RouterLink} to="/search">
-      <SearchIcon />
-    </IconButton>
+  const [searchTarget, setSearchTarget] = useState<string>('');
+  const search = (event: FormEvent): void => {
+    event.preventDefault();
+
+    // TODO
+    console.log(searchTarget);
+    setSearchTarget('');
+  };
+  const updateSearchTarget = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchTarget(event.currentTarget.value);
+  };
+  const searchBox = (
+    <Paper
+      component="form"
+      className={styles.searchForm}
+      onSubmit={search}
+      variant="outlined"
+    >
+      <InputBase
+        value={searchTarget}
+        placeholder="search projects"
+        onChange={updateSearchTarget}
+        type="search"
+        classes={{ input: styles.searchInput }}
+        endAdornment={null}
+      />
+      <IconButton type="submit" size="small">
+        <SearchIcon />
+      </IconButton>
+    </Paper>
   );
 
   const [
@@ -58,7 +105,7 @@ const Header = (): ReactElement => {
   const closeAccountMenu = (): void => {
     setAccountMenuAnchor(null);
   };
-  const accountIconButton = (
+  const accountMenuButton = (
     <Fragment>
       <IconButton onClick={openAccountMenu}>
         <AccountCircleIcon />
@@ -84,8 +131,8 @@ const Header = (): ReactElement => {
       <Toolbar variant="dense" className={styles.toolbar}>
         <div>{brandLink}</div>
         <div>
-          {searchIconButton}
-          {accountIconButton}
+          {searchBox}
+          {accountMenuButton}
         </div>
       </Toolbar>
     </AppBar>
