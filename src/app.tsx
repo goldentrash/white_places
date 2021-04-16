@@ -4,7 +4,7 @@ import { ApolloProvider } from '@apollo/client';
 import client from './apollo';
 import Header from './header';
 import Search from './page/search';
-import Introduction from './page/introduction';
+import Project from './page/project';
 
 const App = (): ReactElement => {
   return (
@@ -13,7 +13,7 @@ const App = (): ReactElement => {
         <Header />
         <Switch>
           <Route path="/search" component={Search} />
-          <Route path="" component={Introduction} />
+          <Route path="" component={Project} />
         </Switch>
       </BrowserRouter>
     </ApolloProvider>

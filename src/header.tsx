@@ -22,7 +22,6 @@ import InputBase from '@material-ui/core/InputBase';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     brandLink: {
-      flex: 'none',
       margin: theme.spacing(1, 1.5),
 
       '&:hover': {
