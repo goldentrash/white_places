@@ -1,0 +1,22 @@
+schema: 'lambda/typeDefs/**/!(index).ts'
+documents: 'src/documents/**/*.graphql'
+
+extensions:
+  codegen:
+    overwrite: true
+
+    generates:
+      # for resolvers
+      codegen/resolver-types.ts:
+        config:
+          useIndexSignature: true
+        plugins:
+          - typescript
+          - typescript-resolvers
+
+      # for react hooks
+      codegen/document-types.ts:
+        plugins:
+          - typescript
+          - typescript-operations
+          - typescript-react-apollo

@@ -1,7 +1,0 @@
-# lintting (no warning)
-'*.{ts,tsx}':
-  - eslint --max-warnings 0
-
-# formatting
-'(*.{config.js,toml,html,json,yaml,ts,tsx,graphql}|*rc)':
-  - prettier --write

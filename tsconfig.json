@@ -1,13 +1,13 @@
 {
-  "include": ["src/**/*", "functions/**/*"],
+  "include": ["src/**/*", "lambda/**/*"],
   "compilerOptions": {
-    "target": "es2020",
+    "target": "es6",
     "module": "commonjs",
     "types": [],
     "baseUrl": ".",
     "paths": {
       "codegen/*": ["codegen/*"],
-      "components/*": ["src/components/*"]
+      "components": ["src/components"]
     },
     "jsx": "react",
     "removeComments": true,

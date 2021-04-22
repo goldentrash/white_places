@@ -1,0 +1,30 @@
+root: true
+env:
+  browser: true
+  node: true
+parser: '@typescript-eslint/parser'
+parserOptions:
+  ecmaVersion: 2020
+  sourceType: module
+  project: tsconfig.json
+plugins:
+  - react
+  - jsx-a11y
+  - '@typescript-eslint'
+extends:
+  - eslint:recommended
+  - plugin:react/recommended
+  - plugin:react-hooks/recommended
+  - plugin:jsx-a11y/recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:@typescript-eslint/recommended-requiring-type-checking
+  - prettier
+rules:
+  # for arror function types
+  react/prop-types: off
+  '@typescript-eslint/no-unused-vars':
+    - warn
+    - argsIgnorePattern: ^_
+settings:
+  react:
+    version: detect
