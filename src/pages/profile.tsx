@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
+import React, { ReactElement } from 'react';
 
-export const Profile: FunctionComponent = () => {
+export const Profile = (): ReactElement => {
   return <div>user profile!</div>;
 };

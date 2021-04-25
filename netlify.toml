@@ -8,3 +8,11 @@ from = "/*"
 to = "/"
 status = 200
 force = false
+
+[dev]
+command = "webpack serve --port 8080 --config webpack.dev.js"
+port = 8888
+targetPort = 8080
+publish = "dist/publish"
+autoLaunch = true
+framework = "#custom"

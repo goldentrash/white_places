@@ -1,7 +1,5 @@
-import React, { FunctionComponent } from 'react';
+import React, { ReactElement } from 'react';
 
-export const introductionUrl = '/followers';
-
-export const Introduction: FunctionComponent = () => {
-  return <div>opinion list</div>;
+export const Introduction = (): ReactElement => {
+  return <div>introduction~</div>;
 };

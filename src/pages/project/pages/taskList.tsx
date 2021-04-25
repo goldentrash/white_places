@@ -1,7 +1,5 @@
-import React, { FunctionComponent } from 'react';
+import React, { ReactElement } from 'react';
 
-export const taskListUrl = '/followers';
-
-export const TaskList: FunctionComponent = () => {
+export const TaskList = (): ReactElement => {
   return <div>task list</div>;
 };

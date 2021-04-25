@@ -3,5 +3,5 @@
   - eslint --max-warnings 0
 
 # formatting
-'*.{config.js,toml,html,json,yaml,ts,tsx,graphql}':
+'*.{js,toml,html,json,yaml,ts,tsx,graphql}':
   - prettier --write

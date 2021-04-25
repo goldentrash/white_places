@@ -4,8 +4,6 @@ import { query as queryResolver } from './resolvers';
 import { query as queryTypeDefs } from './typeDefs';
 import { logger } from './plugins';
 
-const isProduction = process.env.NODE_ENV === 'production';
-
 const typeDefs = [queryTypeDefs];
 
 const resolvers: Resolvers = {
@@ -18,10 +16,10 @@ const apolloServer = new ApolloServer({
   context: () => ({}),
   dataSources: () => ({}),
   plugins: [logger],
-  introspection: false,
+  introspection: process.env.NODE_ENV !== 'production',
   uploads: false,
-  playground: !isProduction,
-  debug: !isProduction,
+  playground: process.env.NODE_ENV !== 'production',
+  debug: process.env.NODE_ENV !== 'production',
 });
 
 export const handler = apolloServer.createHandler();

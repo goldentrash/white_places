@@ -1,18 +1,20 @@
-import React, { FunctionComponent } from 'react';
+import React, { ReactElement } from 'react';
 import {
   Link as RouterLink,
   RouteComponentProps,
   Switch,
   Route,
+  matchPath,
 } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
   Tabs,
   Tab,
+  TabProps,
   Typography,
   Chip,
-  Button,
+  ChipProps,
   ButtonGroup,
   MenuItem,
 } from '@material-ui/core';
@@ -27,15 +29,11 @@ import {
   ArrowDropDown as ArrowDropDownIcon,
 } from '@material-ui/icons';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { PopoverMenu } from 'components';
+import { PopoverMenu, MenuButton } from 'components';
 import {
-  FollowerList as OpinionListPage,
-  opinionListUrl,
-  opinionListPath,
-  timelineUrl,
-  followerListUrl,
-  introductionUrl,
-  taskListUrl,
+  OpinionList as OpinionListPage,
+  Introduction as IntroductionPage,
+  TaskList as TaskListPage,
 } from './pages';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -46,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
     projectTitle: {
       margin: theme.spacing(0, 1),
     },
-    projectStateChip: {
+    statusChip: {
       marginLeft: theme.spacing(1),
     },
     topMenu: {
@@ -59,15 +57,68 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const projectPath = '/project/:id/:tab';
-type ProjectPathParams = {
-  id: string;
-  tab: string;
+const enum Path {
+  Introduction = '/introduction',
+  OpinionList = '/opinionList',
+  TaskList = '/taskList',
+  PointShop = '/pointShop',
+  FollowerList = '/followerList',
+  Timeline = '/timeline',
+}
+
+type TabKind = 'introduction' | 'opinionList' | 'taskList' | 'pointShop';
+const evalTabKind = (tab: unknown): TabKind | undefined => {
+  switch (tab) {
+    case 'introduction':
+    case 'opinionList':
+    case 'taskList':
+    case 'pointShop':
+      return tab;
+    default:
+      return undefined;
+  }
 };
 
-export const Project: FunctionComponent<
-  RouteComponentProps<ProjectPathParams>
-> = (props) => {
+const ActiveStateChip = (
+  props: Omit<ChipProps, 'isActive'> & { isActive: boolean }
+): ReactElement => {
+  const styles = useStyles();
+
+  const { isActive, ...otherProps } = props;
+
+  return (
+    <Chip
+      className={styles.statusChip}
+      color="secondary"
+      size="small"
+      variant="outlined"
+      clickable={false}
+      icon={isActive ? <CheckIcon /> : <WarningIcon />}
+      label={isActive ? 'active' : 'inactive'}
+      {...otherProps}
+    />
+  );
+};
+
+const NavTab = (
+  props: Omit<TabProps<RouterLink>, 'value'> & {
+    value: TabKind;
+  }
+): ReactElement => {
+  const { value, ...otherProps } = props;
+
+  return (
+    <Tab label={value} value={value} component={RouterLink} {...otherProps} />
+  );
+};
+
+type MatchParams = {
+  projectId?: string;
+};
+
+export const Project = (
+  props: RouteComponentProps<MatchParams>
+): ReactElement => {
   const styles = useStyles();
 
   // we will get project using lazyGraphqlQuery
@@ -83,6 +134,13 @@ export const Project: FunctionComponent<
     name: 'guest',
   };
 
+  const tab =
+    evalTabKind(
+      matchPath<MatchParams & { tab?: string }>(props.location.pathname, {
+        path: props.match.path + '/:tab',
+      })?.params?.tab
+    ) ?? false;
+
   return (
     <div>
       <AppBar position="static" elevation={0} color="default">
@@ -95,36 +153,18 @@ export const Project: FunctionComponent<
             >
               {project.title}
             </Typography>
-            <Chip
-              className={styles.projectStateChip}
-              color="secondary"
-              size="small"
-              variant="outlined"
-              clickable={false}
-              icon={project.isActive ? <CheckIcon /> : <WarningIcon />}
-              label={project.isActive ? 'active' : 'inactive'}
-            />
+            <ActiveStateChip isActive={project.isActive} />
           </div>
 
           <div className={styles.topMenu}>
-            <Button
-              startIcon={<HomeOutlinedIcon />}
-              href="/"
-              variant="outlined"
-              size="small"
-            >
+            <MenuButton startIcon={<HomeOutlinedIcon />} href="/">
               Homepage
-            </Button>
-            <Button
-              startIcon={<FileCopyOutlinedIcon />}
-              href="/"
-              variant="outlined"
-              size="small"
-            >
+            </MenuButton>
+            <MenuButton startIcon={<FileCopyOutlinedIcon />} href="/">
               Repository
-            </Button>
-            <ButtonGroup variant="outlined" size="small">
-              <Button
+            </MenuButton>
+            <ButtonGroup>
+              <MenuButton
                 startIcon={
                   project.followers.includes(user) ? (
                     <FavoriteIcon />
@@ -134,23 +174,23 @@ export const Project: FunctionComponent<
                 }
               >
                 Follow
-              </Button>
-              <Button
+              </MenuButton>
+              <MenuButton
                 component={RouterLink}
-                to={props.match.url + followerListUrl}
+                to={props.match.url + Path.FollowerList}
               >
                 {project.followers.length}
-              </Button>
+              </MenuButton>
             </ButtonGroup>
-            <ButtonGroup variant="outlined" size="small">
+            <ButtonGroup>
               <PopoverMenu
                 buttonEl={
-                  <Button
+                  <MenuButton
                     startIcon={<AssessmentOutlinedIcon />}
                     endIcon={<ArrowDropDownIcon />}
                   >
                     Contributings
-                  </Button>
+                  </MenuButton>
                 }
               >
                 <MenuItem>
@@ -159,39 +199,46 @@ export const Project: FunctionComponent<
                   <RouterLink to={props.match.url}>Submit some Task</RouterLink>
                 </MenuItem>
               </PopoverMenu>
-              <Button component={RouterLink} to={timelineUrl}>
+              <MenuButton
+                component={RouterLink}
+                to={props.match.url + Path.Timeline}
+              >
                 {project.generatedPoint}
-              </Button>
+              </MenuButton>
             </ButtonGroup>
           </div>
         </Toolbar>
 
-        <Tabs value={props.match.params.tab}>
-          <Tab
-            label="introduction"
-            value="introduction"
-            component={RouterLink}
-            to={props.match.url + introductionUrl}
+        <Tabs value={tab}>
+          <NavTab
+            value={'introduction'}
+            to={props.match.url + Path.Introduction}
           />
-          <Tab
-            label="opinion"
-            value="opinion"
-            component={RouterLink}
-            to={props.match.url + opinionListUrl}
+          <NavTab
+            value={'opinionList'}
+            to={props.match.url + Path.OpinionList}
           />
-          <Tab
-            label="task"
-            value="task"
-            component={RouterLink}
-            to={props.match.url + taskListUrl}
+          <NavTab value={'taskList'} to={props.match.url + Path.TaskList} />
+          <NavTab
+            value={'pointShop'}
+            disabled={true}
+            to={props.match.url + Path.PointShop}
           />
-          <Tab label="point shop" value="point shop" disabled={true} />
         </Tabs>
       </AppBar>
+
       <Switch>
         <Route
-          path={props.match.path + opinionListPath}
+          path={props.match.path + Path.Introduction}
+          component={IntroductionPage}
+        />
+        <Route
+          path={props.match.path + Path.OpinionList}
           component={OpinionListPage}
+        />
+        <Route
+          path={props.match.path + Path.TaskList}
+          component={TaskListPage}
         />
       </Switch>
     </div>

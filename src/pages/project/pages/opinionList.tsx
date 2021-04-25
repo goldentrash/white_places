@@ -1,8 +1,5 @@
-import React, { FunctionComponent } from 'react';
+import React, { ReactElement } from 'react';
 
-export const opinionListPath = '/opinions';
-export const opinionListUrl = '/opinions';
-
-export const OpinionList: FunctionComponent = () => {
+export const OpinionList = (): ReactElement => {
   return <div>opinion list</div>;
 };

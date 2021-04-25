@@ -1,5 +1,4 @@
 const path = require('path');
-const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
@@ -21,6 +20,12 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        include: [path.resolve('node_modules')],
+        enforce: 'pre',
+        use: ['source-map-loader'],
+      },
+      {
         test: /\.tsx?$/,
         include: [path.resolve('src'), path.resolve('codegen')],
         use: {
@@ -34,7 +39,6 @@ module.exports = {
   },
 
   plugins: [
-    new Dotenv(),
     new HtmlWebpackPlugin({
       title: 'White Places',
       template: path.resolve('public', 'index.html'),
@@ -52,8 +56,13 @@ module.exports = {
     splitChunks: false,
   },
 
-  watchOptions: {
-    ignored: ['node_modules', 'lambda'],
-    poll: 1000,
+  devServer: {
+    contentBase: path.resolve('dist', 'publish'),
+    watchContentBase: true,
+    historyApiFallback: true,
+    watchOptions: {
+      ignored: ['node_modules', 'lambda'],
+      poll: 1000,
+    },
   },
 };

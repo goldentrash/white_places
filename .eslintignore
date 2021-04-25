@@ -11,4 +11,4 @@ dist
 *.graphql
 
 # config
-*.config.js
+webpack.*

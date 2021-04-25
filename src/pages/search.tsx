@@ -1,8 +1,5 @@
-import React, { FunctionComponent } from 'react';
+import React, { ReactElement } from 'react';
 
-export const searchPath = '/search';
-export const searchUrl = '/search';
-
-export const Search: FunctionComponent = () => {
+export const Search = (): ReactElement => {
   return <div>search project!</div>;
 };

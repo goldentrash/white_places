@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
+import React, { ReactElement } from 'react';
 
-export const Timeline: FunctionComponent = () => {
+export const Timeline = (): ReactElement => {
   return <div>user timeline!</div>;
 };

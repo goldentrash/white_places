@@ -1,8 +1,5 @@
-import React, { FunctionComponent } from 'react';
+import React, { ReactElement } from 'react';
 
-export const timelinePath = '/timeline';
-export const timelineUrl = '/timeline';
-
-export const Timeline: FunctionComponent = () => {
-  return <div>opinion list</div>;
+export const Timeline = (): ReactElement => {
+  return <div>contributing timeline!</div>;
 };

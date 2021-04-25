@@ -1,10 +1,8 @@
 schema: 'lambda/typeDefs/**/!(index).ts'
 documents: 'src/documents/**/*.graphql'
-
 extensions:
   codegen:
     overwrite: true
-
     generates:
       # for resolvers
       codegen/resolver-types.ts:
@@ -13,7 +11,6 @@ extensions:
         plugins:
           - typescript
           - typescript-resolvers
-
       # for react hooks
       codegen/document-types.ts:
         plugins:

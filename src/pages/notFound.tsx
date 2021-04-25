@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
+import React, { ReactElement } from 'react';
 
-export const NotFound: FunctionComponent = () => {
+export const NotFound = (): ReactElement => {
   return <div>404 NotFound!</div>;
 };

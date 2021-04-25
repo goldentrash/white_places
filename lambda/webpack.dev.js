@@ -1,5 +1,4 @@
 const path = require('path');
-const Dotenv = require('dotenv-webpack');
 const nodeExternals = require('webpack-node-externals');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
@@ -25,6 +24,12 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        include: [path.resolve('node_modules')],
+        enforce: 'pre',
+        use: ['source-map-loader'],
+      },
+      {
         test: /\.ts$/,
         include: [path.resolve('lambda'), path.resolve('codegen')],
         use: {
@@ -36,8 +41,6 @@ module.exports = {
       },
     ],
   },
-
-  plugins: [new Dotenv()],
 
   optimization: {
     minimize: false,

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 
@@ -8,7 +8,9 @@ const theme = createMuiTheme({
   },
 });
 
-export const CssThemeProvider: FunctionComponent = (props) => {
+export const CssThemeProvider = (props: {
+  children: ReactNode;
+}): ReactElement => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

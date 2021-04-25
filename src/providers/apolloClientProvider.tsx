@@ -1,7 +1,5 @@
-import React, { FunctionComponent } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-
-const isProduction = process.env.NODE_ENV === 'production';
 
 const apolloClient = new ApolloClient({
   uri: '/.netlify/functions/graphql',
@@ -9,7 +7,7 @@ const apolloClient = new ApolloClient({
   // 현재 캐싱을 전혀 활용하지 않고 있다.
   // 추후 공부를 통해 캐싱을 활용, state management에 사용하자
   cache: new InMemoryCache(),
-  connectToDevTools: !isProduction,
+  connectToDevTools: process.env.NODE_ENV !== 'production',
 
   defaultOptions: {
     query: {
@@ -24,7 +22,9 @@ const apolloClient = new ApolloClient({
   },
 });
 
-export const ApolloClientProvider: FunctionComponent = (props) => {
+export const ApolloClientProvider = (props: {
+  children: ReactNode;
+}): ReactElement => {
   return (
     <ApolloProvider client={apolloClient}>{props.children}</ApolloProvider>
   );

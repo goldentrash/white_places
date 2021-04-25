@@ -1,9 +1,4 @@
-import React, {
-  FunctionComponent,
-  useState,
-  ChangeEventHandler,
-  FormEventHandler,
-} from 'react';
+import React, { ReactElement, useState, ChangeEvent, FormEvent } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { IconButton, Paper, InputBase } from '@material-ui/core';
 import { Search as SearchIcon } from '@material-ui/icons';
@@ -28,33 +23,23 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const initialText = '';
-
-export type SearchEventHandler = {
-  (text: string): void;
-};
-
 type SearchBoxProps = {
   placeholder?: string;
-  onSearch: SearchEventHandler;
+  onSearch(text: string): void;
 };
 
-export const SearchBox: FunctionComponent<SearchBoxProps> = (props) => {
+export const SearchBox = (props: SearchBoxProps): ReactElement => {
   const styles = useStyles();
 
-  const [text, setText] = useState<string>(initialText);
+  const [text, setText] = useState<string>('');
 
-  const handleSubmit: FormEventHandler<HTMLDivElement> = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLDivElement>): void => {
     event.preventDefault();
 
     props.onSearch(text);
-    setText(initialText);
-    // while(true); 이 함수 호출이 종료된 후 rerendering되는 것일까?
-    // 그렇지 않다면, unmount 이후 text를 수정하기 때문에 문제가 될 것이다.
+    setText('');
   };
-  const handleChange: ChangeEventHandler<
-    HTMLInputElement | HTMLTextAreaElement
-  > = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setText(event.currentTarget.value);
   };
 

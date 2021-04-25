@@ -1,25 +1,27 @@
-import React, { FunctionComponent } from 'react';
+import React, { ReactElement } from 'react';
 import {
-  BrowserRouter,
   Switch,
   Route,
   useHistory,
   Link as RouterLink,
 } from 'react-router-dom';
 import qs from 'qs';
-import { IconButton, MenuItem, AppBar, Link, Toolbar } from '@material-ui/core';
+import {
+  IconButton,
+  MenuItem,
+  AppBar,
+  Link,
+  LinkProps,
+  Toolbar,
+} from '@material-ui/core';
 import { AccountCircle as AccountCircleIcon } from '@material-ui/icons';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import {
   Search as SearchPage,
-  searchPath,
-  searchUrl,
   Project as ProjectPage,
-  projectPath,
   NotFound as NotFoundPage,
 } from './pages';
-import { Providers } from './providers';
-import { SearchBox, SearchEventHandler, PopoverMenu } from 'components';
+import { SearchBox, PopoverMenu } from 'components';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,55 +38,67 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const programTitle = 'White Places';
-const mainPageUrl = '/';
+const enum Path {
+  Main = '/',
+  Search = '/search',
+  Project = '/project/:projectId',
+}
 
-export const App: FunctionComponent = () => {
+const BrandLink = (props: LinkProps) => {
+  const styles = useStyles();
+
+  const { children, ...otherProps } = props;
+
+  return (
+    <Link
+      variant="h6"
+      component={RouterLink}
+      to={Path.Main}
+      className={styles.brandLink}
+      {...otherProps}
+    >
+      {children}
+    </Link>
+  );
+};
+
+export const App = (): ReactElement => {
   const styles = useStyles();
 
   const history = useHistory();
-  const handleSearch: SearchEventHandler = (text) => {
+  const handleSearch = (text: string): void => {
     history.push({
-      pathname: searchUrl,
+      pathname: Path.Search,
       search: qs.stringify({ text }, { addQueryPrefix: true }),
     });
   };
 
   return (
-    <Providers>
-      <BrowserRouter>
-        <AppBar position="static" color="inherit" elevation={0}>
-          <Toolbar variant="dense" className={styles.toolbar}>
-            <Link
-              variant="h6"
-              component={RouterLink}
-              to={mainPageUrl}
-              className={styles.brandLink}
+    <div>
+      <AppBar position="static" color="inherit" elevation={0}>
+        <Toolbar variant="dense" className={styles.toolbar}>
+          <BrandLink>White Places</BrandLink>
+          <div>
+            <SearchBox placeholder="search project" onSearch={handleSearch} />
+            <PopoverMenu
+              buttonEl={
+                <IconButton>
+                  <AccountCircleIcon />
+                </IconButton>
+              }
             >
-              {programTitle}
-            </Link>
-            <div>
-              <SearchBox placeholder="search project" onSearch={handleSearch} />
-              <PopoverMenu
-                buttonEl={
-                  <IconButton>
-                    <AccountCircleIcon />
-                  </IconButton>
-                }
-              >
-                <MenuItem>
-                  <a href="/">Sign in with GitHub</a>
-                </MenuItem>
-              </PopoverMenu>
-            </div>
-          </Toolbar>
-        </AppBar>
-        <Switch>
-          <Route path={searchPath} component={SearchPage} />
-          <Route path={projectPath} component={ProjectPage} />
-          <Route component={NotFoundPage} />
-        </Switch>
-      </BrowserRouter>
-    </Providers>
+              <MenuItem>
+                <a href="/">Sign in with GitHub</a>
+              </MenuItem>
+            </PopoverMenu>
+          </div>
+        </Toolbar>
+      </AppBar>
+      <Switch>
+        <Route path={Path.Search} component={SearchPage} />
+        <Route path={Path.Project} component={ProjectPage} />
+        <Route component={NotFoundPage} />
+      </Switch>
+    </div>
   );
 };
