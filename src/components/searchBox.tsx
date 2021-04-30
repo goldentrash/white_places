@@ -5,7 +5,7 @@ import { Search as SearchIcon } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
+    paper: {
       display: 'inline-block',
     },
     input: {
@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: theme.typography.body2.lineHeight,
       letterSpacing: theme.typography.body2.letterSpacing,
 
+      // now, only chrome is supported
       '&::-webkit-search-cancel-button,&::-webkit-search-decoration,&::-webkit-search-results-button,&::-webkit-search-results-decoration': {
         '-webkit-appearance': 'none',
       },
@@ -29,7 +30,7 @@ type SearchBoxProps = {
 };
 
 export const SearchBox = (props: SearchBoxProps): ReactElement => {
-  const styles = useStyles();
+  const classes = useStyles();
 
   const [text, setText] = useState<string>('');
 
@@ -46,7 +47,7 @@ export const SearchBox = (props: SearchBoxProps): ReactElement => {
   return (
     <Paper
       component="form"
-      className={styles.root}
+      classes={{ root: classes.paper }}
       onSubmit={handleSubmit}
       variant="outlined"
     >
@@ -55,7 +56,7 @@ export const SearchBox = (props: SearchBoxProps): ReactElement => {
         placeholder={props.placeholder}
         onChange={handleChange}
         type="search"
-        classes={{ input: styles.input }}
+        classes={{ input: classes.input }}
       />
       <IconButton type="submit" size="small">
         <SearchIcon />

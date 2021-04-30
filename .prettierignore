@@ -6,3 +6,6 @@ codegen
 
 # Build Output
 dist
+
+# Local Netlify folder
+.netlify

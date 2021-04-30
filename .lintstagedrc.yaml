@@ -1,7 +1,8 @@
-# lintting (no warning)
-'*.{ts,tsx}':
+# source files
+'*.{ts,tsx,graphql}':
   - eslint --max-warnings 0
+  - prettier --write
 
-# formatting
-'*.{js,toml,html,json,yaml,ts,tsx,graphql}':
+# config files
+'*.{js,toml,html,json,yaml}':
   - prettier --write

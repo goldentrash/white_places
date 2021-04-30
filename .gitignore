@@ -13,3 +13,6 @@ codegen
 
 # log
 *.log
+
+# Local Netlify folder
+.netlify

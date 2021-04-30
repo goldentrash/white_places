@@ -7,5 +7,3 @@ if (!process.env.FAUNA_SECRET) {
 export const faunaClient = new faunadb.Client({
   secret: process.env.FAUNA_SECRET,
 });
-
-export * from './createCollection';

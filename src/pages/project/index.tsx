@@ -31,9 +31,10 @@ import {
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { PopoverMenu, MenuButton } from 'components';
 import {
-  OpinionList as OpinionListPage,
-  Introduction as IntroductionPage,
-  TaskList as TaskListPage,
+  Opinions as OpinionListPage,
+  Informations as InformationListPage,
+  Tasks as TaskListPage,
+  Information as InformationPage,
 } from './pages';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
     toolbar: {
       justifyContent: 'space-between',
     },
-    projectTitle: {
+    titleTypography: {
       margin: theme.spacing(0, 1),
     },
     statusChip: {
@@ -54,41 +55,52 @@ const useStyles = makeStyles((theme: Theme) =>
         marginRight: theme.spacing(1),
       },
     },
+    navTab: {
+      textTransform: 'capitalize',
+    },
   })
 );
 
-const enum Path {
-  Introduction = '/introduction',
-  OpinionList = '/opinionList',
-  TaskList = '/taskList',
-  PointShop = '/pointShop',
-  FollowerList = '/followerList',
-  Timeline = '/timeline',
-}
-
-type TabKind = 'introduction' | 'opinionList' | 'taskList' | 'pointShop';
+type TabKind = 'informations' | 'opinions' | 'tasks' | 'pointShop';
 const evalTabKind = (tab: unknown): TabKind | undefined => {
   switch (tab) {
-    case 'introduction':
-    case 'opinionList':
-    case 'taskList':
+    case 'informations':
+    case 'opinions':
+    case 'tasks':
     case 'pointShop':
       return tab;
     default:
       return undefined;
   }
 };
+const NavTab = (
+  props: Omit<TabProps<RouterLink>, 'value'> & {
+    value: TabKind;
+  }
+): ReactElement => {
+  const classes = useStyles();
+  const { value, ...otherProps } = props;
+
+  return (
+    <Tab
+      classes={{ root: classes.navTab }}
+      label={value}
+      value={value}
+      component={RouterLink}
+      {...otherProps}
+    />
+  );
+};
 
 const ActiveStateChip = (
   props: Omit<ChipProps, 'isActive'> & { isActive: boolean }
 ): ReactElement => {
-  const styles = useStyles();
-
+  const classes = useStyles();
   const { isActive, ...otherProps } = props;
 
   return (
     <Chip
-      className={styles.statusChip}
+      classes={{ root: classes.statusChip }}
       color="secondary"
       size="small"
       variant="outlined"
@@ -100,18 +112,15 @@ const ActiveStateChip = (
   );
 };
 
-const NavTab = (
-  props: Omit<TabProps<RouterLink>, 'value'> & {
-    value: TabKind;
-  }
-): ReactElement => {
-  const { value, ...otherProps } = props;
-
-  return (
-    <Tab label={value} value={value} component={RouterLink} {...otherProps} />
-  );
-};
-
+const enum Path {
+  Information = '/informations/:title',
+  Informations = '/informations',
+  Opinions = '/opinions',
+  Tasks = '/tasks',
+  PointShop = '/pointShop',
+  Followers = '/followers',
+  Timeline = '/timeline',
+}
 type MatchParams = {
   projectId?: string;
 };
@@ -119,67 +128,66 @@ type MatchParams = {
 export const Project = (
   props: RouteComponentProps<MatchParams>
 ): ReactElement => {
-  const styles = useStyles();
+  const classes = useStyles();
 
   // we will get project using lazyGraphqlQuery
   const project = {
     isActive: true,
     title: 'white places',
     generatedPoint: 123,
-    followers: [] as Record<string, unknown>[],
+    homepageUrl: '/',
+    reposUrl: '/',
+    isFollowed: true,
+    numOfFollowers: 123,
   };
 
-  // we will get user using apollo cache
-  const user = {
-    name: 'guest',
-  };
-
-  const tab =
-    evalTabKind(
-      matchPath<MatchParams & { tab?: string }>(props.location.pathname, {
-        path: props.match.path + '/:tab',
-      })?.params?.tab
-    ) ?? false;
+  const currTab = evalTabKind(
+    matchPath<MatchParams & { tab?: string }>(props.location.pathname, {
+      path: props.match.path + '/:tab',
+    })?.params?.tab
+  );
 
   return (
     <div>
       <AppBar position="static" elevation={0} color="default">
-        <Toolbar className={styles.toolbar}>
+        <Toolbar classes={{ root: classes.toolbar }}>
           <div>
             <Typography
               variant="h4"
               display="inline"
-              className={styles.projectTitle}
+              classes={{ root: classes.titleTypography }}
             >
               {project.title}
             </Typography>
             <ActiveStateChip isActive={project.isActive} />
           </div>
 
-          <div className={styles.topMenu}>
-            <MenuButton startIcon={<HomeOutlinedIcon />} href="/">
+          <div className={classes.topMenu}>
+            <MenuButton
+              startIcon={<HomeOutlinedIcon />}
+              href={project.homepageUrl}
+            >
               Homepage
             </MenuButton>
-            <MenuButton startIcon={<FileCopyOutlinedIcon />} href="/">
+            <MenuButton
+              startIcon={<FileCopyOutlinedIcon />}
+              href={project.reposUrl}
+            >
               Repository
             </MenuButton>
             <ButtonGroup>
               <MenuButton
                 startIcon={
-                  project.followers.includes(user) ? (
-                    <FavoriteIcon />
-                  ) : (
-                    <FavoriteBorderIcon />
-                  )
+                  project.isFollowed ? <FavoriteIcon /> : <FavoriteBorderIcon />
                 }
               >
                 Follow
               </MenuButton>
               <MenuButton
                 component={RouterLink}
-                to={props.match.url + Path.FollowerList}
+                to={props.match.url + Path.Followers}
               >
-                {project.followers.length}
+                {project.numOfFollowers}
               </MenuButton>
             </ButtonGroup>
             <ButtonGroup>
@@ -209,16 +217,13 @@ export const Project = (
           </div>
         </Toolbar>
 
-        <Tabs value={tab}>
+        <Tabs value={currTab ?? false}>
           <NavTab
-            value={'introduction'}
-            to={props.match.url + Path.Introduction}
+            value={'informations'}
+            to={props.match.url + Path.Informations}
           />
-          <NavTab
-            value={'opinionList'}
-            to={props.match.url + Path.OpinionList}
-          />
-          <NavTab value={'taskList'} to={props.match.url + Path.TaskList} />
+          <NavTab value={'opinions'} to={props.match.url + Path.Opinions} />
+          <NavTab value={'tasks'} to={props.match.url + Path.Tasks} />
           <NavTab
             value={'pointShop'}
             disabled={true}
@@ -229,17 +234,18 @@ export const Project = (
 
       <Switch>
         <Route
-          path={props.match.path + Path.Introduction}
-          component={IntroductionPage}
+          path={props.match.path + Path.Information}
+          component={InformationPage}
         />
         <Route
-          path={props.match.path + Path.OpinionList}
+          path={props.match.path + Path.Informations}
+          component={InformationListPage}
+        />
+        <Route
+          path={props.match.path + Path.Opinions}
           component={OpinionListPage}
         />
-        <Route
-          path={props.match.path + Path.TaskList}
-          component={TaskListPage}
-        />
+        <Route path={props.match.path + Path.Tasks} component={TaskListPage} />
       </Switch>
     </div>
   );

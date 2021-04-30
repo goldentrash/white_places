@@ -44,26 +44,28 @@ const enum Path {
   Project = '/project/:projectId',
 }
 
-const BrandLink = (props: LinkProps) => {
-  const styles = useStyles();
+const BrandLink = (
+  props: Omit<LinkProps, 'children' | 'title'> & { title: string }
+) => {
+  const classes = useStyles();
 
-  const { children, ...otherProps } = props;
+  const { title, ...otherProps } = props;
 
   return (
     <Link
       variant="h6"
       component={RouterLink}
       to={Path.Main}
-      className={styles.brandLink}
+      classes={{ root: classes.brandLink }}
       {...otherProps}
     >
-      {children}
+      {title}
     </Link>
   );
 };
 
 export const App = (): ReactElement => {
-  const styles = useStyles();
+  const classes = useStyles();
 
   const history = useHistory();
   const handleSearch = (text: string): void => {
@@ -76,8 +78,8 @@ export const App = (): ReactElement => {
   return (
     <div>
       <AppBar position="static" color="inherit" elevation={0}>
-        <Toolbar variant="dense" className={styles.toolbar}>
-          <BrandLink>White Places</BrandLink>
+        <Toolbar variant="dense" classes={{ root: classes.toolbar }}>
+          <BrandLink title="White Palces" />
           <div>
             <SearchBox placeholder="search project" onSearch={handleSearch} />
             <PopoverMenu

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
 
-export const FollowerList = (): ReactElement => {
+export const Followers = (): ReactElement => {
   return <div>follower list</div>;
 };

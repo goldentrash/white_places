@@ -12,3 +12,6 @@ dist
 
 # config
 webpack.*
+
+# Local Netlify folder
+.netlify

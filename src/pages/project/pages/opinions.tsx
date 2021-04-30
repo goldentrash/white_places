@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
 
-export const OpinionList = (): ReactElement => {
+export const Opinions = (): ReactElement => {
   return <div>opinion list</div>;
 };

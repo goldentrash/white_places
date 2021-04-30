@@ -7,9 +7,11 @@ module.exports = {
   target: 'node',
   externals: [nodeExternals()],
 
-  entry: path.resolve('lambda', 'index.ts'),
+  entry: {
+    graphql: path.resolve('lambda', 'graphql', 'index.ts'),
+  },
   output: {
-    filename: 'graphql.js',
+    filename: '[name].js',
     path: path.resolve('dist', 'lambda'),
     pathinfo: false,
     library: {

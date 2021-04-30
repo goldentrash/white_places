@@ -11,7 +11,7 @@ import { Menu } from '@material-ui/core';
 
 const useStyles = makeStyles((_theme: Theme) =>
   createStyles({
-    menu: {
+    paper: {
       '& a': { color: 'inherit', textDecoration: 'none' },
     },
   })
@@ -23,7 +23,7 @@ type PopoverMenuProps = {
 };
 
 export const PopoverMenu = (props: PopoverMenuProps): ReactElement => {
-  const styles = useStyles();
+  const classes = useStyles();
 
   const { buttonEl, children, ...otherProps } = props;
 
@@ -40,7 +40,7 @@ export const PopoverMenu = (props: PopoverMenuProps): ReactElement => {
     <Fragment>
       {cloneElement(buttonEl, { ...otherProps, onClick: handleClick })}
       <Menu
-        className={styles.menu}
+        classes={{ paper: classes.paper }}
         keepMounted
         anchorEl={anchorEl}
         getContentAnchorEl={null}

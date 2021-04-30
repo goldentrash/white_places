@@ -4,14 +4,14 @@ extensions:
   codegen:
     overwrite: true
     generates:
-      # for resolvers
+      # for graphql server resolvers
       codegen/resolver-types.ts:
         config:
           useIndexSignature: true
         plugins:
           - typescript
           - typescript-resolvers
-      # for react hooks
+      # for react app querys
       codegen/document-types.ts:
         plugins:
           - typescript
