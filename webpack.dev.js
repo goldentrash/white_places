@@ -1,22 +1,10 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const { merge } = require('webpack-merge');
+const commonConfig = require('./webpack.common');
 
-module.exports = {
+module.exports = merge(commonConfig, {
   mode: 'development',
-  target: 'web',
 
-  entry: path.resolve('src', 'index.tsx'),
-  output: {
-    filename: 'application.js',
-    path: path.resolve('dist', 'publish'),
-    pathinfo: false,
-  },
-
-  resolve: {
-    plugins: [new TsconfigPathsPlugin({ extensions: ['.js', '.ts', '.tsx'] })],
-    extensions: ['.js', '.ts', '.tsx'],
-  },
   module: {
     rules: [
       {
@@ -25,28 +13,8 @@ module.exports = {
         enforce: 'pre',
         use: ['source-map-loader'],
       },
-      {
-        test: /\.tsx?$/,
-        include: [path.resolve('src'), path.resolve('codegen')],
-        use: {
-          loader: 'ts-loader',
-          options: {
-            transpileOnly: true,
-          },
-        },
-      },
     ],
   },
-
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'White Places',
-      template: path.resolve('public', 'index.html'),
-      favicon: path.resolve('public', 'favicon.png'),
-      showErrors: true,
-      publicPath: '/',
-    }),
-  ],
 
   optimization: {
     minimize: false,
@@ -65,4 +33,4 @@ module.exports = {
       poll: 1000,
     },
   },
-};
+});

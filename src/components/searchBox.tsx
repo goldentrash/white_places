@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type SearchBoxProps = {
+export type SearchBoxProps = {
   placeholder?: string;
   onSearch(text: string): void;
 };

@@ -1,8 +1,13 @@
-schema: 'lambda/typeDefs/**/!(index).ts'
+schema: 'lambda/graphql/typeDefs/**/!(index).ts'
 documents: 'src/documents/**/*.graphql'
 extensions:
   codegen:
     overwrite: true
+    config:
+      constEnums: true
+      immutableTypes: true
+      avoidOptionals: true
+      nonOptionalTypename: true
     generates:
       # for graphql server resolvers
       codegen/resolver-types.ts:
@@ -10,7 +15,8 @@ extensions:
           useIndexSignature: true
         plugins:
           - typescript
-          - typescript-resolvers
+          - typescript-resolvers:
+              avoidOptionals: false
       # for react app querys
       codegen/document-types.ts:
         plugins:

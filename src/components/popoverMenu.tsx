@@ -17,7 +17,7 @@ const useStyles = makeStyles((_theme: Theme) =>
   })
 );
 
-type PopoverMenuProps = {
+export type PopoverMenuProps = {
   buttonEl: ReactElement;
   children?: ReactNode;
 };

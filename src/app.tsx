@@ -75,6 +75,20 @@ export const App = (): ReactElement => {
     });
   };
 
+  const questMenus = (
+    <PopoverMenu
+      buttonEl={
+        <IconButton>
+          <AccountCircleIcon />
+        </IconButton>
+      }
+    >
+      <MenuItem>
+        <a href="/">Sign in with GitHub</a>
+      </MenuItem>
+    </PopoverMenu>
+  );
+
   return (
     <div>
       <AppBar position="static" color="inherit" elevation={0}>
@@ -82,17 +96,7 @@ export const App = (): ReactElement => {
           <BrandLink title="White Palces" />
           <div>
             <SearchBox placeholder="search project" onSearch={handleSearch} />
-            <PopoverMenu
-              buttonEl={
-                <IconButton>
-                  <AccountCircleIcon />
-                </IconButton>
-              }
-            >
-              <MenuItem>
-                <a href="/">Sign in with GitHub</a>
-              </MenuItem>
-            </PopoverMenu>
+            {questMenus}
           </div>
         </Toolbar>
       </AppBar>

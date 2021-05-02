@@ -1,0 +1,14 @@
+query GetProjectInfo($id: ID!) {
+  project(id: $id) {
+    title
+    isActive
+    repositoryUrl
+    homepageUrl
+    isFollowed
+    numOfFollowers
+    numOfGeneratedPoint
+    numOfInformations
+    numOfOpinions
+    numOfTasks
+  }
+}

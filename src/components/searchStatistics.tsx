@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type SearchStatisticsProps = {
+export type SearchStatisticsProps = {
   numberOfResult: number;
   type: string;
 };

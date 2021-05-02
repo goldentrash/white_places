@@ -40,7 +40,7 @@ const componentsMap = {
   },
 };
 
-type MarkdownProps = {
+export type MarkdownProps = {
   children: string;
 };
 

@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type ListItemProps = {
+export type ListItemProps = {
   title: string;
   pageUrl: string;
 };

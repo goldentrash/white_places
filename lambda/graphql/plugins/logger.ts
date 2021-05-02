@@ -15,7 +15,7 @@ export const logger: ApolloServerPlugin = {
     console.log(
       `${LogLevel.Info} - ${new Date().toString()}: Get ${
         operationName ?? 'anonymous'
-      } request`
+      }`
     );
 
     return {

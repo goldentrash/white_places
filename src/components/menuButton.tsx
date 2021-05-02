@@ -10,8 +10,13 @@ const useStyles = makeStyles((_theme: Theme) =>
   })
 );
 
+export type MenuButtonProps<C extends ElementType> = ButtonProps<
+  C,
+  { component?: C }
+>;
+
 export const MenuButton = <C extends ElementType>(
-  props: ButtonProps<C, { component?: C }>
+  props: MenuButtonProps<C>
 ): ReactElement => {
   const classes = useStyles();
   const { children, ...otherProps } = props;

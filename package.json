@@ -9,11 +9,11 @@
     "start": "npm-run-all --parallel watch:lambda start:client",
     "start:client": "netlify dev",
     "watch:lambda": "webpack watch --config lambda/webpack.dev.js",
-    "prebuild": "yarn run generate:codegen",
+    "prebuild": "yarn run gen:codegen",
     "build": "yarn run build:client && yarn run build:lambda",
     "build:client": "webpack --config webpack.prod.js",
     "build:lambda": "webpack --config lambda/webpack.prod.js",
-    "generate:codegen": "graphql-codegen --config .graphqlrc.yaml",
+    "gen:codegen": "graphql-codegen --config .graphqlrc.yaml",
     "check:type": "tsc --noEmit",
     "test": "echo \"have no test yet\""
   },
@@ -21,6 +21,7 @@
     "@apollo/client": "^3.3.12",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "ajv": "^8.2.0",
     "apollo-datasource-rest": "^0.12.0",
     "apollo-server-lambda": "^2.21.0",
     "colors": "^1.4.0",
@@ -66,6 +67,7 @@
     "webpack": "^5.20.2",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3",
     "webpack-node-externals": "^2.5.2"
   }
 }

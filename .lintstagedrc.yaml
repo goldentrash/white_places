@@ -1,8 +1,8 @@
 # source files
-'*.{ts,tsx,graphql}':
+'*.{ts,tsx}':
   - eslint --max-warnings 0
   - prettier --write
 
 # config files
-'*.{js,toml,html,json,yaml}':
+'*.{js,toml,json,yaml,html,graphql}':
   - prettier --write
