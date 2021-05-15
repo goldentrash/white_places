@@ -6,7 +6,6 @@ extensions:
     config:
       constEnums: true
       immutableTypes: true
-      avoidOptionals: true
       nonOptionalTypename: true
     generates:
       # for graphql server resolvers
@@ -16,9 +15,10 @@ extensions:
         plugins:
           - typescript
           - typescript-resolvers:
-              avoidOptionals: false
       # for react app querys
       codegen/document-types.ts:
+        config:
+          avoidOptionals: true
         plugins:
           - typescript
           - typescript-operations

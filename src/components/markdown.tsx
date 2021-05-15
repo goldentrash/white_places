@@ -14,20 +14,29 @@ const useStyles = makeStyles((_theme: Theme) =>
   })
 );
 
-const InlineCodeBlock = (props: { children?: ReactNode }) => {
+type InlineCodeBlockProps = {
+  children?: ReactNode;
+};
+const InlineCodeBlock = ({ children }: InlineCodeBlockProps) => {
   const classes = useStyles();
 
-  return <code className={classes.code}>{props.children}</code>;
+  return <code className={classes.code}>{children}</code>;
 };
 
+type CodeProps = {
+  node: Record<string, unknown>;
+  children: ReactNode[];
+  className?: string;
+  inline?: boolean;
+};
 const componentsMap = {
-  code(props: {
-    node: Record<string, unknown>;
-    children: ReactNode[];
-    className?: string;
-    inline?: boolean;
-  }): ReactNode {
-    const { node, children, className, inline, ...otherProps } = props;
+  code({
+    node,
+    children,
+    className,
+    inline,
+    ...otherProps
+  }: CodeProps): ReactNode {
     const language = /language-(\w+)/.exec(className || '')?.[1];
 
     return inline ? (
@@ -43,11 +52,10 @@ const componentsMap = {
 export type MarkdownProps = {
   children: string;
 };
-
-export const Markdown = (props: MarkdownProps): ReactElement => {
+export const Markdown = ({ children }: MarkdownProps): ReactElement => {
   return (
     <ReactMarkdown remarkPlugins={[gfm]} components={componentsMap}>
-      {props.children}
+      {children}
     </ReactMarkdown>
   );
 };

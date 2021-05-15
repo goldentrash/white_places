@@ -26,6 +26,7 @@ export const logger: ApolloServerPlugin = {
               error.message
             } at ${operationName ?? 'anonymous'}`
           );
+          console.error(error.stack);
         });
       },
 

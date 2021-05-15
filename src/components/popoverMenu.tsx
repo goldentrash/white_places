@@ -1,5 +1,4 @@
 import React, {
-  ReactNode,
   useState,
   Fragment,
   cloneElement,
@@ -7,7 +6,8 @@ import React, {
   MouseEvent,
 } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Menu } from '@material-ui/core';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles((_theme: Theme) =>
   createStyles({
@@ -18,17 +18,17 @@ const useStyles = makeStyles((_theme: Theme) =>
 );
 
 export type PopoverMenuProps = {
-  buttonEl: ReactElement;
-  children?: ReactNode;
+  button: ReactElement;
+  items: ReactElement[];
 };
-
-export const PopoverMenu = (props: PopoverMenuProps): ReactElement => {
+export const PopoverMenu = ({
+  button,
+  items,
+  ...otherProps
+}: PopoverMenuProps): ReactElement => {
   const classes = useStyles();
 
-  const { buttonEl, children, ...otherProps } = props;
-
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
   const handleClick = (event: MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
   };
@@ -38,7 +38,7 @@ export const PopoverMenu = (props: PopoverMenuProps): ReactElement => {
 
   return (
     <Fragment>
-      {cloneElement(buttonEl, { ...otherProps, onClick: handleClick })}
+      {cloneElement(button, { ...otherProps, onClick: handleClick })}
       <Menu
         classes={{ paper: classes.paper }}
         keepMounted
@@ -48,7 +48,9 @@ export const PopoverMenu = (props: PopoverMenuProps): ReactElement => {
         onClose={handleClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        {children}
+        {items.map((item) => (
+          <MenuItem key={item.key}>{item}</MenuItem>
+        ))}
       </Menu>
     </Fragment>
   );

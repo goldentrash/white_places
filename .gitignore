@@ -6,6 +6,9 @@ dist
 
 # auto generated
 codegen
+# how about
+# -types
+# 이러면 resolvertype은 lambda 내부 폴더에, documenttype은 src 내부에 가능하다
 
 # secret
 .env

@@ -1,7 +1,9 @@
 import React, { ReactElement, useState, ChangeEvent, FormEvent } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { IconButton, Paper, InputBase } from '@material-ui/core';
-import { Search as SearchIcon } from '@material-ui/icons';
+import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+import InputBase, { InputBaseProps } from '@material-ui/core/InputBase';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,27 +19,32 @@ const useStyles = makeStyles((theme: Theme) =>
       letterSpacing: theme.typography.body2.letterSpacing,
 
       // now, only chrome is supported
-      '&::-webkit-search-cancel-button,&::-webkit-search-decoration,&::-webkit-search-results-button,&::-webkit-search-results-decoration': {
-        '-webkit-appearance': 'none',
-      },
+      '&::-webkit-search-cancel-button,&::-webkit-search-decoration,&::-webkit-search-results-button,&::-webkit-search-results-decoration':
+        {
+          '-webkit-appearance': 'none',
+        },
     },
   })
 );
 
 export type SearchBoxProps = {
   placeholder?: string;
-  onSearch(text: string): void;
-};
-
-export const SearchBox = (props: SearchBoxProps): ReactElement => {
+  onSearch?: (text: string) => void;
+} & InputBaseProps;
+export const SearchBox = ({
+  onSearch,
+  placeholder,
+  ...otherProps
+}: SearchBoxProps): ReactElement => {
   const classes = useStyles();
 
   const [text, setText] = useState<string>('');
-
   const handleSubmit = (event: FormEvent<HTMLDivElement>): void => {
     event.preventDefault();
 
-    props.onSearch(text);
+    if (onSearch) {
+      onSearch(text);
+    }
     setText('');
   };
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -53,10 +60,11 @@ export const SearchBox = (props: SearchBoxProps): ReactElement => {
     >
       <InputBase
         value={text}
-        placeholder={props.placeholder}
+        placeholder={placeholder}
         onChange={handleChange}
         type="search"
         classes={{ input: classes.input }}
+        {...otherProps}
       />
       <IconButton type="submit" size="small">
         <SearchIcon />

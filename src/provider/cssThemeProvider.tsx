@@ -1,6 +1,7 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement } from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { CssBaseline } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ProviderProps } from './index';
 
 const theme = createMuiTheme({
   typography: {
@@ -8,13 +9,11 @@ const theme = createMuiTheme({
   },
 });
 
-export const CssThemeProvider = (props: {
-  children: ReactNode;
-}): ReactElement => {
+export const CssThemeProvider = ({ children }: ProviderProps): ReactElement => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {props.children}
+      {children}
     </ThemeProvider>
   );
 };
