@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { PageList } from 'components';
-import { Url } from './routes';
+import { urlBuilder } from 'helper';
 
 export const Documents = (): ReactElement => {
   const documents = [{ id: '123123', title: 'asdf' }];
@@ -13,7 +13,7 @@ export const Documents = (): ReactElement => {
           <PageList.Item
             key={doc.id}
             title={doc.title}
-            pageUrl={Url.Document(doc.id)}
+            pageUrl={urlBuilder.document('pid', doc.id)}
           />
         );
       })}

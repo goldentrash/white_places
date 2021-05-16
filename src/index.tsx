@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { App } from './app';
 import Provider from './provider';
+import { Router } from './router';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider.CssTheme>
       <Provider.ApolloClient>
         <Provider.ReactRouter>
-          <App />
+          <Router />
         </Provider.ReactRouter>
       </Provider.ApolloClient>
     </Provider.CssTheme>

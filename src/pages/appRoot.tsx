@@ -1,9 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Routes, Route, Link as RouterLink } from 'react-router-dom';
-import { Path, Url } from './routes';
-import { NotFound } from './notFound';
-import { Project } from './project';
-import { Introduction } from './introduction';
+import { Link as RouterLink, Outlet } from 'react-router-dom';
 import { SearchBox, PopoverMenu } from 'components';
 import IconButton from '@material-ui/core/IconButton';
 import AppBar from '@material-ui/core/AppBar';
@@ -11,6 +7,7 @@ import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { urlBuilder } from 'helper';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,14 +30,11 @@ type BrandLinkProps = {
 const BrandLink = ({ brandTitle }: BrandLinkProps): ReactElement => {
   const classes = useStyles();
 
-  // will use apollo local variables
-  const isLogin = false;
-
   return (
     <Link
       variant="h6"
       component={RouterLink}
-      to={isLogin ? Url.Profile('') : Url.Introduction()}
+      to={urlBuilder.introduction()}
       classes={{ root: classes.brandLink }}
     >
       {brandTitle}
@@ -49,14 +43,6 @@ const BrandLink = ({ brandTitle }: BrandLinkProps): ReactElement => {
 };
 
 const AccountMenu = (): ReactElement => {
-  // will use apollo local variables
-  const isLogin = false;
-
-  const userMenu: ReactElement[] = [
-    <button disabled key="logOut">
-      Log Out
-    </button>,
-  ];
   const guestMenu: ReactElement[] = [
     <button disabled key="githubLogIng">
       Sign in with GitHub
@@ -70,12 +56,12 @@ const AccountMenu = (): ReactElement => {
           <AccountCircleIcon />
         </IconButton>
       }
-      items={isLogin ? userMenu : guestMenu}
+      items={guestMenu}
     />
   );
 };
 
-export const App = (): ReactElement => {
+export const AppRoot = (): ReactElement => {
   const classes = useStyles();
 
   return (
@@ -90,11 +76,7 @@ export const App = (): ReactElement => {
         </Toolbar>
       </AppBar>
 
-      <Routes>
-        <Route path={Path.NotFound} element={<NotFound />} />
-        <Route path={Path.Introduction} element={<Introduction />} />
-        <Route path={Path.Project} element={<Project />} />
-      </Routes>
+      <Outlet />
     </div>
   );
 };

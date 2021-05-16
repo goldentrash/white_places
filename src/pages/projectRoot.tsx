@@ -1,21 +1,14 @@
 import React, { ReactElement } from 'react';
-import { Routes, Route, NavLink, useParams } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
-import StoreIcon from '@material-ui/icons/Store';
-import WarningIcon from '@material-ui/icons/Warning';
-import CheckIcon from '@material-ui/icons/Check';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Menu } from 'components';
-import { Path } from './routes';
-import { Document } from './document';
-import { Documents } from './documents';
+import { urlBuilder } from 'helper';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,9 +30,6 @@ const useStyles = makeStyles((theme: Theme) =>
 const TitleAndBadges = (): ReactElement => {
   const classes = useStyles();
 
-  const { projectId } = useParams();
-  const states = ['active'];
-
   return (
     <div>
       <Typography
@@ -47,7 +37,7 @@ const TitleAndBadges = (): ReactElement => {
         display="inline"
         classes={{ root: classes.titleTypography }}
       >
-        Sample Project Title (ID: {projectId})
+        Sample Project Title
       </Typography>
       <Chip
         classes={{ root: classes.statusChip }}
@@ -55,8 +45,7 @@ const TitleAndBadges = (): ReactElement => {
         size="small"
         variant="outlined"
         clickable={false}
-        icon={states.includes('active') ? <CheckIcon /> : <WarningIcon />}
-        label={states.includes('active') ? 'active' : 'inactive'}
+        label={'active'}
       />
     </div>
   );
@@ -67,8 +56,6 @@ const LinksAndMenu = (): ReactElement => {
     { name: 'homepages', href: '/' },
     { name: 'github', href: '/' },
   ];
-  // will calcuateated by user query?
-  const isFollowed = true;
 
   return (
     <Menu>
@@ -80,12 +67,8 @@ const LinksAndMenu = (): ReactElement => {
         );
       })}
 
-      <Menu.Item
-        startIcon={isFollowed ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-      >
-        Follow
-      </Menu.Item>
-      <Menu.Item startIcon={<StoreIcon />}>Point Shop</Menu.Item>
+      <Menu.Item>Follow</Menu.Item>
+      <Menu.Item>Point Shop</Menu.Item>
     </Menu>
   );
 };
@@ -97,15 +80,15 @@ const NavTabs = (): ReactElement => {
         label="Documents"
         // activeClassName={}
         component={NavLink}
-        to={Path.Documents}
+        to={urlBuilder.documents('asdf')}
       />
-      <Tab label="Followers" component={NavLink} to={Path.Followers} />
-      <Tab label="Timeline" component={NavLink} to={Path.Timeline} />
+      <Tab label="Followers" component={NavLink} to="" />
+      <Tab label="Timeline" component={NavLink} to="" />
     </Tabs>
   );
 };
 
-export const Project = (): ReactElement => {
+export const ProjectRoot = (): ReactElement => {
   const classes = useStyles();
 
   return (
@@ -118,10 +101,7 @@ export const Project = (): ReactElement => {
         <NavTabs />
       </AppBar>
 
-      <Routes>
-        <Route path={Path.Document} element={<Document />} />
-        <Route path={Path.Documents} element={<Documents />} />
-      </Routes>
+      <Outlet />
     </div>
   );
 };
