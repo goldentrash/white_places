@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode, ElementType } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -21,11 +21,8 @@ export const Menu = ({ children }: MenuProps): ReactElement => {
 
   return <div className={classes.root}>{children}</div>;
 };
+export default Menu;
 
-export { ItemProps as MenuItemProps } from './item';
-import { Item } from './item';
+import Item, { ItemProps } from './item';
+export type MenuItemProps<Component extends ElementType> = ItemProps<Component>;
 Menu.Item = Item;
-
-export { ButtonGroupProps as MenuItemGroupProps } from '@material-ui/core/ButtonGroup';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-Menu.ItemGroup = ButtonGroup;

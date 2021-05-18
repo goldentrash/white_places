@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
-import { PageList } from 'components';
-import { urlBuilder } from 'helper';
+import PageList from 'components/pageList';
+import urlBuilder from 'helpers/urlBuilder';
 
 export const Documents = (): ReactElement => {
-  const documents = [{ id: '123123', title: 'asdf' }];
+  const documents = [{ id: '123123', title: 'introduction' }];
 
   return (
     <PageList>
@@ -13,10 +13,11 @@ export const Documents = (): ReactElement => {
           <PageList.Item
             key={doc.id}
             title={doc.title}
-            pageUrl={urlBuilder.document('pid', doc.id)}
+            pageUrl={urlBuilder.document('white_places', doc.title)}
           />
         );
       })}
     </PageList>
   );
 };
+export default Documents;

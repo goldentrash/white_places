@@ -72,3 +72,4 @@ export const SearchBox = ({
     </Paper>
   );
 };
+export default SearchBox;

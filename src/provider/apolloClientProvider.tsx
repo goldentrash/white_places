@@ -1,6 +1,5 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import { ProviderProps } from './index';
 
 const apolloClient = new ApolloClient({
   uri: '/.netlify/functions/graphql',
@@ -20,8 +19,12 @@ const apolloClient = new ApolloClient({
   },
 });
 
+export type ApolloClientProviderProps = {
+  children: ReactNode;
+};
 export const ApolloClientProvider = ({
   children,
-}: ProviderProps): ReactElement => {
+}: ApolloClientProviderProps): ReactElement => {
   return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
 };
+export default ApolloClientProvider;

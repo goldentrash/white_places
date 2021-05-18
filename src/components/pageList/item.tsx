@@ -30,3 +30,4 @@ export const Item = ({ title, pageUrl }: ItemProps): ReactElement => {
     </Card>
   );
 };
+export default Item;

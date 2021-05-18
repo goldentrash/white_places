@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Provider from './provider';
-import { Router } from './router';
+import Router from './router';
 
 ReactDOM.render(
   <React.StrictMode>

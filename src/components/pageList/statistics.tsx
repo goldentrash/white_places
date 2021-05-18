@@ -1,5 +1,5 @@
 import React, { ReactElement, Fragment } from 'react';
-import Divider from '@material-ui/core/Divider'; // 이건 그냥 index에서 구분하도록 하는게 낫지 않나?
+import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
@@ -30,3 +30,4 @@ export const Statistics = ({
     </Fragment>
   );
 };
+export default Statistics;

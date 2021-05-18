@@ -55,3 +55,4 @@ export const PopoverMenu = ({
     </Fragment>
   );
 };
+export default PopoverMenu;

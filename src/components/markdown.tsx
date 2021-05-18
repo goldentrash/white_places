@@ -59,3 +59,4 @@ export const Markdown = ({ children }: MarkdownProps): ReactElement => {
     </ReactMarkdown>
   );
 };
+export default Markdown;

@@ -5,11 +5,12 @@ export type PageListProps = ContainerProps;
 export const PageList = ({ children }: PageListProps): ReactElement => {
   return <Container>{children}</Container>;
 };
+export default PageList;
 
-export { StatisticsProps as PageListStatisticsProps } from './statistics';
-import { Statistics } from './statistics';
+import Statistics, { StatisticsProps } from './statistics';
+export type PageListStatisticsProps = StatisticsProps;
 PageList.Statistics = Statistics;
 
-export { ItemProps as PageListItemProps } from './item';
-import { Item } from './item';
+import Item, { ItemProps } from './item';
+export type PageListItemProps = ItemProps;
 PageList.Item = Item;

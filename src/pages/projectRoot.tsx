@@ -12,8 +12,8 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Menu } from 'components';
-import { urlBuilder } from 'helper';
+import Menu from 'components/menu';
+import urlBuilder from 'helpers/urlBuilder';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -72,8 +72,8 @@ const LinksAndMenu = (): ReactElement => {
         );
       })}
 
-      <Menu.Item>Follow</Menu.Item>
       <Menu.Item>Point Shop</Menu.Item>
+      <Menu.Item>Follow</Menu.Item>
     </Menu>
   );
 };
@@ -84,20 +84,29 @@ const NavTabs = (): ReactElement => {
   const tabs = [
     {
       label: 'Documents',
-      to: urlBuilder.documents('pid'),
+      to: urlBuilder.documents('white_places'),
+      value: 0,
     },
-    { label: 'Followers', to: 'tt' },
-    { label: 'Timeline', to: '' },
+    { label: 'Followers', to: 'tt', value: 1 },
+    { label: 'Timeline', to: '', value: 2 },
+    { label: 'setting', to: 'dd', value: 3 },
   ];
 
-  const selectedIndex = tabs.findIndex(({ to }) =>
-    matchPath(to, currLocation.pathname)
-  );
-
   return (
-    <Tabs value={selectedIndex !== -1 ? selectedIndex : false}>
-      {tabs.map(({ label, to }) => (
-        <Tab key={to} label={label} component={RouterLink} to={to} />
+    <Tabs
+      value={
+        tabs.find(({ to }) => matchPath(`${to}/*`, currLocation.pathname))
+          ?.value ?? false
+      }
+    >
+      {tabs.map(({ label, to, value }) => (
+        <Tab
+          key={value}
+          value={value}
+          label={label}
+          component={RouterLink}
+          to={to}
+        />
       ))}
     </Tabs>
   );
@@ -106,6 +115,7 @@ const NavTabs = (): ReactElement => {
 export const ProjectRoot = (): ReactElement => {
   const classes = useStyles();
 
+  // if project exist!
   return (
     <div>
       <AppBar position="static" elevation={0} color="default">
@@ -120,3 +130,4 @@ export const ProjectRoot = (): ReactElement => {
     </div>
   );
 };
+export default ProjectRoot;

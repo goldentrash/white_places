@@ -28,3 +28,4 @@ export const Item = <Component extends ElementType>({
     </Button>
   );
 };
+export default Item;

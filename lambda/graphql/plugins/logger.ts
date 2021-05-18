@@ -40,3 +40,5 @@ export const logger: ApolloServerPlugin = {
     };
   },
 };
+
+export default logger;

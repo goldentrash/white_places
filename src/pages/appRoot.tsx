@@ -1,13 +1,14 @@
 import React, { ReactElement } from 'react';
 import { Link as RouterLink, Outlet } from 'react-router-dom';
-import { SearchBox, PopoverMenu } from 'components';
+import SearchBox from 'components/searchBox';
+import PopoverMenu from 'components/popoverMenu';
 import IconButton from '@material-ui/core/IconButton';
 import AppBar from '@material-ui/core/AppBar';
 import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { urlBuilder } from 'helper';
+import urlBuilder from 'helpers/urlBuilder';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -80,3 +81,4 @@ export const AppRoot = (): ReactElement => {
     </div>
   );
 };
+export default AppRoot;

@@ -1,14 +1,11 @@
 import React, { ReactElement } from 'react';
 import { useRoutes, Outlet } from 'react-router-dom';
-import {
-  AppRoot,
-  Introduction,
-  NotFound,
-  ProjectRoot,
-  Documents,
-  Document,
-  Error,
-} from './pages';
+import AppRoot from './pages/appRoot';
+import NavigateToMain from './pages/navigateToMain';
+import NotFound from './pages/notFound';
+import ProjectRoot from './pages/projectRoot';
+import Document from './pages/document';
+import Documents from './pages/documents';
 
 const routes = [
   {
@@ -16,9 +13,9 @@ const routes = [
     element: <AppRoot />,
     children: [
       { path: '*', element: <NotFound /> },
-      { path: '/', element: <Introduction /> },
+      { path: '/', element: <NavigateToMain /> },
       {
-        path: 'project/:projectId',
+        path: 'projects/:projectTitle',
         element: <ProjectRoot />,
         children: [
           { path: '*', element: <NotFound /> },
@@ -28,7 +25,7 @@ const routes = [
             children: [
               { path: '/', element: <Documents /> },
               {
-                path: ':documentId',
+                path: ':documentTitle',
                 element: <Document />,
               },
             ],
@@ -40,5 +37,12 @@ const routes = [
 ];
 
 export const Router = (): ReactElement => {
-  return useRoutes(routes) ?? <Error />;
+  const elements = useRoutes(routes);
+
+  if (!elements) {
+    throw Error();
+  }
+
+  return elements;
 };
+export default Router;
