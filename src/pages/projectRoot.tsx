@@ -1,5 +1,10 @@
 import React, { ReactElement } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import {
+  Link as RouterLink,
+  Outlet,
+  useLocation,
+  matchPath,
+} from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tabs from '@material-ui/core/Tabs';
@@ -74,16 +79,26 @@ const LinksAndMenu = (): ReactElement => {
 };
 
 const NavTabs = (): ReactElement => {
+  const currLocation = useLocation();
+
+  const tabs = [
+    {
+      label: 'Documents',
+      to: urlBuilder.documents('pid'),
+    },
+    { label: 'Followers', to: 'tt' },
+    { label: 'Timeline', to: '' },
+  ];
+
+  const selectedIndex = tabs.findIndex(({ to }) =>
+    matchPath(to, currLocation.pathname)
+  );
+
   return (
-    <Tabs value={false}>
-      <Tab
-        label="Documents"
-        // activeClassName={}
-        component={NavLink}
-        to={urlBuilder.documents('asdf')}
-      />
-      <Tab label="Followers" component={NavLink} to="" />
-      <Tab label="Timeline" component={NavLink} to="" />
+    <Tabs value={selectedIndex !== -1 ? selectedIndex : false}>
+      {tabs.map(({ label, to }) => (
+        <Tab key={to} label={label} component={RouterLink} to={to} />
+      ))}
     </Tabs>
   );
 };

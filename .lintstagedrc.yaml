@@ -2,7 +2,9 @@
 '*.{ts,tsx}':
   - eslint --max-warnings 0
   - prettier --write
+'*.{html,graphql}':
+  - prettier --write
 
 # config files
-'*.{js,toml,json,yaml,html,graphql}':
+'*.{js,toml,json,yaml}':
   - prettier --write
