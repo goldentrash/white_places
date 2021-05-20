@@ -59,7 +59,7 @@ const TitleAndBadges = (): ReactElement => {
 const LinksAndMenu = (): ReactElement => {
   const links = [
     { name: 'homepages', href: '/' },
-    { name: 'github', href: '/' },
+    { name: 'git hub', href: '/' },
   ];
 
   return (
@@ -73,36 +73,50 @@ const LinksAndMenu = (): ReactElement => {
       })}
 
       <Menu.Item>Point Shop</Menu.Item>
-      <Menu.Item>Follow</Menu.Item>
+      <Menu.Item>Watch</Menu.Item>
     </Menu>
   );
 };
 
 const NavTabs = (): ReactElement => {
+  const classes = useStyles();
+
   const currLocation = useLocation();
 
   const tabs = [
+    { label: 'Helps', to: 'help' },
+    { label: 'Opinions', to: urlBuilder.opinions('white_places') },
+    { label: 'Tasks', to: 'task' },
     {
       label: 'Documents',
       to: urlBuilder.documents('white_places'),
-      value: 0,
     },
-    { label: 'Followers', to: 'tt', value: 1 },
-    { label: 'Timeline', to: '', value: 2 },
-    { label: 'setting', to: 'dd', value: 3 },
+    { label: 'Timeline', to: 'timeline' },
+    { label: 'setting', to: 'setting' },
   ];
+
+  const negative1ToNull = (idx: number): number | null => {
+    if (idx === -1) {
+      return null;
+    } else {
+      return idx;
+    }
+  };
 
   return (
     <Tabs
       value={
-        tabs.find(({ to }) => matchPath(`${to}/*`, currLocation.pathname))
-          ?.value ?? false
+        negative1ToNull(
+          tabs.findIndex(({ to }) =>
+            matchPath(`${to}/*`, currLocation.pathname)
+          )
+        ) ?? false
       }
     >
-      {tabs.map(({ label, to, value }) => (
+      {tabs.map(({ label, to }) => (
         <Tab
-          key={value}
-          value={value}
+          classes={{ root: classes.navTab }}
+          key={`${label}:${to}`}
           label={label}
           component={RouterLink}
           to={to}

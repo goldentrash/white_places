@@ -6,6 +6,7 @@ import NotFound from './pages/notFound';
 import ProjectRoot from './pages/projectRoot';
 import Document from './pages/document';
 import Documents from './pages/documents';
+import Opinions from './pages/opinions';
 
 const routes = [
   {
@@ -29,6 +30,10 @@ const routes = [
                 element: <Document />,
               },
             ],
+          },
+          {
+            path: 'opinions',
+            element: <Opinions />,
           },
         ],
       },

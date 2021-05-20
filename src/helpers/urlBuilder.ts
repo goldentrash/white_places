@@ -16,4 +16,9 @@ export default {
       documentTitle,
     });
   },
+  opinions(projectTitle: string): string {
+    return generatePath('/projects/:projectTitle/opinions', {
+      projectTitle,
+    });
+  },
 };

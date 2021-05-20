@@ -2,7 +2,7 @@ import React, { ReactElement, useState, ChangeEvent, FormEvent } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
-import InputBase, { InputBaseProps } from '@material-ui/core/InputBase';
+import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -30,11 +30,10 @@ const useStyles = makeStyles((theme: Theme) =>
 export type SearchBoxProps = {
   placeholder?: string;
   onSearch?: (text: string) => void;
-} & InputBaseProps;
+};
 export const SearchBox = ({
   onSearch,
   placeholder,
-  ...otherProps
 }: SearchBoxProps): ReactElement => {
   const classes = useStyles();
 
@@ -64,7 +63,6 @@ export const SearchBox = ({
         onChange={handleChange}
         type="search"
         classes={{ input: classes.input }}
-        {...otherProps}
       />
       <IconButton type="submit" size="small">
         <SearchIcon />

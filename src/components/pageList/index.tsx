@@ -2,8 +2,11 @@ import React, { ReactElement } from 'react';
 import Container, { ContainerProps } from '@material-ui/core/Container';
 
 export type PageListProps = ContainerProps;
-export const PageList = ({ children }: PageListProps): ReactElement => {
-  return <Container>{children}</Container>;
+export const PageList = ({
+  children,
+  ...otherProps
+}: PageListProps): ReactElement => {
+  return <Container {...otherProps}>{children}</Container>;
 };
 export default PageList;
 

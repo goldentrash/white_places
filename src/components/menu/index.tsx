@@ -1,9 +1,11 @@
-import React, { ReactElement, ReactNode, ElementType } from 'react';
+import React, { ReactElement, ElementType, HTMLAttributes } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      marginTop: 'auto',
       display: 'flex',
 
       '& > *': {
@@ -13,13 +15,19 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export type MenuProps = {
-  children?: ReactNode;
-};
-export const Menu = ({ children }: MenuProps): ReactElement => {
+export type MenuProps = HTMLAttributes<HTMLDivElement>;
+export const Menu = ({
+  children,
+  className,
+  ...otherProps
+}: MenuProps): ReactElement => {
   const classes = useStyles();
 
-  return <div className={classes.root}>{children}</div>;
+  return (
+    <div className={classNames(classes.root, className)} {...otherProps}>
+      {children}
+    </div>
+  );
 };
 export default Menu;
 

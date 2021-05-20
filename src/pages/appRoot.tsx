@@ -14,10 +14,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     brandLink: {
       margin: theme.spacing(1, 1.5),
-
-      '&:hover': {
-        textDecoration: 'none',
-      },
     },
     toolbar: {
       justifyContent: 'space-between',
@@ -37,6 +33,7 @@ const BrandLink = ({ brandTitle }: BrandLinkProps): ReactElement => {
       component={RouterLink}
       to={urlBuilder.introduction()}
       classes={{ root: classes.brandLink }}
+      underline="none"
     >
       {brandTitle}
     </Link>
@@ -71,7 +68,7 @@ export const AppRoot = (): ReactElement => {
         <Toolbar variant="dense" classes={{ root: classes.toolbar }}>
           <BrandLink brandTitle="White Places" />
           <div>
-            <SearchBox disabled placeholder="search project" />
+            <SearchBox placeholder="search project" />
             <AccountMenu />
           </div>
         </Toolbar>

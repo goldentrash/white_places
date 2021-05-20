@@ -24,7 +24,6 @@ export type PopoverMenuProps = {
 export const PopoverMenu = ({
   button,
   items,
-  ...otherProps
 }: PopoverMenuProps): ReactElement => {
   const classes = useStyles();
 
@@ -38,7 +37,7 @@ export const PopoverMenu = ({
 
   return (
     <Fragment>
-      {cloneElement(button, { ...otherProps, onClick: handleClick })}
+      {cloneElement(button, { onClick: handleClick })}
       <Menu
         classes={{ paper: classes.paper }}
         keepMounted

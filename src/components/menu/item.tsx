@@ -10,7 +10,10 @@ const useStyles = makeStyles((_theme: Theme) =>
   })
 );
 
-export type ItemProps<Component extends ElementType> = ButtonProps<Component>;
+export type ItemProps<Component extends ElementType> = Omit<
+  ButtonProps<Component>,
+  'classes'
+>;
 export const Item = <Component extends ElementType>({
   children,
   ...otherProps
@@ -21,7 +24,6 @@ export const Item = <Component extends ElementType>({
     <Button
       classes={{ label: classes.label }}
       variant="outlined"
-      size="small"
       {...otherProps}
     >
       {children}
