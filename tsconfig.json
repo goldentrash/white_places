@@ -9,6 +9,7 @@
     "paths": {
       "codegen/*": ["codegen/*"],
       "components/*": ["src/components/*"],
+      "hooks/*": ["src/hooks/*"],
       "helpers/*": ["src/helpers/*"]
     },
     "jsx": "react",

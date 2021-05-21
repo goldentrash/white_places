@@ -9,95 +9,61 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Chip from '@material-ui/core/Chip';
+import Link from '@material-ui/core/Link';
+import Button, { ButtonProps } from '@material-ui/core/Button';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import Menu from 'components/menu';
 import urlBuilder from 'helpers/urlBuilder';
+import useDecodedParams from 'hooks/useDecodedParams';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     toolbar: {
       justifyContent: 'space-between',
     },
-    titleTypography: {
+    titleLink: {
       margin: theme.spacing(0, 1),
     },
-    statusChip: {
-      marginLeft: theme.spacing(1),
+    menu: {
+      '& > *': {
+        marginRight: theme.spacing(1),
+      },
     },
-    navTab: {
+    label: {
       textTransform: 'capitalize',
     },
   })
 );
 
-const TitleAndBadges = (): ReactElement => {
+type TitleLinkProps = {
+  title: string;
+};
+const TitleLink = ({ title }: TitleLinkProps): ReactElement => {
   const classes = useStyles();
 
   return (
-    <div>
-      <Typography
-        variant="h4"
-        display="inline"
-        classes={{ root: classes.titleTypography }}
-      >
-        Sample Project Title
-      </Typography>
-      <Chip
-        classes={{ root: classes.statusChip }}
-        color="secondary"
-        size="small"
-        variant="outlined"
-        clickable={false}
-        label={'active'}
-      />
-    </div>
+    <Link
+      classes={{ root: classes.titleLink }}
+      variant="h4"
+      display="inline"
+      underline="none"
+      component={RouterLink}
+      to={urlBuilder.introduction(title)}
+    >
+      {title}
+    </Link>
   );
 };
 
-const LinksAndMenu = (): ReactElement => {
-  const links = [
-    { name: 'homepages', href: '/' },
-    { name: 'git hub', href: '/' },
-  ];
-
-  return (
-    <Menu>
-      {links.map(({ name, href }) => {
-        return (
-          <Menu.Item key={name} href={href}>
-            {name}
-          </Menu.Item>
-        );
-      })}
-
-      <Menu.Item>Point Shop</Menu.Item>
-      <Menu.Item>Watch</Menu.Item>
-    </Menu>
-  );
+type NavTabsProps = {
+  tabs: { label: string; to: string }[];
 };
-
-const NavTabs = (): ReactElement => {
+const NavTabs = ({ tabs }: NavTabsProps): ReactElement => {
   const classes = useStyles();
-
   const currLocation = useLocation();
 
-  const tabs = [
-    { label: 'Helps', to: 'help' },
-    { label: 'Opinions', to: urlBuilder.opinions('white_places') },
-    { label: 'Tasks', to: 'task' },
-    {
-      label: 'Documents',
-      to: urlBuilder.documents('white_places'),
-    },
-    { label: 'Timeline', to: 'timeline' },
-    { label: 'setting', to: 'setting' },
-  ];
-
-  const negative1ToNull = (idx: number): number | null => {
+  const negative1ToFalse = (idx: number): number | false => {
     if (idx === -1) {
-      return null;
+      return false;
     } else {
       return idx;
     }
@@ -105,18 +71,14 @@ const NavTabs = (): ReactElement => {
 
   return (
     <Tabs
-      value={
-        negative1ToNull(
-          tabs.findIndex(({ to }) =>
-            matchPath(`${to}/*`, currLocation.pathname)
-          )
-        ) ?? false
-      }
+      value={negative1ToFalse(
+        tabs.findIndex(({ to }) => matchPath(`${to}/*`, currLocation.pathname))
+      )}
     >
-      {tabs.map(({ label, to }) => (
+      {tabs.map(({ label, to }, idx) => (
         <Tab
-          classes={{ root: classes.navTab }}
-          key={`${label}:${to}`}
+          classes={{ root: classes.label }}
+          key={idx}
           label={label}
           component={RouterLink}
           to={to}
@@ -129,15 +91,41 @@ const NavTabs = (): ReactElement => {
 export const ProjectRoot = (): ReactElement => {
   const classes = useStyles();
 
+  const { projectTitle } = useDecodedParams();
+
+  const buttonProps: ButtonProps = {
+    classes: { label: classes.label },
+    variant: 'outlined',
+  };
+
   // if project exist!
   return (
     <div>
       <AppBar position="static" elevation={0} color="default">
         <Toolbar classes={{ root: classes.toolbar }}>
-          <TitleAndBadges />
-          <LinksAndMenu />
+          <TitleLink title={projectTitle} />
+
+          <div className={classes.menu}>
+            <Button {...buttonProps}>homepage</Button>
+            <Button {...buttonProps}>git hub</Button>
+            <Button {...buttonProps}>watch</Button>
+            <Button {...buttonProps}>point shop</Button>
+          </div>
         </Toolbar>
-        <NavTabs />
+
+        <NavTabs
+          tabs={[
+            { label: 'Helps', to: 'help' },
+            { label: 'Opinions', to: urlBuilder.opinions(projectTitle) },
+            { label: 'Tasks', to: 'task' },
+            {
+              label: 'Documents',
+              to: urlBuilder.documents(projectTitle),
+            },
+            { label: 'Timeline', to: 'timeline' },
+            { label: 'setting', to: 'setting' },
+          ]}
+        />
       </AppBar>
 
       <Outlet />

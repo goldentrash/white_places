@@ -1,69 +1,93 @@
 import React, { ReactElement } from 'react';
-import Chip from '@material-ui/core/Chip';
-import PageList from 'components/pageList';
-import urlBuilder from 'helpers/urlBuilder';
+import { Link as RouterLink } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
+import Divider from '@material-ui/core/Divider';
+import Button, { ButtonProps } from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Link from '@material-ui/core/Link';
+import Chip from '@material-ui/core/Chip';
+import urlBuilder from 'helpers/urlBuilder';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    opinionBio: {
+    header: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      margin: theme.spacing(2, 0, 1, 0),
+    },
+    label: {
+      textTransform: 'capitalize',
+    },
+    item: {
+      marginTop: theme.spacing(1),
+
+      '& > *': {
+        margin: theme.spacing(1, 2),
+      },
+    },
+    status: {
       display: 'flex',
       alignItems: 'center',
-    },
-    chip: {
-      marginRight: theme.spacing(1),
+
+      '& > * ': {
+        marginRight: theme.spacing(1),
+      },
     },
   })
 );
 
-type OpinionBioProps = {
-  state: string;
-  likes: number;
-};
-const OpinionBio = ({ state, likes }: OpinionBioProps): ReactElement => {
+export const Opinions = (): ReactElement => {
   const classes = useStyles();
 
-  return (
-    <div className={classes.opinionBio}>
-      <Chip
-        classes={{ root: classes.chip }}
-        label={state}
-        size="small"
-        color="primary"
-      />
-      <Typography color="textSecondary" variant="subtitle1" component="div">
-        <b>{likes}</b> people likes this opinion
-      </Typography>
-    </div>
-  );
-};
+  const buttonProps: ButtonProps = {
+    classes: { label: classes.label },
+    color: 'primary',
+    variant: 'contained',
+    size: 'small',
+  };
 
-export const Opinions = (): ReactElement => {
   const opinions = [
-    { id: '123123', title: 'introduction', likes: 1, state: 'pendding' },
+    { id: '123123', title: 'introduction', likes: 1, status: 'pendding' },
     {
       id: '1231f23',
       title: 'introdfsdfasduction',
       likes: 122,
-      state: 'pdendding',
+      status: 'pdendding',
     },
   ];
 
   return (
-    <PageList>
-      <PageList.Statistics numberOfResult={32} type="Opinions" />
-      {opinions.map(({ id, title, state, likes }) => {
+    <Container>
+      <div className={classes.header}>
+        <Typography variant="h5">{opinions.length} Opinions!</Typography>
+        <Button {...buttonProps}>Opiniate New</Button>
+      </div>
+      <Divider />
+
+      {opinions.map(({ title, status, likes }, idx) => {
         return (
-          <PageList.Item
-            key={id}
-            title={title}
-            pageUrl={urlBuilder.opinions('white_places')}
-            contents={<OpinionBio state={state} likes={likes} />}
-          />
+          <Paper key={idx} variant="outlined" classes={{ root: classes.item }}>
+            <Link
+              underline="none"
+              variant="h5"
+              component={RouterLink}
+              to={urlBuilder.document('white places', document.title)}
+            >
+              {title}
+            </Link>
+
+            <div className={classes.status}>
+              <Chip label={status} size="small" />
+              <Typography color="textSecondary" variant="subtitle1">
+                <b>{likes}</b> people likes this opinion
+              </Typography>
+            </div>
+          </Paper>
         );
       })}
-    </PageList>
+    </Container>
   );
 };
 export default Opinions;

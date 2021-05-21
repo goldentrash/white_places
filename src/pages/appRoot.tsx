@@ -29,11 +29,11 @@ const BrandLink = ({ brandTitle }: BrandLinkProps): ReactElement => {
 
   return (
     <Link
+      classes={{ root: classes.brandLink }}
       variant="h6"
+      underline="none"
       component={RouterLink}
       to={urlBuilder.introduction()}
-      classes={{ root: classes.brandLink }}
-      underline="none"
     >
       {brandTitle}
     </Link>

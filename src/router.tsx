@@ -7,42 +7,45 @@ import ProjectRoot from './pages/projectRoot';
 import Document from './pages/document';
 import Documents from './pages/documents';
 import Opinions from './pages/opinions';
-
-const routes = [
-  {
-    path: '/',
-    element: <AppRoot />,
-    children: [
-      { path: '*', element: <NotFound /> },
-      { path: '/', element: <NavigateToMain /> },
-      {
-        path: 'projects/:projectTitle',
-        element: <ProjectRoot />,
-        children: [
-          { path: '*', element: <NotFound /> },
-          {
-            path: 'documents',
-            element: <Outlet />,
-            children: [
-              { path: '/', element: <Documents /> },
-              {
-                path: ':documentTitle',
-                element: <Document />,
-              },
-            ],
-          },
-          {
-            path: 'opinions',
-            element: <Opinions />,
-          },
-        ],
-      },
-    ],
-  },
-];
+import Opinion from './pages/opinion';
 
 export const Router = (): ReactElement => {
-  const elements = useRoutes(routes);
+  const elements = useRoutes([
+    {
+      path: '/',
+      element: <AppRoot />,
+      children: [
+        { path: '*', element: <NotFound /> },
+        { path: '/', element: <NavigateToMain /> },
+        {
+          path: 'projects/:projectTitle',
+          element: <ProjectRoot />,
+          children: [
+            { path: '*', element: <NotFound /> },
+            {
+              path: 'documents',
+              element: <Outlet />,
+              children: [
+                { path: '/', element: <Documents /> },
+                {
+                  path: ':documentTitle',
+                  element: <Document />,
+                },
+              ],
+            },
+            {
+              path: 'opinions',
+              element: <Outlet />,
+              children: [
+                { path: '/', element: <Opinions /> },
+                { path: ':opinionTitle', element: <Opinion /> },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]);
 
   if (!elements) {
     throw Error();

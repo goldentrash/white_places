@@ -1,24 +1,36 @@
 import { generatePath } from 'react-router-dom';
 
+const generateUrl = (path: string, params?: Record<string, string>): string => {
+  return encodeURI(generatePath(path, params));
+};
+
 // 이거 테스트 어캐하지?
 export default {
-  introduction(): string {
-    return generatePath('/projects/white_places/documents/introduction');
+  introduction(projectTitle = 'white places'): string {
+    return generateUrl('/projects/:projectTitle/documents/introduction', {
+      projectTitle,
+    });
   },
   documents(projectTitle: string): string {
-    return generatePath('/projects/:projectTitle/documents', {
+    return generateUrl('/projects/:projectTitle/documents', {
       projectTitle,
     });
   },
   document(projectTitle: string, documentTitle: string): string {
-    return generatePath('/projects/:projectTitle/documents/:documentTitle', {
+    return generateUrl('/projects/:projectTitle/documents/:documentTitle', {
       projectTitle,
       documentTitle,
     });
   },
   opinions(projectTitle: string): string {
-    return generatePath('/projects/:projectTitle/opinions', {
+    return generateUrl('/projects/:projectTitle/opinions', {
       projectTitle,
+    });
+  },
+  opinion(projectTitle: string, opinionTitle: string): string {
+    return generateUrl('/projects/:projectTitle/opinions/:opinionTitle', {
+      projectTitle,
+      opinionTitle,
     });
   },
 };
