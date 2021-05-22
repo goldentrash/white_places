@@ -10,7 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Link from '@material-ui/core/Link';
-import Button, { ButtonProps } from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import urlBuilder from 'helpers/urlBuilder';
 import useDecodedParams from 'hooks/useDecodedParams';
@@ -93,11 +93,6 @@ export const ProjectRoot = (): ReactElement => {
 
   const { projectTitle } = useDecodedParams();
 
-  const buttonProps: ButtonProps = {
-    classes: { label: classes.label },
-    variant: 'outlined',
-  };
-
   // if project exist!
   return (
     <div>
@@ -106,15 +101,21 @@ export const ProjectRoot = (): ReactElement => {
           <TitleLink title={projectTitle} />
 
           <div className={classes.menu}>
-            <Button {...buttonProps}>homepage</Button>
-            <Button {...buttonProps}>git hub</Button>
-            <Button {...buttonProps}>watch</Button>
-            <Button {...buttonProps}>point shop</Button>
+            <Button classes={{ label: classes.label }} variant="outlined">
+              homepage
+            </Button>
+            <Button classes={{ label: classes.label }} variant="outlined">
+              git hub
+            </Button>
+            <Button classes={{ label: classes.label }} variant="outlined">
+              watch
+            </Button>
           </div>
         </Toolbar>
 
         <NavTabs
           tabs={[
+            { label: 'Timeline', to: 'timeline' },
             { label: 'Helps', to: 'help' },
             { label: 'Opinions', to: urlBuilder.opinions(projectTitle) },
             { label: 'Tasks', to: 'task' },
@@ -122,7 +123,7 @@ export const ProjectRoot = (): ReactElement => {
               label: 'Documents',
               to: urlBuilder.documents(projectTitle),
             },
-            { label: 'Timeline', to: 'timeline' },
+            { label: 'point shop', to: 'point shop' },
             { label: 'setting', to: 'setting' },
           ]}
         />

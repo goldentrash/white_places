@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import Button, { ButtonProps } from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 import Markdown from 'components/markdown';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
@@ -39,12 +39,12 @@ const useStyles = makeStyles((theme: Theme) =>
         marginRight: theme.spacing(1),
       },
     },
-    fabsBoxAnchor: {
+    floatingButtonsAnchor: {
       position: 'relative',
       left: '100%',
       marginLeft: theme.spacing(3),
     },
-    fabsBox: {
+    floatingButtons: {
       position: 'fixed',
       top: '35%',
       display: 'flex',
@@ -69,12 +69,6 @@ export const Opinion = (): ReactElement => {
     </Typography>
   );
 
-  const buttonOptions: ButtonProps = {
-    color: 'primary',
-    variant: 'contained',
-    size: 'small',
-  };
-
   return (
     <Container>
       <div className={classes.header}>
@@ -87,9 +81,15 @@ export const Opinion = (): ReactElement => {
           </div>
 
           <div className={classes.menu}>
-            <Button {...buttonOptions}>수정</Button>
+            <Button variant="contained" size="small" color="primary">
+              수정
+            </Button>
             <Alert
-              button={<Button {...buttonOptions}>삭제</Button>}
+              button={
+                <Button variant="contained" size="small" color="secondary">
+                  삭제
+                </Button>
+              }
               title="정말로 삭제하시겠습니까?"
             />
           </div>
@@ -99,8 +99,8 @@ export const Opinion = (): ReactElement => {
       <Divider classes={{ root: classes.divider }} />
       <Markdown>{'**동기**  역시 마크다운이 최고다! `code`란 말이야'}</Markdown>
 
-      <div className={classes.fabsBoxAnchor}>
-        <div className={classes.fabsBox}>
+      <div className={classes.floatingButtonsAnchor}>
+        <div className={classes.floatingButtons}>
           <IconButton color="primary">
             <ThumbUpAltIcon />
           </IconButton>

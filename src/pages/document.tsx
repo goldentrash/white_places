@@ -3,7 +3,7 @@ import useDecodedParams from 'hooks/useDecodedParams';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import Button, { ButtonProps } from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 import Markdown from 'components/markdown';
 import Alert from 'components/alert';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
@@ -16,6 +16,8 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(2, 0, 1, 0),
     },
     menu: {
+      marginTop: 'auto',
+
       '& > *': {
         marginRight: theme.spacing(1),
       },
@@ -31,21 +33,21 @@ export const Document = (): ReactElement => {
 
   const { documentTitle } = useDecodedParams();
 
-  const buttonOptions: ButtonProps = {
-    color: 'primary',
-    variant: 'contained',
-    size: 'small',
-  };
-
   // if document exist!
   return (
     <Container>
       <div className={classes.header}>
         <Typography variant="h4">{documentTitle}</Typography>
         <div className={classes.menu}>
-          <Button {...buttonOptions}>수정</Button>
+          <Button variant="contained" size="small" color="primary">
+            수정
+          </Button>
           <Alert
-            button={<Button {...buttonOptions}>삭제</Button>}
+            button={
+              <Button variant="contained" size="small" color="secondary">
+                삭제
+              </Button>
+            }
             title="정말로 삭제하시겠습니까?"
           />
         </div>
