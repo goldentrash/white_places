@@ -3,9 +3,10 @@ import { useParams } from 'react-router-dom';
 export const useDecodedParams = (): Record<string, string> => {
   const params = useParams();
 
+  const result: Record<string, string> = {};
   for (const param in params) {
-    params[param] = decodeURI(params[param]);
+    result[param] = decodeURI(params[param]);
   }
-  return params;
+  return Object.freeze(result);
 };
 export default useDecodedParams;

@@ -58,6 +58,12 @@ export const Opinions = (): ReactElement => {
     },
   ];
 
+  const statusLine = (
+    <Typography color="textSecondary" variant="subtitle1">
+      <b>123</b> people likes this opinion
+    </Typography>
+  );
+
   return (
     <Container>
       <div className={classes.header}>
@@ -66,23 +72,21 @@ export const Opinions = (): ReactElement => {
       </div>
       <Divider />
 
-      {opinions.map(({ title, status, likes }, idx) => {
+      {opinions.map(({ title, status }, idx) => {
         return (
           <Paper key={idx} variant="outlined" classes={{ root: classes.item }}>
             <Link
               underline="none"
               variant="h5"
               component={RouterLink}
-              to={urlBuilder.document('white places', document.title)}
+              to={urlBuilder.opinion('white places', title)}
             >
               {title}
             </Link>
 
             <div className={classes.status}>
               <Chip label={status} size="small" />
-              <Typography color="textSecondary" variant="subtitle1">
-                <b>{likes}</b> people likes this opinion
-              </Typography>
+              {statusLine}
             </div>
           </Paper>
         );

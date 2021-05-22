@@ -59,7 +59,7 @@ export const Documents = (): ReactElement => {
               underline="none"
               variant="h5"
               component={RouterLink}
-              to={urlBuilder.document('white places', document.title)}
+              to={urlBuilder.document('white places', title)}
             >
               {title}
             </Link>

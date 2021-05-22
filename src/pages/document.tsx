@@ -25,11 +25,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type HeaderProps = {
-  title: string;
-};
-const Header = ({ title }: HeaderProps): ReactElement => {
+export const Document = (): ReactElement => {
   const classes = useStyles();
+
+  const { documentTitle } = useDecodedParams();
 
   const buttonOptions: ButtonProps = {
     color: 'primary',
@@ -37,26 +36,17 @@ const Header = ({ title }: HeaderProps): ReactElement => {
     size: 'small',
   };
 
-  return (
-    <div className={classes.header}>
-      <Typography variant="h4">{title}</Typography>
-      <div className={classes.menu}>
-        <Button {...buttonOptions}>수정</Button>
-        <Button {...buttonOptions}>삭제</Button>
-      </div>
-    </div>
-  );
-};
-
-export const Document = (): ReactElement => {
-  const classes = useStyles();
-
-  const { documentTitle } = useDecodedParams();
-
   // if document exist!
   return (
     <Container>
-      <Header title={documentTitle} />
+      <div className={classes.header}>
+        <Typography variant="h4">{documentTitle}</Typography>
+        <div className={classes.menu}>
+          <Button {...buttonOptions}>수정</Button>
+          <Button {...buttonOptions}>삭제</Button>
+        </div>
+      </div>
+
       <Divider classes={{ root: classes.divider }} />
       <Markdown>{'**동기**  역시 마크다운이 최고다! `code`란 말이야'}</Markdown>
     </Container>
