@@ -38,6 +38,7 @@ export const PopoverMenu = ({
   return (
     <Fragment>
       {cloneElement(button, { onClick: handleClick })}
+
       <Menu
         classes={{ paper: classes.paper }}
         keepMounted

@@ -10,6 +10,7 @@ import Markdown from 'components/markdown';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
+import Alert from 'components/alert';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -38,21 +39,20 @@ const useStyles = makeStyles((theme: Theme) =>
         marginRight: theme.spacing(1),
       },
     },
-    fabsBox: {
+    fabsBoxAnchor: {
       position: 'relative',
       left: '100%',
       marginLeft: theme.spacing(3),
+    },
+    fabsBox: {
+      position: 'fixed',
+      top: '35%',
+      display: 'flex',
+      flexDirection: 'column',
 
-      '& > div': {
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'fixed',
-        top: '35%',
-
-        '& > button': {
-          marginBottom: theme.spacing(1),
-          border: '1px solid',
-        },
+      '& > button': {
+        marginBottom: theme.spacing(1),
+        border: '1px solid',
       },
     },
   })
@@ -88,7 +88,10 @@ export const Opinion = (): ReactElement => {
 
           <div className={classes.menu}>
             <Button {...buttonOptions}>수정</Button>
-            <Button {...buttonOptions}>삭제</Button>
+            <Alert
+              button={<Button {...buttonOptions}>삭제</Button>}
+              title="정말로 삭제하시겠습니까?"
+            />
           </div>
         </div>
       </div>
@@ -96,17 +99,22 @@ export const Opinion = (): ReactElement => {
       <Divider classes={{ root: classes.divider }} />
       <Markdown>{'**동기**  역시 마크다운이 최고다! `code`란 말이야'}</Markdown>
 
-      <div className={classes.fabsBox}>
-        <div>
+      <div className={classes.fabsBoxAnchor}>
+        <div className={classes.fabsBox}>
           <IconButton color="primary">
             <ThumbUpAltIcon />
           </IconButton>
           <IconButton color="primary">
             <AssignmentTurnedInIcon />
           </IconButton>
-          <IconButton color="secondary">
-            <NotInterestedIcon />
-          </IconButton>
+          <Alert
+            button={
+              <IconButton color="secondary">
+                <NotInterestedIcon />
+              </IconButton>
+            }
+            title="정말로 기각하시겠습니까?"
+          />
         </div>
       </div>
     </Container>

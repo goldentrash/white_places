@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button, { ButtonProps } from '@material-ui/core/Button';
 import Markdown from 'components/markdown';
+import Alert from 'components/alert';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -43,7 +44,10 @@ export const Document = (): ReactElement => {
         <Typography variant="h4">{documentTitle}</Typography>
         <div className={classes.menu}>
           <Button {...buttonOptions}>수정</Button>
-          <Button {...buttonOptions}>삭제</Button>
+          <Alert
+            button={<Button {...buttonOptions}>삭제</Button>}
+            title="정말로 삭제하시겠습니까?"
+          />
         </div>
       </div>
 
