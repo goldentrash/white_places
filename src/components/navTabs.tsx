@@ -3,6 +3,7 @@ import { Link as RouterLink, useLocation, matchPath } from 'react-router-dom';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { negative1ToNull } from 'helpers/util';
 
 const useStyles = makeStyles((_theme: Theme) =>
   createStyles({
@@ -19,19 +20,15 @@ export const NavTabs = ({ tabs }: NavTabsProps): ReactElement => {
   const classes = useStyles();
   const currLocation = useLocation();
 
-  const negative1ToFalse = (idx: number): number | false => {
-    if (idx === -1) {
-      return false;
-    } else {
-      return idx;
-    }
-  };
-
   return (
     <Tabs
-      value={negative1ToFalse(
-        tabs.findIndex(({ to }) => matchPath(`${to}/*`, currLocation.pathname))
-      )}
+      value={
+        negative1ToNull(
+          tabs.findIndex(({ to }) =>
+            matchPath(`${to}/*`, currLocation.pathname)
+          )
+        ) ?? false
+      }
     >
       {tabs.map(({ label, to }, idx) => (
         <Tab

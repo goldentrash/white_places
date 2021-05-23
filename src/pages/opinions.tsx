@@ -9,6 +9,7 @@ import Link from '@material-ui/core/Link';
 import Chip from '@material-ui/core/Chip';
 import urlBuilder from 'helpers/urlBuilder';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import Selector from 'components/selector';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,6 +23,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     label: {
       textTransform: 'capitalize',
+    },
+    menu: {
+      '& > *': {
+        marginRight: theme.spacing(1),
+      },
     },
     item: {
       marginTop: theme.spacing(1),
@@ -57,15 +63,25 @@ export const Opinions = (): ReactElement => {
   return (
     <Container>
       <div className={classes.header}>
-        <Typography variant="h5">총 {opinions.length}개의 의견</Typography>
-        <Button
-          classes={{ label: classes.label }}
-          color="primary"
-          variant="contained"
-          size="small"
-        >
-          의견 제시하기
-        </Button>
+        <Typography variant="h5">
+          대기중인 {opinions.length}개의 의견
+        </Typography>
+
+        <div className={classes.menu}>
+          <Selector
+            label={'상태'}
+            defaultItem="대기중"
+            items={['대기중', '기각됨', '수용됨']}
+          />
+          <Button
+            classes={{ label: classes.label }}
+            color="primary"
+            variant="contained"
+            size="small"
+          >
+            의견 제시하기
+          </Button>
+        </div>
       </div>
       <Divider />
 
