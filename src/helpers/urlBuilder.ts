@@ -22,6 +22,11 @@ export default {
       documentTitle,
     });
   },
+  writeDocument(projectTitle: string): string {
+    return generateUrl('/projects/:projectTitle/documents/write', {
+      projectTitle,
+    });
+  },
   opinions(projectTitle: string): string {
     return generateUrl('/projects/:projectTitle/opinions', {
       projectTitle,

@@ -46,6 +46,8 @@ export const Documents = (): ReactElement => {
           color="primary"
           variant="contained"
           size="small"
+          component={RouterLink}
+          to={urlBuilder.writeDocument('white places')}
         >
           문서 작성하기
         </Button>
