@@ -41,11 +41,10 @@ const BrandLink = ({ brandTitle }: BrandLinkProps): ReactElement => {
 };
 
 const AccountMenu = (): ReactElement => {
-  const guestMenu: ReactElement[] = [
-    <button disabled key="githubLogIng">
-      Sign in with GitHub
-    </button>,
-  ];
+  const guestMenu: {
+    text: string;
+    onClick?: () => void;
+  }[] = [{ text: 'GitHub으로 로그인' }];
 
   return (
     <PopoverMenu
@@ -68,7 +67,7 @@ export const AppRoot = (): ReactElement => {
         <Toolbar variant="dense" classes={{ root: classes.toolbar }}>
           <BrandLink brandTitle="White Places" />
           <div>
-            <SearchBox placeholder="search project" />
+            <SearchBox placeholder="프로젝트 검색" />
             <AccountMenu />
           </div>
         </Toolbar>

@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
-import Button, { ButtonProps } from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import urlBuilder from 'helpers/urlBuilder';
 import Paper from '@material-ui/core/Paper';
@@ -32,13 +32,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Documents = (): ReactElement => {
   const classes = useStyles();
 
-  const buttonProps: ButtonProps = {
-    classes: { label: classes.label },
-    color: 'primary',
-    variant: 'contained',
-    size: 'small',
-  };
-
   const documents = [
     { id: '123123', title: 'introduction' },
     { id: '123ff123', title: 'intrasoduction' },
@@ -47,8 +40,15 @@ export const Documents = (): ReactElement => {
   return (
     <Container>
       <div className={classes.header}>
-        <Typography variant="h5">{documents.length} Documents!</Typography>
-        <Button {...buttonProps}>Write New</Button>
+        <Typography variant="h5">총 {documents.length}개의 문서</Typography>
+        <Button
+          classes={{ label: classes.label }}
+          color="primary"
+          variant="contained"
+          size="small"
+        >
+          문서 작성하기
+        </Button>
       </div>
       <Divider />
 

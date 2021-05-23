@@ -1,19 +1,13 @@
 import React, { ReactElement } from 'react';
-import {
-  Link as RouterLink,
-  Outlet,
-  useLocation,
-  matchPath,
-} from 'react-router-dom';
+import { Link as RouterLink, Outlet } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import urlBuilder from 'helpers/urlBuilder';
 import useDecodedParams from 'hooks/useDecodedParams';
+import NavTabs from 'components/navTabs';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,9 +21,6 @@ const useStyles = makeStyles((theme: Theme) =>
       '& > *': {
         marginRight: theme.spacing(1),
       },
-    },
-    label: {
-      textTransform: 'capitalize',
     },
   })
 );
@@ -54,40 +45,6 @@ const TitleLink = ({ title }: TitleLinkProps): ReactElement => {
   );
 };
 
-type NavTabsProps = {
-  tabs: { label: string; to: string }[];
-};
-const NavTabs = ({ tabs }: NavTabsProps): ReactElement => {
-  const classes = useStyles();
-  const currLocation = useLocation();
-
-  const negative1ToFalse = (idx: number): number | false => {
-    if (idx === -1) {
-      return false;
-    } else {
-      return idx;
-    }
-  };
-
-  return (
-    <Tabs
-      value={negative1ToFalse(
-        tabs.findIndex(({ to }) => matchPath(`${to}/*`, currLocation.pathname))
-      )}
-    >
-      {tabs.map(({ label, to }, idx) => (
-        <Tab
-          classes={{ root: classes.label }}
-          key={idx}
-          label={label}
-          component={RouterLink}
-          to={to}
-        />
-      ))}
-    </Tabs>
-  );
-};
-
 export const ProjectRoot = (): ReactElement => {
   const classes = useStyles();
 
@@ -101,30 +58,21 @@ export const ProjectRoot = (): ReactElement => {
           <TitleLink title={projectTitle} />
 
           <div className={classes.menu}>
-            <Button classes={{ label: classes.label }} variant="outlined">
-              homepage
-            </Button>
-            <Button classes={{ label: classes.label }} variant="outlined">
-              git hub
-            </Button>
-            <Button classes={{ label: classes.label }} variant="outlined">
-              watch
-            </Button>
+            <Button variant="outlined">GITHUB</Button>
+            <Button variant="outlined">알림 켜기</Button>
           </div>
         </Toolbar>
 
         <NavTabs
           tabs={[
-            { label: 'Timeline', to: 'timeline' },
-            { label: 'Helps', to: 'help' },
-            { label: 'Opinions', to: urlBuilder.opinions(projectTitle) },
-            { label: 'Tasks', to: 'task' },
+            { label: '타임라인', to: 'timeline' },
+            { label: '의견', to: urlBuilder.opinions(projectTitle) },
+            { label: '작업', to: 'task' },
             {
-              label: 'Documents',
+              label: '문서',
               to: urlBuilder.documents(projectTitle),
             },
-            { label: 'point shop', to: 'point shop' },
-            { label: 'setting', to: 'setting' },
+            { label: '설정', to: 'setting' },
           ]}
         />
       </AppBar>

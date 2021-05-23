@@ -18,6 +18,12 @@ const useStyles = makeStyles((theme: Theme) =>
     header: {
       margin: theme.spacing(2, 0, 1, 0),
     },
+    title: {
+      display: 'inline-block',
+    },
+    typeChip: {
+      marginLeft: theme.spacing(1),
+    },
     subHeader: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -39,12 +45,12 @@ const useStyles = makeStyles((theme: Theme) =>
         marginRight: theme.spacing(1),
       },
     },
-    floatingButtonsAnchor: {
+    fabsAnchor: {
       position: 'relative',
       left: '100%',
       marginLeft: theme.spacing(3),
     },
-    floatingButtons: {
+    fabsBox: {
       position: 'fixed',
       top: '35%',
       display: 'flex',
@@ -58,26 +64,58 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const RightFabs = (): ReactElement => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.fabsAnchor}>
+      <div className={classes.fabsBox}>
+        <IconButton color="primary">
+          <ThumbUpAltIcon />
+        </IconButton>
+        <IconButton color="primary">
+          <AssignmentTurnedInIcon />
+        </IconButton>
+        <Alert
+          button={
+            <IconButton color="secondary">
+              <NotInterestedIcon />
+            </IconButton>
+          }
+          title="정말로 기각하시겠습니까?"
+        />
+      </div>
+    </div>
+  );
+};
+
 export const Opinion = (): ReactElement => {
   const classes = useStyles();
 
   const { opinionTitle } = useDecodedParams();
 
-  const statusLine = (
-    <Typography color="textSecondary" variant="subtitle1">
-      <b>#aa124adffd</b>
-    </Typography>
-  );
-
   return (
     <Container>
+      <RightFabs />
+
       <div className={classes.header}>
-        <Typography variant="h4">{opinionTitle}</Typography>
+        <div>
+          <Typography classes={{ root: classes.title }} variant="h4">
+            {opinionTitle}
+          </Typography>
+          <Chip
+            classes={{ root: classes.typeChip }}
+            label="신기능"
+            size="small"
+          />
+        </div>
 
         <div className={classes.subHeader}>
           <div className={classes.status}>
-            <Chip label={status} size="small" />
-            {statusLine}
+            <Chip label="수용됨" size="small" />
+            <Typography color="textSecondary" variant="subtitle1">
+              <b>#aa124adffd</b> 작업을 확인하세요!
+            </Typography>
           </div>
 
           <div className={classes.menu}>
@@ -98,25 +136,6 @@ export const Opinion = (): ReactElement => {
 
       <Divider classes={{ root: classes.divider }} />
       <Markdown>{'**동기**  역시 마크다운이 최고다! `code`란 말이야'}</Markdown>
-
-      <div className={classes.floatingButtonsAnchor}>
-        <div className={classes.floatingButtons}>
-          <IconButton color="primary">
-            <ThumbUpAltIcon />
-          </IconButton>
-          <IconButton color="primary">
-            <AssignmentTurnedInIcon />
-          </IconButton>
-          <Alert
-            button={
-              <IconButton color="secondary">
-                <NotInterestedIcon />
-              </IconButton>
-            }
-            title="정말로 기각하시겠습니까?"
-          />
-        </div>
-      </div>
     </Container>
   );
 };

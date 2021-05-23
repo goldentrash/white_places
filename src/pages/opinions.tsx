@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
-import Button, { ButtonProps } from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'space-between',
       margin: theme.spacing(2, 0, 1, 0),
+    },
+    typeChip: {
+      marginLeft: theme.spacing(1),
     },
     label: {
       textTransform: 'capitalize',
@@ -41,52 +44,55 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Opinions = (): ReactElement => {
   const classes = useStyles();
 
-  const buttonProps: ButtonProps = {
-    classes: { label: classes.label },
-    color: 'primary',
-    variant: 'contained',
-    size: 'small',
-  };
-
   const opinions = [
-    { id: '123123', title: 'introduction', likes: 1, status: 'pendding' },
+    { id: '123123', title: 'introduction', likes: 1, status: '기각됨' },
     {
       id: '1231f23',
       title: 'introdfsdfasduction',
       likes: 122,
-      status: 'pdendding',
+      status: '대기중',
     },
   ];
-
-  const statusLine = (
-    <Typography color="textSecondary" variant="subtitle1">
-      <b>123</b> people likes this opinion
-    </Typography>
-  );
 
   return (
     <Container>
       <div className={classes.header}>
-        <Typography variant="h5">{opinions.length} Opinions!</Typography>
-        <Button {...buttonProps}>Opiniate New</Button>
+        <Typography variant="h5">총 {opinions.length}개의 의견</Typography>
+        <Button
+          classes={{ label: classes.label }}
+          color="primary"
+          variant="contained"
+          size="small"
+        >
+          의견 제시하기
+        </Button>
       </div>
       <Divider />
 
       {opinions.map(({ title, status }, idx) => {
         return (
           <Paper key={idx} variant="outlined" classes={{ root: classes.item }}>
-            <Link
-              underline="none"
-              variant="h5"
-              component={RouterLink}
-              to={urlBuilder.opinion('white places', title)}
-            >
-              {title}
-            </Link>
+            <div>
+              <Link
+                underline="none"
+                variant="h5"
+                component={RouterLink}
+                to={urlBuilder.opinion('white places', title)}
+              >
+                {title}
+              </Link>
+              <Chip
+                classes={{ root: classes.typeChip }}
+                label="버그"
+                size="small"
+              />
+            </div>
 
             <div className={classes.status}>
               <Chip label={status} size="small" />
-              {statusLine}
+              <Typography color="textSecondary" variant="subtitle1">
+                <b>123</b>명이 찬성합니다
+              </Typography>
             </div>
           </Paper>
         );

@@ -19,7 +19,10 @@ const useStyles = makeStyles((_theme: Theme) =>
 
 export type PopoverMenuProps = {
   button: ReactElement;
-  items: ReactElement[];
+  items: {
+    text: string;
+    onClick?: () => void;
+  }[];
 };
 export const PopoverMenu = ({
   button,
@@ -48,8 +51,10 @@ export const PopoverMenu = ({
         onClose={handleClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        {items.map((item) => (
-          <MenuItem key={item.key}>{item}</MenuItem>
+        {items.map(({ onClick, text }, idx) => (
+          <MenuItem key={idx} onClick={onClick}>
+            {text}
+          </MenuItem>
         ))}
       </Menu>
     </Fragment>
