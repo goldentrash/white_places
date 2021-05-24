@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'space-between',
       margin: theme.spacing(2, 0, 1, 0),
     },
+    statistics: {
+      marginTop: 'auto',
+      marginBottom: 'auto',
+    },
     label: {
       textTransform: 'capitalize',
     },
@@ -40,7 +44,13 @@ export const Documents = (): ReactElement => {
   return (
     <Container>
       <div className={classes.header}>
-        <Typography variant="h5">총 {documents.length}개의 문서</Typography>
+        <Typography
+          variant="h5"
+          component="span"
+          classes={{ root: classes.statistics }}
+        >
+          총 {documents.length}개의 문서
+        </Typography>
         <Button
           classes={{ label: classes.label }}
           color="primary"

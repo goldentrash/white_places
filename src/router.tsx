@@ -8,7 +8,7 @@ import Document from './pages/document';
 import Documents from './pages/documents';
 import Opinions from './pages/opinions';
 import Opinion from './pages/opinion';
-import WriteDocument from './pages/writeDocument';
+import Write from './pages/write';
 
 export const Router = (): ReactElement => {
   const elements = useRoutes([
@@ -32,7 +32,7 @@ export const Router = (): ReactElement => {
                   path: ':documentTitle',
                   element: <Document />,
                 },
-                { path: 'write', element: <WriteDocument /> },
+                { path: 'write', element: <Write kind="document" /> },
               ],
             },
             {

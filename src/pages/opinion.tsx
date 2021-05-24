@@ -4,13 +4,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+import Commentor from 'components/commentor';
 import Button from '@material-ui/core/Button';
 import Markdown from 'components/markdown';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import Alert from 'components/alert';
+import Comment from 'components/comment';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -94,13 +95,24 @@ export const Opinion = (): ReactElement => {
 
   const { opinionTitle } = useDecodedParams();
 
+  const comments = [
+    'comment1',
+    'comment2',
+    '아 정말 이짓을 얼마나 해야되는거라고 생각해?',
+    'last',
+  ];
+
   return (
     <Container>
       <RightFabs />
 
       <div className={classes.header}>
         <div>
-          <Typography classes={{ root: classes.title }} variant="h4">
+          <Typography
+            classes={{ root: classes.title }}
+            variant="h4"
+            component="h1"
+          >
             {opinionTitle}
           </Typography>
           <Chip
@@ -113,7 +125,11 @@ export const Opinion = (): ReactElement => {
         <div className={classes.subHeader}>
           <div className={classes.status}>
             <Chip label="수용됨" size="small" />
-            <Typography color="textSecondary" variant="subtitle1">
+            <Typography
+              color="textSecondary"
+              variant="subtitle1"
+              component="span"
+            >
               <b>#aa124adffd</b> 작업을 확인하세요!
             </Typography>
           </div>
@@ -134,8 +150,18 @@ export const Opinion = (): ReactElement => {
         </div>
       </div>
 
-      <Divider classes={{ root: classes.divider }} />
-      <Markdown>{'**동기**  역시 마크다운이 최고다! `code`란 말이야'}</Markdown>
+      <Comment
+        content={
+          <Markdown>
+            {'**동기**  역시 마크다운이 최고다! `code`란 말이야'}
+          </Markdown>
+        }
+      />
+
+      {comments.map((comment, idx) => {
+        return <Comment key={idx} content={comment} />;
+      })}
+      <Commentor />
     </Container>
   );
 };

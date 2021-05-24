@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'space-between',
       margin: theme.spacing(2, 0, 1, 0),
     },
+    statistics: {
+      marginTop: 'auto',
+      marginBottom: 'auto',
+    },
     typeChip: {
       marginLeft: theme.spacing(1),
     },
@@ -63,7 +67,11 @@ export const Opinions = (): ReactElement => {
   return (
     <Container>
       <div className={classes.header}>
-        <Typography variant="h5">
+        <Typography
+          variant="h5"
+          component="span"
+          classes={{ root: classes.statistics }}
+        >
           대기중인 {opinions.length}개의 의견
         </Typography>
 
@@ -106,7 +114,11 @@ export const Opinions = (): ReactElement => {
 
             <div className={classes.status}>
               <Chip label={status} size="small" />
-              <Typography color="textSecondary" variant="subtitle1">
+              <Typography
+                color="textSecondary"
+                variant="subtitle1"
+                component="span"
+              >
                 <b>123</b>명이 찬성합니다
               </Typography>
             </div>

@@ -37,7 +37,9 @@ export const Document = (): ReactElement => {
   return (
     <Container>
       <div className={classes.header}>
-        <Typography variant="h4">{documentTitle}</Typography>
+        <Typography variant="h4" component="h1">
+          {documentTitle}
+        </Typography>
         <div className={classes.menu}>
           <Button variant="contained" size="small" color="primary">
             수정

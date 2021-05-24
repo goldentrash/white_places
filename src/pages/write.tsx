@@ -33,10 +33,10 @@ const useStyles = makeStyles((theme: Theme) =>
     titleTypography: {
       margin: theme.spacing(2, 0, 1, 0),
     },
-    divider: {
+    dividerVertical: {
       margin: theme.spacing(0, 2),
     },
-    divider2: {
+    dividerHorizontal: {
       margin: theme.spacing(2, 0, 4, 0),
     },
     submitButton: {
@@ -45,7 +45,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const WriteDocument = (): ReactElement => {
+export type WriteProps = {
+  kind: string;
+};
+export const Write = ({ kind }: WriteProps): ReactElement => {
   const classes = useStyles();
 
   const [title, setTitle] = useState('');
@@ -68,20 +71,26 @@ export const WriteDocument = (): ReactElement => {
   };
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
+
+    kind;
   };
 
   return (
     <Container className={classes.root}>
       <div className={classes.preview}>
-        <Typography variant="h4" classes={{ root: classes.titleTypography }}>
+        <Typography
+          variant="h4"
+          classes={{ root: classes.titleTypography }}
+          component="h1"
+        >
           {title}
         </Typography>
-        <Divider classes={{ root: classes.divider2 }} />
+        <Divider classes={{ root: classes.dividerHorizontal }} />
         <Markdown>{content}</Markdown>
       </div>
 
       <Divider
-        classes={{ root: classes.divider }}
+        classes={{ root: classes.dividerVertical }}
         orientation="vertical"
         flexItem
       />
@@ -113,10 +122,10 @@ export const WriteDocument = (): ReactElement => {
           color="secondary"
           variant="contained"
         >
-          작성완료
+          저장
         </Button>
       </form>
     </Container>
   );
 };
-export default WriteDocument;
+export default Write;
