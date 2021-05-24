@@ -38,4 +38,15 @@ export default {
       opinionTitle,
     });
   },
+  tasks(projectTitle: string): string {
+    return generateUrl('/projects/:projectTitle/tasks', {
+      projectTitle,
+    });
+  },
+  task(projectTitle: string, taskTitle: string): string {
+    return generateUrl('/projects/:projectTitle/tasks/:taskTitle', {
+      projectTitle,
+      taskTitle,
+    });
+  },
 };

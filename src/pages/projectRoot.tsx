@@ -67,7 +67,7 @@ export const ProjectRoot = (): ReactElement => {
           tabs={[
             { label: '타임라인', to: 'timeline' },
             { label: '의견', to: urlBuilder.opinions(projectTitle) },
-            { label: '작업', to: 'task' },
+            { label: '작업', to: urlBuilder.tasks(projectTitle) },
             {
               label: '문서',
               to: urlBuilder.documents(projectTitle),

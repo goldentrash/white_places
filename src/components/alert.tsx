@@ -9,12 +9,14 @@ export type AlertProps = {
   title: string;
   onYes?: () => void;
   onNo?: () => void;
+  onClose?: () => void;
 };
 export const Alert = ({
   button,
   title,
   onYes,
   onNo,
+  onClose,
 }: AlertProps): ReactElement => {
   const [open, setOpen] = React.useState(false);
 
@@ -22,6 +24,10 @@ export const Alert = ({
     setOpen(true);
   };
   const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
+
     setOpen(false);
   };
   const handleYes = () => {
@@ -47,10 +53,10 @@ export const Alert = ({
         <DialogTitle>{title}</DialogTitle>
 
         <DialogActions>
-          <Button onClick={handleNo} color="primary">
+          <Button onClick={handleNo} color="secondary">
             아니요
           </Button>
-          <Button onClick={handleYes} color="secondary">
+          <Button onClick={handleYes} color="primary">
             예
           </Button>
         </DialogActions>

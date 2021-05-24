@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
@@ -33,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
         marginRight: theme.spacing(1),
       },
     },
-    opinion: {
+    task: {
       marginTop: theme.spacing(1),
 
       '& > *': {
@@ -51,16 +50,15 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Opinions = (): ReactElement => {
+export const Tasks = (): ReactElement => {
   const classes = useStyles();
 
-  const opinions = [
-    { id: '123123', title: 'introduction', likes: 1, status: '기각됨' },
+  const tasks = [
+    { id: '123123', title: 'introduction', status: '진행중' },
     {
       id: '1231f23',
       title: 'introdfsdfasduction',
-      likes: 122,
-      status: '대기중',
+      status: '진행중',
     },
   ];
 
@@ -72,39 +70,24 @@ export const Opinions = (): ReactElement => {
           component="span"
           classes={{ root: classes.statistics }}
         >
-          대기중인 {opinions.length}개의 의견
+          진행중인 {tasks.length}개의 작업
         </Typography>
 
         <div className={classes.menu}>
-          <Selector
-            defaultItem="대기중"
-            items={['대기중', '기각됨', '수용됨']}
-          />
-          <Button
-            classes={{ label: classes.label }}
-            color="primary"
-            variant="contained"
-            size="small"
-          >
-            의견 제시하기
-          </Button>
+          <Selector defaultItem="진행중" items={['진행중', '완료']} />
         </div>
       </div>
       <Divider />
 
-      {opinions.map(({ title, status }, idx) => {
+      {tasks.map(({ title, status }, idx) => {
         return (
-          <Paper
-            key={idx}
-            variant="outlined"
-            classes={{ root: classes.opinion }}
-          >
+          <Paper key={idx} variant="outlined" classes={{ root: classes.task }}>
             <div>
               <Link
                 underline="none"
                 variant="h5"
                 component={RouterLink}
-                to={urlBuilder.opinion('white places', title)}
+                to={urlBuilder.task('white places', title)}
               >
                 {title}
               </Link>
@@ -122,7 +105,7 @@ export const Opinions = (): ReactElement => {
                 variant="subtitle1"
                 component="span"
               >
-                <b>123</b>명이 찬성합니다
+                <b>13</b>개의 PR이 대기중입니다
               </Typography>
             </div>
           </Paper>
@@ -131,4 +114,4 @@ export const Opinions = (): ReactElement => {
     </Container>
   );
 };
-export default Opinions;
+export default Tasks;

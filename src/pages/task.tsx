@@ -5,10 +5,9 @@ import Container from '@material-ui/core/Container';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
 import Commentor from 'components/commentor';
+import Button from '@material-ui/core/Button';
 import Markdown from 'components/markdown';
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import NotInterestedIcon from '@material-ui/icons/NotInterested';
+import CodeIcon from '@material-ui/icons/Code';
 import Alert from 'components/alert';
 import Comment from 'components/comment';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
@@ -29,8 +28,10 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'space-between',
       marginTop: theme.spacing(1),
     },
-    divider: {
-      margin: theme.spacing(2, 0, 4, 0),
+    menu: {
+      '& > *': {
+        marginRight: theme.spacing(1),
+      },
     },
     status: {
       display: 'flex',
@@ -39,6 +40,9 @@ const useStyles = makeStyles((theme: Theme) =>
       '& > * ': {
         marginRight: theme.spacing(1),
       },
+    },
+    content: {
+      padding: theme.spacing(1, 0),
     },
     fabsAnchor: {
       position: 'relative',
@@ -65,29 +69,23 @@ const RightFabs = (): ReactElement => {
   return (
     <div className={classes.fabsAnchor}>
       <div className={classes.fabsBox}>
-        <IconButton color="primary">
-          <ThumbUpAltIcon />
-        </IconButton>
-        <IconButton color="primary">
-          <AssignmentTurnedInIcon />
-        </IconButton>
         <Alert
           button={
-            <IconButton color="secondary">
-              <NotInterestedIcon />
+            <IconButton color="primary">
+              <CodeIcon />
             </IconButton>
           }
-          title="정말로 기각하시겠습니까?"
+          title="작업에 참여하시겠습니까?"
         />
       </div>
     </div>
   );
 };
 
-export const Opinion = (): ReactElement => {
+export const Task = (): ReactElement => {
   const classes = useStyles();
 
-  const { opinionTitle } = useDecodedParams();
+  const { taskTitle } = useDecodedParams();
 
   const comments = [
     'comment1',
@@ -107,7 +105,7 @@ export const Opinion = (): ReactElement => {
             variant="h4"
             component="h1"
           >
-            {opinionTitle}
+            {taskTitle}
           </Typography>
           <Chip
             classes={{ root: classes.typeChip }}
@@ -118,25 +116,37 @@ export const Opinion = (): ReactElement => {
 
         <div className={classes.subHeader}>
           <div className={classes.status}>
-            <Chip label="수용됨" size="small" />
+            <Chip label="완료" size="small" />
             <Typography
               color="textSecondary"
               variant="subtitle1"
               component="span"
             >
-              <b>#aa124adffd</b> 작업을 확인하세요!
+              <b>white piano</b>의 PR이 수용되었습니다!
             </Typography>
+          </div>
+
+          <div className={classes.menu}>
+            <Button variant="contained" size="small" color="primary">
+              수정
+            </Button>
+            <Alert
+              button={
+                <Button variant="contained" size="small" color="secondary">
+                  종료
+                </Button>
+              }
+              title="정말로 종료하시겠습니까?"
+            />
           </div>
         </div>
       </div>
 
-      <Comment
-        content={
-          <Markdown>
-            {'**동기**  역시 마크다운이 최고다! `code`란 말이야'}
-          </Markdown>
-        }
-      />
+      <div className={classes.content}>
+        <Markdown>
+          {'**동기**  역시 마크다운이 최고다! `code`란 말이야'}
+        </Markdown>
+      </div>
 
       {comments.map((comment, idx) => {
         return <Comment key={idx} content={comment} />;
@@ -145,4 +155,4 @@ export const Opinion = (): ReactElement => {
     </Container>
   );
 };
-export default Opinion;
+export default Task;

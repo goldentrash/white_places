@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export type SelectorProps = {
-  label: string;
   defaultItem: string;
   items: string[];
   onChange?: (item: string) => void;

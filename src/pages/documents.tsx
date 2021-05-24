@@ -23,12 +23,12 @@ const useStyles = makeStyles((theme: Theme) =>
     label: {
       textTransform: 'capitalize',
     },
-    item: {
+    document: {
       marginTop: theme.spacing(1),
-
-      '& > *': {
-        margin: theme.spacing(1, 2),
-      },
+    },
+    link: {
+      display: 'inline-block',
+      margin: theme.spacing(1, 2),
     },
   })
 );
@@ -66,8 +66,13 @@ export const Documents = (): ReactElement => {
 
       {documents.map(({ title }, idx) => {
         return (
-          <Paper key={idx} variant="outlined" classes={{ root: classes.item }}>
+          <Paper
+            key={idx}
+            variant="outlined"
+            classes={{ root: classes.document }}
+          >
             <Link
+              classes={{ root: classes.link }}
               underline="none"
               variant="h5"
               component={RouterLink}

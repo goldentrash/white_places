@@ -9,6 +9,8 @@ import Documents from './pages/documents';
 import Opinions from './pages/opinions';
 import Opinion from './pages/opinion';
 import Write from './pages/write';
+import Tasks from './pages/tasks';
+import Task from './pages/task';
 
 export const Router = (): ReactElement => {
   const elements = useRoutes([
@@ -41,6 +43,14 @@ export const Router = (): ReactElement => {
               children: [
                 { path: '/', element: <Opinions /> },
                 { path: ':opinionTitle', element: <Opinion /> },
+              ],
+            },
+            {
+              path: 'tasks',
+              element: <Outlet />,
+              children: [
+                { path: '/', element: <Tasks /> },
+                { path: ':taskTitle', element: <Task /> },
               ],
             },
           ],
