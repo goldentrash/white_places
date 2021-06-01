@@ -27,12 +27,22 @@ module.exports = {
       {
         test: /\.ts$/,
         include: [path.resolve('lambda'), path.resolve('codegen')],
-        use: {
-          loader: 'ts-loader',
-          options: {
-            transpileOnly: true,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ['@babel/preset-env', { targets: { node: 'current' } }],
+              ],
+            },
           },
-        },
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+            },
+          },
+        ],
       },
     ],
   },

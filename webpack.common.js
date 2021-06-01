@@ -21,12 +21,20 @@ module.exports = {
       {
         test: /\.tsx?$/,
         include: [path.resolve('src'), path.resolve('codegen')],
-        use: {
-          loader: 'ts-loader',
-          options: {
-            transpileOnly: true,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [['@babel/preset-env']],
+            },
           },
-        },
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+            },
+          },
+        ],
       },
     ],
   },

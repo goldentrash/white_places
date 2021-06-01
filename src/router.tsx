@@ -11,6 +11,9 @@ import Opinion from './pages/opinion';
 import Write from './pages/write';
 import Tasks from './pages/tasks';
 import Task from './pages/task';
+import Timeline from './pages/timeline';
+import Setting from './pages/setting';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 export const Router = (): ReactElement => {
   const elements = useRoutes([
@@ -25,6 +28,8 @@ export const Router = (): ReactElement => {
           element: <ProjectRoot />,
           children: [
             { path: '*', element: <NotFound /> },
+            { path: 'timeline', element: <Timeline /> },
+            { path: 'setting', element: <Setting /> },
             {
               path: 'documents',
               element: <Outlet />,
@@ -58,6 +63,13 @@ export const Router = (): ReactElement => {
       ],
     },
   ]);
+
+  const screenMinWidth = 1440;
+  const isDesktop = useMediaQuery(`(min-width:${screenMinWidth}px)`);
+
+  if (!isDesktop) {
+    return <div>{screenMinWidth}px 이상의 화면 UI만 제공됩니다</div>;
+  }
 
   if (!elements) {
     throw Error();

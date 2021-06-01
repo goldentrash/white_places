@@ -1,11 +1,18 @@
 {
   "name": "white_places",
   "version": "1.0.0",
+  "license": "MIT",
   "private": true,
+  "engines": {
+    "node": "^14.15.4",
+    "yarn": "^1.22.5"
+  },
+  "browserslist": [
+    "last 2 Chrome versions"
+  ],
   "repository": "https://github.com/goldentrash/netlify_test.git",
   "author": "goldentrash <startoflateness@gmail.com>",
   "scripts": {
-    "postversion": "echo \"git push origin master\"",
     "start": "npm-run-all --parallel watch:lambda start:client",
     "start:client": "netlify dev",
     "watch:lambda": "webpack watch --config lambda/webpack.dev.js",
@@ -14,8 +21,8 @@
     "build:client": "webpack --config webpack.prod.js",
     "build:lambda": "webpack --config lambda/webpack.prod.js",
     "gen:codegen": "graphql-codegen --config .graphqlrc.yaml",
-    "check:type": "tsc --noEmit",
-    "test": "echo \"have no test yet\""
+    "test": "jest",
+    "check:type": "tsc --noEmit"
   },
   "dependencies": {
     "@apollo/client": "^3.3.12",
@@ -39,30 +46,37 @@
     "remark-gfm": "^1.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
     "@graphql-codegen/cli": "1.21.1",
     "@graphql-codegen/typescript": "1.21.0",
     "@graphql-codegen/typescript-operations": "^1.17.15",
     "@graphql-codegen/typescript-react-apollo": "^2.2.3",
     "@graphql-codegen/typescript-resolvers": "^1.19.0",
+    "@types/jest": "^26.0.23",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.2",
     "@types/react-syntax-highlighter": "^13.5.0",
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
+    "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-jest": "^24.3.6",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "html-webpack-plugin": "^5.0.0",
     "husky": "^4.3.8",
+    "jest": "^27.0.3",
     "lint-staged": "^10.5.4",
     "netlify-cli": "2.54.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "prettier-plugin-toml": "^0.3.1",
     "source-map-loader": "^2.0.1",
+    "ts-jest": "^27.0.2",
     "ts-loader": "^8.0.15",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
     "typescript": "^4.1.3",
