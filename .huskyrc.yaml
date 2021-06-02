@@ -1,7 +1,6 @@
 hooks:
-  # test All
   pre-push:
-    - yarn run check:type && yarn run test && yarn run build
+    - yarn run build
 
   # All source must successfully be compiled
   pre-commit:
