@@ -13,7 +13,6 @@ import Tasks from './pages/tasks';
 import Task from './pages/task';
 import Timeline from './pages/timeline';
 import Setting from './pages/setting';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 export const Router = (): ReactElement => {
   const elements = useRoutes([
@@ -63,13 +62,6 @@ export const Router = (): ReactElement => {
       ],
     },
   ]);
-
-  const screenMinWidth = 1440;
-  const isDesktop = useMediaQuery(`(min-width:${screenMinWidth}px)`);
-
-  if (!isDesktop) {
-    return <div>{screenMinWidth}px 이상의 화면 UI만 제공됩니다</div>;
-  }
 
   if (!elements) {
     throw Error();
