@@ -8,9 +8,8 @@
     "baseUrl": ".",
     "paths": {
       "codegen/*": ["codegen/*"],
-      "components/*": ["src/components/*"],
-      "hooks/*": ["src/hooks/*"],
-      "helpers/*": ["src/helpers/*"]
+      "src/*": ["src/*"],
+      "lambda/*": ["lambda/*"]
     },
     "jsx": "react",
     "removeComments": true,

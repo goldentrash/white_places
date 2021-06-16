@@ -5,3 +5,12 @@
 
 use `netlify-cli@2.54.0` not `netlify-cli@latest` because later 2.54.0 is on error when send POST request in dev server
 please let me know if that error has solved then I will change netlify-cli's version to latest
+
+## needed ENV_VAR
+
+- FAUNA_SECRET=
+- GOTRUE_API_URL=
+
+- NODE_VERSION=14.17.0
+- AWS_LAMBDA_JS_RUNTIME=nodejs14.x
+- YARN_VERSION=1.22.5

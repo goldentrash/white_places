@@ -1,10 +1,11 @@
 {
   "name": "white_places",
+  "description": "project management webapp",
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": "^14.15.4",
+    "node": "^14.17.0",
     "yarn": "^1.22.5"
   },
   "browserslist": [
@@ -54,6 +55,7 @@
     "@graphql-codegen/typescript-react-apollo": "^2.2.3",
     "@graphql-codegen/typescript-resolvers": "^1.19.0",
     "@testing-library/react": "^11.2.7",
+    "@types/css-mediaquery": "^0.1.1",
     "@types/jest": "^26.0.23",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.2",
@@ -62,6 +64,7 @@
     "@typescript-eslint/parser": "^4.14.2",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
+    "css-mediaquery": "^0.1.2",
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-jest": "^24.3.6",

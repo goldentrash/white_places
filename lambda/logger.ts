@@ -21,12 +21,13 @@ export const logger: ApolloServerPlugin = {
     return {
       didEncounterErrors: ({ errors }) => {
         errors.map((error) => {
-          console.error(
+          // netlify function log `console.log` not `console.error`
+          console.log(
             `${LogLevel.Error} - ${new Date().toString()}: ${
               error.message
             } at ${operationName ?? 'anonymous'}`
           );
-          console.error(error.stack);
+          console.log(error.stack);
         });
       },
 

@@ -1,5 +1,5 @@
 import { ApolloServer } from 'apollo-server-lambda';
-import logger from './plugins/logger';
+import logger from 'lambda/logger';
 
 const apolloServer = new ApolloServer({
   typeDefs: [],
