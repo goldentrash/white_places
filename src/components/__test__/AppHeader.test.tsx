@@ -8,6 +8,7 @@ import RootLevelPath from 'src/routes/RootLevelPath';
 import { APP_NAME } from 'src/constants';
 import { MemoryRouter, Routes, Route } from 'react-router';
 import AppHeader from '../AppHeader';
+import { User } from 'gotrue-js';
 
 const TEST_ENTRY = '/some/path';
 
@@ -32,7 +33,7 @@ test('브랜드 링크를 클릭하면 메인 페이지로 이동한다', () => 
 describe('로그인 한 상황에서', () => {
   test('프로필 링크를 클릭하면 프로필 페이지로 이동한다', () => {
     const ProfilePage = () => <div>profile page</div>;
-    const user = { id: '123' };
+    const user: Pick<User, 'id'> = { id: '123' };
 
     render(
       <MemoryRouter initialEntries={[TEST_ENTRY]}>

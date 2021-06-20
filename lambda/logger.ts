@@ -33,7 +33,7 @@ export const logger: ApolloServerPlugin = {
 
       willSendResponse: () => {
         console.log(
-          `${LogLevel.Info} - ${new Date().toString()}: Resolve ${
+          `${LogLevel.Info} - ${new Date().toString()}: Terminate ${
             operationName ?? 'anonymous'
           }`
         );

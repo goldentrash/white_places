@@ -1,12 +1,13 @@
 import { ApolloServer } from 'apollo-server-lambda';
 import logger from 'lambda/logger';
+import typeDefs from 'lambda/typeDefs';
+import resolvers from 'lambda/resolvers';
+import context from 'lambda/context';
 
 const apolloServer = new ApolloServer({
-  typeDefs: [],
-  resolvers: {},
-  dataSources: () => {
-    return {};
-  },
+  typeDefs: typeDefs,
+  resolvers: resolvers,
+  context: context,
   plugins: [logger],
   introspection: process.env.NODE_ENV !== 'production',
   uploads: false,
@@ -14,4 +15,6 @@ const apolloServer = new ApolloServer({
   debug: process.env.NODE_ENV !== 'production',
 });
 
-export const handler = apolloServer.createHandler();
+const handler = apolloServer.createHandler();
+
+export { handler, apolloServer };

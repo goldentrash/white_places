@@ -1,7 +1,32 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+  ApolloLink,
+  concat,
+} from '@apollo/client';
+import goTrue from 'src/goTrue';
+
+const httpLink = new HttpLink({
+  uri: '/.netlify/functions/graphql',
+});
+
+const authMiddleware = new ApolloLink((operation, forward) => {
+  const goTrueUser = goTrue.currentUser();
+  const jwt = goTrueUser?.token.access_token;
+
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      Authorization: jwt ? `Bearer ${jwt}` : undefined,
+    },
+  }));
+
+  return forward(operation);
+});
 
 const apolloClient = new ApolloClient({
-  uri: '/.netlify/functions/graphql',
+  link: concat(authMiddleware, httpLink),
 
   cache: new InMemoryCache(),
   connectToDevTools: process.env.NODE_ENV !== 'production',

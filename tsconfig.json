@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*", "lambda/**/*"],
+  "include": ["src/**/*", "lambda/**/*", "codegen/**/*"],
   "compilerOptions": {
     "target": "es2020",
     "module": "commonjs",

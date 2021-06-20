@@ -9,7 +9,6 @@ please let me know if that error has solved then I will change netlify-cli's ver
 ## needed ENV_VAR
 
 - FAUNA_SECRET=
-- GOTRUE_API_URL=
 
 - NODE_VERSION=14.17.0
 - AWS_LAMBDA_JS_RUNTIME=nodejs14.x

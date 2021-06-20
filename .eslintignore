@@ -10,9 +10,12 @@ dist
 # graphql
 *.graphql
 
+# Local Netlify folder
+.netlify
+
+# test setup
+jest
+
 # config
 webpack.*
 jest.*
-
-# Local Netlify folder
-.netlify
