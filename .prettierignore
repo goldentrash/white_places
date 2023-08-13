@@ -1,7 +1,11 @@
 # cache
 node_modules
 
-# nested projects
-api
-client
-db
+# auto generated
+codegen
+
+# Build Output
+dist
+
+# Local Netlify folder
+.netlify

@@ -1,0 +1,21 @@
+# cache
+node_modules
+
+# auto generated
+codegen
+
+# build output
+dist
+
+# graphql
+*.graphql
+
+# Local Netlify folder
+.netlify
+
+# test setup
+jest
+
+# config
+webpack.*
+jest.*

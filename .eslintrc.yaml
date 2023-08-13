@@ -1,0 +1,45 @@
+root: true
+parser: '@typescript-eslint/parser'
+parserOptions:
+  ecmaVersion: 2020
+  sourceType: module
+  project: tsconfig.json
+plugins:
+  - react
+  - jsx-a11y
+  - jest
+  - '@typescript-eslint'
+# eslint extends는 override할 수 없다
+# 만약 가능하게 변경된다면, 수정해서 적용하도록 하자
+extends:
+  - eslint:recommended
+  - plugin:react/recommended
+  - plugin:react-hooks/recommended
+  - plugin:jsx-a11y/recommended
+  - plugin:jest/recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:@typescript-eslint/recommended-requiring-type-checking
+  - prettier
+rules:
+  '@typescript-eslint/no-unused-vars':
+    - warn
+    - argsIgnorePattern: ^_
+      ignoreRestSiblings: true
+settings:
+  react:
+    version: detect
+overrides:
+  - files: 'lambda'
+    env:
+      node: true
+  - files: 'src'
+    env:
+      browser: true
+  - files: '**/*.test.*'
+    env:
+      jest/globals: true
+    rules:
+      '@typescript-eslint/unbound-method':
+        - off
+      jest/unbound-method:
+        - error

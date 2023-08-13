@@ -1,9 +1,0 @@
-# cache
-elm-stuff
-node_modules
-
-# config
-*.config.js
-
-# build output
-dist

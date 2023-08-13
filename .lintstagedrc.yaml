@@ -1,0 +1,10 @@
+# source files
+'*.{ts,tsx}':
+  - eslint --max-warnings 0
+  - prettier --write
+'*.{html,graphql}':
+  - prettier --write
+
+# config files
+'*.{js,toml,json,yaml}':
+  - prettier --write

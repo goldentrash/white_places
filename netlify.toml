@@ -1,13 +1,18 @@
 [build]
-command = "yarn run install:all && yarn run build"
-publish = "client/dist"
-functions = "api/functions"
+command = "yarn run build"
+publish = "dist/publish"
+functions = "dist/lambda"
 
 [[redirects]]
 from = "/*"
-to = "/index.html"
+to = "/"
 status = 200
 force = false
 
 [dev]
-publish = "dist"
+command = "webpack serve --port 8080 --config webpack.dev.js"
+port = 8888
+targetPort = 8080
+publish = "dist/publish"
+autoLaunch = true
+framework = "#custom"

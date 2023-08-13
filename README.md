@@ -6,7 +6,10 @@
 use `netlify-cli@2.54.0` not `netlify-cli@latest` because later 2.54.0 is on error when send POST request in dev server
 please let me know if that error has solved then I will change netlify-cli's version to latest
 
-## Must Use --no-ff option when merge to master branch
+## needed ENV_VAR
 
-until husky support `pre-merge-commit` hook  
-I highly recommand to do `git config branch.master.mergeoptions --no-ff`
+- FAUNA_SECRET=
+
+- NODE_VERSION=14.17.0
+- AWS_LAMBDA_JS_RUNTIME=nodejs14.x
+- YARN_VERSION=1.22.5

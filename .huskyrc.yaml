@@ -1,0 +1,10 @@
+hooks:
+  pre-push:
+    - yarn run build
+
+  # All source must successfully be compiled
+  pre-commit:
+    - lint-staged && yarn run check:type && yarn run test --onlyChanged
+
+  # I don't want to use rebase
+  pre-rebase: exit 1

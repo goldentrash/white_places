@@ -1,0 +1,28 @@
+schema: 'lambda/typeDefs.ts'
+documents: 'src/documents/*.graphql'
+extensions:
+  codegen:
+    overwrite: true
+    config:
+      constEnums: true
+      immutableTypes: true
+      nonOptionalTypename: true
+    generates:
+      # for graphql server resolvers
+      codegen/resolver-types.ts:
+        config:
+          useIndexSignature: true
+          contextType: Context
+        plugins:
+          - add:
+              content: import { Context } from 'lambda/context'
+          - typescript
+          - typescript-resolvers
+      # for react app querys
+      codegen/document-types.ts:
+        config:
+          avoidOptionals: true
+        plugins:
+          - typescript
+          - typescript-operations
+          - typescript-react-apollo

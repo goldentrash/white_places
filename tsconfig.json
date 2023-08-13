@@ -1,0 +1,22 @@
+{
+  "include": ["src/**/*", "lambda/**/*", "codegen/**/*"],
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "sourceMap": true,
+    "types": ["jest"],
+    "baseUrl": ".",
+    "paths": {
+      "codegen/*": ["codegen/*"],
+      "src/*": ["src/*"],
+      "lambda/*": ["lambda/*"]
+    },
+    "jsx": "react",
+    "removeComments": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": false,
+    "forceConsistentCasingInFileNames": true
+  }
+}
